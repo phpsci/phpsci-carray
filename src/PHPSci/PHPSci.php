@@ -20,11 +20,9 @@ class PHPSci extends CArray {
      * PHPSci constructor.
      *
      * @param array $input
-     * @param int $flags
-     * @param string $iterator_class
      * @throws ExtensionMissingException
      */
-    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
+    public function __construct($input = array())
     {
         if (!extension_loaded('phpsci')) {
             throw new ExtensionMissingException("PHPSci Extension is required. Download it here: https://github.com/phpsci/phpsci");
