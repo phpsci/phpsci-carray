@@ -14,6 +14,13 @@
       "email": "henrique.borba.dev@gmail.com"
     }
   ],
+  "require": {
+    "php": "^7.2",
+    "psr/log": "~1.0"
+  },
+  "suggest": {
+    "monolog/monolog": "Allows for client-level logging and tracing"
+  },
   "autoload": {
     "psr-4": {
       "PHPSci\\": "src/PHPSci/"
