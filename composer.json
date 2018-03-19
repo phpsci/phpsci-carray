@@ -1,0 +1,22 @@
+{
+  "name": "phpsci/phpsci",
+  "description": "Scientific Computing Library for PHP.",
+  "keywords": [
+    "phpsci",
+    "php science",
+    "php matrix"
+  ],
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Henrique Borba",
+      "email": "henrique.borba.dev@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PHPSci\\": "src/PHPSci/"
+    }
+  }
+}
