@@ -28,7 +28,7 @@ abstract class CArray implements \ArrayAccess
      *
      * @return float
      */
-    private function getCArray() {
+    public function getCArray() {
         return $this->c_array;
     }
 
@@ -74,7 +74,7 @@ abstract class CArray implements \ArrayAccess
      *  Transform CArray in PHP regular array
      */
     public function toArray() {
-        return $this->c_array->toArray();
+        return $this->c_array->php_array;
     }
 
 
