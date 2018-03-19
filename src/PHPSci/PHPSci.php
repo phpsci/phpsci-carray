@@ -29,7 +29,23 @@ class PHPSci extends CArray {
         if (!extension_loaded('phpsci')) {
             throw new ExtensionMissingException("PHPSci Extension is required. Download it here: https://github.com/phpsci/phpsci");
         }
-        parent::__construct($input, $flags, $iterator_class);
+        # Generate C array of doubles
+        if(is_array($input)){
+            $this->generate_c_array($input);
+        }
+    }
+
+    /**
+     * __get() Magic Method
+     *
+     * @param $name Properties Overloading
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        if(!isset($this->$name)){
+            return call_user_func("PHPSci\PropertiesProcessor\\$name::run", $this);
+        }
     }
 
 
