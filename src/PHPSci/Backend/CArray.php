@@ -13,6 +13,8 @@ use PHPSci\Backend\Exceptions\ParameterValueException;
  */
 abstract class CArray implements \ArrayAccess
 {
+    use CArrayPrinter;
+
     /**
      * Main connection with backend array of doubles.
      *
@@ -58,6 +60,13 @@ abstract class CArray implements \ArrayAccess
         }
     }
 
+    /**
+     *  Transform CArray in PHP regular array
+     */
+    public function toArray() {
+        return $this->c_array->toArray();
+    }
+
 
     /**
      * @param mixed $offset
@@ -95,5 +104,22 @@ abstract class CArray implements \ArrayAccess
      */
     public function offsetGet($offset) {
         return $offset;
+    }
+
+    /**
+     *
+     */
+    public function __toString()
+    {
+        switch($this->c_array->dim) {
+            case 1:
+                return $this->print1d();
+                break;
+            case 2:
+                return $this->print2d();
+                break;
+            default:
+                break;
+        }
     }
 }
