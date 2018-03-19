@@ -3,6 +3,7 @@ namespace PHPSci;
 
 use PHPSci\Backend\CArray;
 use PHPSci\Backend\Exceptions\ExtensionMissingException;
+use PHPSci\Backend\Exceptions\UndefinedPropertyException;
 use PHPSci\Core\Initializable;
 use PHPSci\Core\LinearAlgebra;
 use PHPSci\Core\Randomizable;
@@ -38,11 +39,23 @@ class PHPSci extends CArray {
      *
      * @param $name Properties Overloading
      * @return mixed
+     * @throws UndefinedPropertyException
      */
     public function __get($name)
     {
         if(!isset($this->$name)){
-            return call_user_func("PHPSci\PropertiesProcessor\\$name::run", $this);
+            if(is_callable("PHPSci\PropertiesProcessor\\$name::run"))
+                return call_user_func("PHPSci\PropertiesProcessor\\$name::run", $this);
+            else
+                throw new UndefinedPropertyException("PHPSci", $name);
+        } else {
+            switch($name) {
+                case 'c_array':
+                    return $this->c_array;
+                    break;
+                default:
+                    throw new UndefinedPropertyException("PHPSci", $name);
+            }
         }
     }
 

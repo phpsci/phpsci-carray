@@ -24,6 +24,15 @@ abstract class CArray implements \ArrayAccess
 
 
     /**
+     * Get CArray property
+     *
+     * @return float
+     */
+    private function getCArray() {
+        return $this->c_array;
+    }
+
+    /**
      * Generate C array of doubles
      * @param array $array
      * @return bool
@@ -32,6 +41,7 @@ abstract class CArray implements \ArrayAccess
         $this->c_array = new \CPHPSci($array);
         return true;
     }
+
 
     /**
      * Return current C array size in bytes, kilobytes, megabytes or gigabytes.
