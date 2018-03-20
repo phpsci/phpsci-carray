@@ -3,7 +3,7 @@ We are doing our best!
 
 # PHPSci
 PHPSci is a PHP Library for scientific computing powered by C. You **must** compile and install
-[phpsci-ext](https://www.github.com/phpsci/php-ext). 
+[phpsci-ext](https://www.github.com/phpsci/phpsci-ext). 
 
 `
 We will soon provide precompiled!
