@@ -38,7 +38,7 @@ echo $matrix;
 ```
 
 ```php
-echo PHPSci::transpose($matrix);
+echo psci::transpose($matrix);
 ```
 ```php
 [
