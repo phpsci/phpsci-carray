@@ -8,6 +8,7 @@ use PHPSci\Core\ElementWise;
 use PHPSci\Core\Initializable;
 use PHPSci\Core\LinearAlgebra;
 use PHPSci\Core\Randomizable;
+use PHPSci\Core\Transformable;
 
 /**
  * Main PHPSci Object
@@ -17,7 +18,7 @@ use PHPSci\Core\Randomizable;
  */
 class PHPSci extends CArray {
 
-    use LinearAlgebra, Randomizable, Initializable, ElementWise;
+    use LinearAlgebra, Randomizable, Initializable, ElementWise, Transformable;
 
     private $value;
 
@@ -34,7 +35,11 @@ class PHPSci extends CArray {
             throw new ExtensionMissingException("PHPSci Extension is required. Download it here: https://github.com/phpsci/phpsci");
         }
         # Generate C array of doubles
+
         if(is_array($input)){
+            if(isset($input[0][0]) && is_string($input[0][0])) {
+                $this->value = $input;
+            }
             $this->generate_c_array($input);
         }
         if(is_int($input) || is_double($input)) {

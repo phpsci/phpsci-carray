@@ -19,7 +19,6 @@ trait ElementWise
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param CArray $a
      * @return PHPSci
-     * @throws \PHPSci\Backend\Exceptions\ExtensionMissingException
      */
     public static function sum(CArray $a) {
         return new PHPSci(\CPHPSci::sum($a->toArray(), 0));

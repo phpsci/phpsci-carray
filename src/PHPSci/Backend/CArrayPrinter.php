@@ -33,9 +33,9 @@ trait CArrayPrinter
      * @return string
      */
     public function print1d() : string {
-        $str = "[\n";
+        $str = "";
         $tmp_arr = $this->toArray();
-        $str .= "   [";
+        $str .= "[";
         foreach($tmp_arr as $n) {
             $str .= " $n";
         }

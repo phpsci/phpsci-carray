@@ -2,6 +2,7 @@
 namespace PHPSci\Core;
 
 use PHPSci\Backend\CArray;
+use PHPSci\Backend\Exceptions\ExtensionMissingException;
 use PHPSci\PHPSci;
 
 /**
@@ -19,7 +20,6 @@ trait LinearAlgebra
      * @param CArray $x
      * @param CArray $y
      * @return PHPSci
-     * @throws \PHPSci\Backend\Exceptions\ExtensionMissingException
      */
     public static function matmul(CArray $x, CArray $y) : PHPSci {
        return new PHPSci(\CPHPSci::matmul($x->toArray(), $y->toArray()));

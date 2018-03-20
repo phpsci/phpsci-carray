@@ -1,6 +1,7 @@
 <?php
 namespace PHPSci\Backend;
 use PHPSci\Backend\Exceptions\ParameterValueException;
+use PHPSci\PHPSci;
 
 /**
  * Class Abstract CArray
@@ -21,6 +22,7 @@ abstract class CArray implements \ArrayAccess
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @var double * Backend C Array of Doubles
      */
+
     protected $c_array;
 
 
@@ -32,6 +34,33 @@ abstract class CArray implements \ArrayAccess
      */
     public function getCArray() {
         return $this->c_array;
+    }
+
+    /**
+     * Get CArray rows
+     *
+     * @return int
+     */
+    public function getRows() : int {
+        return $this->c_array->rows;
+    }
+
+    /**
+     * Get CArray rows
+     *
+     * @return int
+     */
+    public function getCols() : int {
+        return $this->c_array->cols;
+    }
+
+    /**
+     * Get CArray [rows, cols]
+     *
+     * @return CArray
+     */
+    public function getRowsCols() : CArray {
+        return new PHPSci([$this->c_array->rows, $this->c_array->cols]);
     }
 
     /**
