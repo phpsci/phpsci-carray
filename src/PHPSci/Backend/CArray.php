@@ -46,6 +46,15 @@ abstract class CArray implements \ArrayAccess
     }
 
     /**
+     * Get how much time CArray took to be created
+     *
+     * @return float
+     */
+    public function getTook() : float {
+        return $this->c_array->took;
+    }
+
+    /**
      * Get CArray rows
      *
      * @return int
