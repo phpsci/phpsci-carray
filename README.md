@@ -32,6 +32,16 @@ echo $matrix;
 
 ```php
 [
+   [ 2 4 ]
+   [ 6 9 ]
+]
+```
+
+```php
+echo PHPSci::transpose($matrix);
+```
+```php
+[
    [ 2 6 ]
    [ 4 9 ]
 ]
