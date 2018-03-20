@@ -18,6 +18,7 @@ abstract class CArray implements \ArrayAccess
     /**
      * Main connection with backend array of doubles.
      *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @var double * Backend C Array of Doubles
      */
     protected $c_array;
@@ -26,6 +27,7 @@ abstract class CArray implements \ArrayAccess
     /**
      * Get CArray property
      *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return float
      */
     public function getCArray() {
@@ -34,6 +36,8 @@ abstract class CArray implements \ArrayAccess
 
     /**
      * Generate C array of doubles
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param array $array
      * @return bool
      */
@@ -46,6 +50,7 @@ abstract class CArray implements \ArrayAccess
     /**
      * Return current C array size in bytes, kilobytes, megabytes or gigabytes.
      *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param string|null $mode
      * @return float
      * @throws ParameterValueException
@@ -71,7 +76,9 @@ abstract class CArray implements \ArrayAccess
     }
 
     /**
-     *  Transform CArray in PHP regular array
+     * Transform CArray in PHP regular array
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
     public function toArray() {
         return $this->c_array->php_array;
@@ -79,6 +86,7 @@ abstract class CArray implements \ArrayAccess
 
 
     /**
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param mixed $offset
      * @param mixed $value
      */
@@ -91,6 +99,7 @@ abstract class CArray implements \ArrayAccess
     }
 
     /**
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param mixed $offset
      * @return bool
      */
@@ -99,6 +108,7 @@ abstract class CArray implements \ArrayAccess
     }
 
     /**
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param mixed $offset
      * @return bool
      */
@@ -107,8 +117,9 @@ abstract class CArray implements \ArrayAccess
     }
 
     /**
+     * offsetGet
      *
-     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param mixed $offset
      * @return mixed|void
      */
@@ -116,20 +127,4 @@ abstract class CArray implements \ArrayAccess
         return $offset;
     }
 
-    /**
-     *
-     */
-    public function __toString()
-    {
-        switch($this->c_array->dim) {
-            case 1:
-                return $this->print1d();
-                break;
-            case 2:
-                return $this->print2d();
-                break;
-            default:
-                break;
-        }
-    }
 }

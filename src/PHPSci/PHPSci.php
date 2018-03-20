@@ -4,6 +4,7 @@ namespace PHPSci;
 use PHPSci\Backend\CArray;
 use PHPSci\Backend\Exceptions\ExtensionMissingException;
 use PHPSci\Backend\Exceptions\UndefinedPropertyException;
+use PHPSci\Core\ElementWise;
 use PHPSci\Core\Initializable;
 use PHPSci\Core\LinearAlgebra;
 use PHPSci\Core\Randomizable;
@@ -11,15 +12,19 @@ use PHPSci\Core\Randomizable;
 /**
  * Main PHPSci Object
  *
+ * @author Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci
  */
 class PHPSci extends CArray {
 
-    use LinearAlgebra, Randomizable, Initializable;
+    use LinearAlgebra, Randomizable, Initializable, ElementWise;
+
+    private $value;
 
     /**
      * PHPSci constructor.
      *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param array $input
      * @throws ExtensionMissingException
      */
@@ -32,11 +37,35 @@ class PHPSci extends CArray {
         if(is_array($input)){
             $this->generate_c_array($input);
         }
+        if(is_int($input) || is_double($input)) {
+            $this->value = $input;
+        }
+    }
+
+    /**
+     * Set value if not CArray
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @param $value
+     */
+    private function setValue($value) {
+        $this->value = $value;
+    }
+
+    /**
+     * Get value if not CArray
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return mixed
+     */
+    public function getValue() {
+        return $this->value;
     }
 
     /**
      * __get() Magic Method
      *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param $name Properties Overloading
      * @return mixed
      * @throws UndefinedPropertyException
@@ -59,5 +88,31 @@ class PHPSci extends CArray {
         }
     }
 
+
+    /**
+     * Print CArray or Value
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    public function __toString()
+    {
+        # if CArray
+        if(isset($this->c_array->dim)) {
+            switch($this->c_array->dim) {
+                case 1:
+                    return $this->print1d();
+                    break;
+                case 2:
+                    return $this->print2d();
+                    break;
+                default:
+                    break;
+            }
+        }
+        # if not CArray
+        if($this->value != null) {
+            return "".$this->value;
+        }
+    }
 
 }
