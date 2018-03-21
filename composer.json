@@ -25,5 +25,8 @@
     "psr-4": {
       "PHPSci\\": "src/PHPSci/"
     }
+  },
+  "require-dev": {
+    "phpbench/phpbench": "@dev"
   }
 }

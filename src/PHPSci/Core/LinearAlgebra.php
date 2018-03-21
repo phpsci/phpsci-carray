@@ -3,6 +3,7 @@ namespace PHPSci\Core;
 
 use PHPSci\Backend\CArray;
 use PHPSci\Backend\Exceptions\ExtensionMissingException;
+use PHPSci\Backend\MemoryPointer;
 use PHPSci\PHPSci;
 
 /**
@@ -21,8 +22,20 @@ trait LinearAlgebra
      * @param CArray $y
      * @return PHPSci
      */
-    public static function matmul(CArray $x, CArray $y) : PHPSci {
-       return new PHPSci(\CPHPSci::matmul($x->toArray(), $y->toArray()));
+    public static function matmul(CArray $x, CArray $y) {
+        $ptr = \CPHPSci::fromUUID(
+            \CPHPSci::matmul(
+                $x->getUuid(),
+                $y->getUuid(),
+                $x->getRows(),
+                $x->getCols(),
+                $y->getCols()),
+            $y->getCols(),
+            $x->getRows()
+        );
+       return new PHPSci(
+           new MemoryPointer($ptr)
+       );
     }
 
 }

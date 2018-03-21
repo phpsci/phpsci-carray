@@ -45,7 +45,12 @@ class PHPSci extends CArray {
         if(is_int($input) || is_double($input)) {
             $this->value = $input;
         }
+        if(is_object($input) && get_class($input) == "PHPSci\Backend\MemoryPointer") {
+            $this->cArrayFromPointer($input);
+        }
     }
+
+
 
     /**
      * Set value if not CArray

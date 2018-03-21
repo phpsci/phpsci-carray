@@ -27,6 +27,15 @@ abstract class CArray implements \ArrayAccess
 
 
     /**
+     * Save CArray object pointer using stdClass
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    protected function cArrayFromPointer(MemoryPointer $c) {
+        $this->c_array = $c;
+    }
+
+    /**
      * Get CArray property
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
@@ -43,6 +52,15 @@ abstract class CArray implements \ArrayAccess
      */
     public function getRows() : int {
         return $this->c_array->rows;
+    }
+
+    /**
+     * Set CArray from MemoryStack
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    private static function CArrayFromUUID(MemoryPointer $ptr) {
+        \CPHPSci::fromUUID();
     }
 
     /**
@@ -120,6 +138,24 @@ abstract class CArray implements \ArrayAccess
      */
     public function toArray() {
         return $this->c_array->php_array;
+    }
+
+    /**
+     * Get CArray from MemoryStack using UUID
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    public function fromUuid() {
+
+    }
+
+    /**
+     * Get UUID from CArray
+     *
+     * @return mixed
+     */
+    public function getUuid() {
+        return $this->c_array->uuid;
     }
 
 
