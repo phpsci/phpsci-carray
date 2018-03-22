@@ -34,19 +34,20 @@ class PHPSci extends CArray {
         if (!extension_loaded('phpsci')) {
             throw new ExtensionMissingException("PHPSci Extension is required. Download it here: https://github.com/phpsci/phpsci");
         }
-        # Generate C array of doubles
-
         if(is_array($input)){
             if(isset($input[0][0]) && is_string($input[0][0])) {
                 $this->value = $input;
             }
-            $this->generate_c_array($input);
+            $this->generateCArray($input);
         }
         if(is_int($input) || is_double($input)) {
             $this->value = $input;
         }
         if(is_object($input) && get_class($input) == "PHPSci\Backend\MemoryPointer") {
             $this->cArrayFromPointer($input);
+        }
+        if(is_object($input) && get_class($input) == "stdClass") {
+            $this->cArrayFromStd($input);
         }
     }
 
@@ -106,23 +107,7 @@ class PHPSci extends CArray {
      */
     public function __toString()
     {
-        # if CArray
-        if(isset($this->c_array->dim)) {
-            switch($this->c_array->dim) {
-                case 1:
-                    return $this->print1d();
-                    break;
-                case 2:
-                    return $this->print2d();
-                    break;
-                default:
-                    break;
-            }
-        }
-        # if not CArray
-        if($this->value != null) {
-            return "".$this->value;
-        }
+        return parent::__toString();
     }
 
 }

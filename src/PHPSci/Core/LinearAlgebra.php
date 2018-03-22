@@ -23,6 +23,7 @@ trait LinearAlgebra
      * @return PHPSci
      */
     public static function matmul(CArray $x, CArray $y) {
+
         $ptr = \CPHPSci::fromUUID(
             \CPHPSci::matmul(
                 $x->getUuid(),
@@ -30,11 +31,10 @@ trait LinearAlgebra
                 $x->getRows(),
                 $x->getCols(),
                 $y->getCols()),
-            $y->getCols(),
-            $x->getRows()
-        );
+            $x->getRows(),
+            $y->getCols());
        return new PHPSci(
-           new MemoryPointer($ptr)
+          $ptr
        );
     }
 

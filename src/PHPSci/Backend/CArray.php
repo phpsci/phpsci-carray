@@ -36,6 +36,15 @@ abstract class CArray implements \ArrayAccess
     }
 
     /**
+     * Save CArray object pointer using stdClass
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    protected function cArrayFromStd(\stdClass $c) {
+        $this->c_array = $c;
+    }
+
+    /**
      * Get CArray property
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
@@ -97,8 +106,8 @@ abstract class CArray implements \ArrayAccess
      * @param array $array
      * @return bool
      */
-    public function generate_c_array(array $array) : bool {
-        $this->c_array = new \CPHPSci($array);
+    public function generateCArray(array $array) : bool {
+        $this->c_array = new MemoryPointer(new \CPHPSci($array));
         return true;
     }
 
@@ -114,20 +123,19 @@ abstract class CArray implements \ArrayAccess
     public function sizeOf(string $mode = null) : float {
         if(!isset($mode)) {
             return $this->c_array->c_array_size;
-        } else {
-            switch($mode) {
-                case 'kb':
-                    return $this->c_array->c_array_size/1024;
-                    break;
-                case 'mb':
-                    return $this->c_array->c_array_size/2048;
-                    break;
-                case 'gb':
-                    return $this->c_array->c_array_size/3072;
-                    break;
-                default:
-                    throw new ParameterValueException("Expected parameter mode to be one of (null, 'kb', 'mb', 'gb'), '$mode' given");
-            }
+        }
+        switch($mode) {
+             case 'kb':
+                 return $this->c_array->c_array_size/1024;
+                 break;
+             case 'mb':
+                 return $this->c_array->c_array_size/2048;
+                 break;
+             case 'gb':
+                 return $this->c_array->c_array_size/3072;
+                 break;
+             default:
+                 throw new ParameterValueException("Expected parameter mode to be one of (null, 'kb', 'mb', 'gb'), '$mode' given");
         }
     }
 
@@ -137,7 +145,7 @@ abstract class CArray implements \ArrayAccess
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
     public function toArray() {
-        return $this->c_array->php_array;
+        return \CPHPSci::toArray($this->c_array->uuid, $this->c_array->rows, $this->c_array->cols);
     }
 
     /**
@@ -201,4 +209,29 @@ abstract class CArray implements \ArrayAccess
         return $offset;
     }
 
+    /**
+     * Print CArray or Value
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    public function __toString()
+    {
+        # if CArray
+        if(isset($this->c_array->dim)) {
+            switch($this->c_array->dim) {
+                case 1:
+                    return $this->print1d();
+                    break;
+                case 2:
+                    return $this->print2d();
+                    break;
+                default:
+                    break;
+            }
+        }
+        # if not CArray
+        if($this->value != null) {
+            return "".$this->value;
+        }
+    }
 }

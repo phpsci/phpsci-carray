@@ -3,6 +3,7 @@ namespace PHPSci\Core;
 
 
 use PHPSci\Backend\CArray;
+use PHPSci\Backend\MemoryPointer;
 use PHPSci\PHPSci;
 
 trait Transformable
@@ -14,7 +15,16 @@ trait Transformable
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
     public static function transpose(CArray $a) {
-        return new PHPSci(\CPHPSci::transpose($a->toArray()));
+        $ptr = \CPHPSci::fromUUID(
+            \CPHPSci::transpose(
+                $a->getUuid(),
+                $a->getCols(),
+                $a->getRows()
+            ),
+            $a->getRows(),
+            $a->getCols()
+        );
+        return new PHPSci($ptr);
     }
 
 
