@@ -18,11 +18,12 @@ trait Transformable
         $ptr = \CPHPSci::fromUUID(
             \CPHPSci::transpose(
                 $a->getUuid(),
-                $a->getCols(),
-                $a->getRows()
+                $a->getRows(),
+                $a->getCols()
             ),
-            $a->getRows(),
-            $a->getCols()
+            $a->getCols(),
+            $a->getRows()
+
         );
         return new PHPSci($ptr);
     }

@@ -30,6 +30,7 @@ trait LinearAlgebra
                 $y->getUuid(),
                 $x->getRows(),
                 $x->getCols(),
+                $y->getRows(),
                 $y->getCols()),
             $x->getRows(),
             $y->getCols());
