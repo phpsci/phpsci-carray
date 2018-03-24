@@ -16,7 +16,8 @@
   ],
   "require": {
     "php": "^7.2",
-    "psr/log": "~1.0"
+    "psr/log": "~1.0",
+    "phpbench/phpbench": "^0.14.0"
   },
   "suggest": {
     "monolog/monolog": "Allows for client-level logging and tracing"
@@ -27,6 +28,6 @@
     }
   },
   "require-dev": {
-    "phpbench/phpbench": "@dev"
+    "phpunit/phpunit": "^7"
   }
 }
