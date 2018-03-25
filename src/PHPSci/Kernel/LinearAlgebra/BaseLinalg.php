@@ -6,7 +6,22 @@ namespace PHPSci\Kernel\LinearAlgebra;
  *
  * @package PHPSci\Kernel\LinearAlgebra
  */
-class BaseLinalg
+abstract class BaseLinalg implements Operation
 {
+
+    /**
+     * @var mixed
+     */
+    protected $params;
+
+    /**
+     * BaseLinalg constructor.
+     */
+    public function __construct()
+    {
+        $a = func_get_args();
+        $this->params = $a;
+    }
+
 
 }
