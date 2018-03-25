@@ -5,6 +5,7 @@ use PHPSci\Kernel\Initializers\Creatable;
 use PHPSci\Kernel\LinearAlgebra\Operatable;
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
 use PHPSci\Kernel\Transform\Transformable;
+use PHPSci\PHPSci;
 
 /**
  * Class CArrayWrapper
@@ -132,10 +133,13 @@ abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
     }
 
     /**
+     * Load CArray from Array
      *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
-    public static function fromArray() {
-
+    public static function fromArray(array $arr) : PHPSci {
+        $ptr = \CArray::fromArray($arr);
+        return new PHPSci((new MemoryPointer($ptr , $ptr->rows, $ptr->cols)));
     }
 
     /**
@@ -153,7 +157,7 @@ abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return MemoryPointer
      */
-    private function ptr() : MemoryPointer{
+    public function ptr() : MemoryPointer{
         return $this->internal_pointer;
     }
 

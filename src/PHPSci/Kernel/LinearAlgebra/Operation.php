@@ -1,12 +1,12 @@
 <?php
 namespace PHPSci\Kernel\LinearAlgebra;
 
+
 /**
- * Class Product
+ * Interface Operation
  *
  * @package PHPSci\Kernel\LinearAlgebra
  */
-class Product
+interface Operation
 {
-
 }
