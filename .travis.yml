@@ -8,8 +8,8 @@ addons:
 dist: trusty
 php:
   - 7.0
-  - 7.1.9
-  - 7.2.4
+  - 7.1
+  - 7.2
   - nightly
 
 matrix:
@@ -21,15 +21,16 @@ matrix:
 
 
 cache:
-  directories:
-    - $HOME/.composer/cache
-
+    apt: true
+    ccache: true
 
 install:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --no-interaction --ignore-platform-reqs
 
 before_script:
+    - ccache --version
+    - ccache --zero-stats
     - export USE_CCACHE=1
     - git clone https://github.com/phpsci/phpsci-ext.git
     - cd phpsci-ext
@@ -39,4 +40,7 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - vendor/bin/phpunit
+    - vendor/bin/phpunit $PHPUNIT_FLAGS
+
+after_success:
+    - ccache --show-stats
