@@ -20,7 +20,7 @@ trait Transformable
      */
     public static function fromArray(array $arr) : PHPSci {
         $ptr = \CArray::fromArray($arr);
-        return new PHPSci((new MemoryPointer($ptr , $ptr->rows, $ptr->cols)));
+        return new PHPSci((new MemoryPointer($ptr , $ptr->x, $ptr->y)));
     }
 
     /**
