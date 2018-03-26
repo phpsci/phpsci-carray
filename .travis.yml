@@ -7,7 +7,6 @@ addons:
       - libopenblas-base
 dist: trusty
 php:
-  - 7.0
   - 7.1
   - 7.2
   - nightly
@@ -33,7 +32,6 @@ before_script:
 script:
     - cd $TRAVIS_BUILD_DIR
     - vendor/bin/phpunit $PHPUNIT_FLAGS
-    - vendor/bin/phpbench run
 
 after_success:
     - ccache --show-stats
