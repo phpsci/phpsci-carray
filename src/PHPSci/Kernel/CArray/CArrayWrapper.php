@@ -4,18 +4,20 @@ namespace PHPSci\Kernel\CArray;
 use PHPSci\Kernel\Initializers\Creatable;
 use PHPSci\Kernel\LinearAlgebra\Operatable;
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
+use PHPSci\Kernel\Ranges\Rangeable;
 use PHPSci\Kernel\Transform\Transformable;
 use PHPSci\PHPSci;
 
 /**
  * Class CArrayWrapper
  *
+ * @author Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci\Kernel\CArray
  */
 abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
 {
 
-    use Transformable, Creatable, Operatable;
+    use Transformable, Creatable, Operatable, Rangeable;
 
     /**
      * @var
