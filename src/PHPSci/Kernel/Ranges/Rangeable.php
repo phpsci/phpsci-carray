@@ -32,9 +32,31 @@ trait Rangeable
         return new PHPSci(
                 new MemoryPointer(
                     $new_ptr,
-                    $new_ptr->rows,
-                    $new_ptr->cols
+                    $new_ptr->x,
+                    $new_ptr->y
                 )
+        );
+    }
+
+    /**
+     * Return evenly spaced numbers over a specified interval.
+     *
+     * Returns num evenly spaced samples, calculated over the interval [start, stop].
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @param float $stop
+     * @param float $start
+     * @param float $num
+     * @return CArrayWrapper
+     */
+    public static function linspace(float $stop, float $start = 0., float $num = 50) : CArrayWrapper {
+        $new_ptr = \CArray::linspace($start, $stop, $num);
+        return new PHPSci(
+            new MemoryPointer(
+                $new_ptr,
+                $new_ptr->x,
+                $new_ptr->y
+            )
         );
     }
 
