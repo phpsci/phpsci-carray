@@ -36,7 +36,7 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - vendor/bin/phpunit $PHPUNIT_FLAGS
+    - vendor/bin/phpunit
 
 after_success:
     - ccache --show-stats
