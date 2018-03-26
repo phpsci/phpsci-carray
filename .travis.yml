@@ -7,8 +7,14 @@ addons:
       - libopenblas-base
 dist: trusty
 php:
+  - 7.1
   - 7.2
-  - nightly
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: 7.1
+
 
 cache:
     apt: true
@@ -30,7 +36,7 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - vendor/bin/phpunit $PHPUNIT_FLAGS
+    - vendor/bin/phpunit
 
 after_success:
     - ccache --show-stats
