@@ -33,7 +33,6 @@ before_script:
 script:
     - cd $TRAVIS_BUILD_DIR
     - phpunit $PHPUNIT_FLAGS
-    - phpbench run
 
 after_success:
     - ccache --show-stats
