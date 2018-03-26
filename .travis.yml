@@ -7,14 +7,16 @@ addons:
       - libopenblas-base
 dist: trusty
 php:
-  - 7.0
-  - 7.1
   - 7.2
   - nightly
 
 cache:
     apt: true
     ccache: true
+
+install:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --no-interaction --ignore-platform-reqs
 
 before_script:
     - ccache --version
@@ -28,8 +30,7 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - phpunit
-    - phpbench run
+    - vendor/bin/phpunit $PHPUNIT_FLAGS
 
 after_success:
     - ccache --show-stats

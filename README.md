@@ -6,6 +6,7 @@
 [![composer.lock](https://poser.pugx.org/phpsci/phpsci/composerlock)](https://packagist.org/packages/phpsci/phpsci)
 
 
+[![Build Status](https://travis-ci.org/phpsci/phpsci.svg?branch=master)](https://travis-ci.org/phpsci/phpsci)
 [![Build Status](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/build.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/phpsci/phpsci/badge.svg?branch=master)](https://coveralls.io/github/phpsci/phpsci?branch=master)
