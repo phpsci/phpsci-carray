@@ -1,6 +1,7 @@
 <?php
 namespace PHPSci\Tests\LinearAlgebra;
 
+use PHPSci\PHPSci;
 use PHPUnit\Framework\TestCase;
 use PHPSci\PHPSci as ps;
 
@@ -53,6 +54,18 @@ class MatmulTest extends TestCase
         $expected = $a->toArray();
         $result = ps::matmul($a, $a)->toArray();
         $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    public function testMatmul2D1D() {
+        $expected = [30,33,51,24];
+        $expected_2 = [19,45,24,41];
+        $a = PHPSci::fromArray([[1,2,3,4],[4,9,1,2],[2,3,5,7],[1,4,1,3]]);
+        $b = PHPSci::fromArray([1,2,3,4]);
+        $this->assertEquals($expected, ps::matmul($a,$b)->toArray());
+        $this->assertEquals($expected_2, ps::matmul($b,$a)->toArray());
     }
 
 
