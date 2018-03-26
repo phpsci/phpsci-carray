@@ -1,0 +1,35 @@
+language: php
+sudo: false
+addons:
+  apt:
+    packages:
+      - libopenblas-dev
+      - libopenblas-base
+dist: trusty
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+  - nightly
+
+cache:
+    apt: true
+    ccache: true
+
+before_script:
+    - ccache --version
+    - ccache --zero-stats
+    - export USE_CCACHE=1
+    - git clone https://github.com/phpsci/phpsci-ext.git
+    - cd phpsci-ext
+    - ./travis/compile.sh
+    - cd ..
+    - phpenv config-add travis/build.ini
+
+script:
+    - cd $TRAVIS_BUILD_DIR
+    - phpunit
+    - phpbench run
+
+after_success:
+    - ccache --show-stats
