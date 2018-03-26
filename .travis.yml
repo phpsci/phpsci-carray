@@ -11,16 +11,29 @@ php:
   - nightly
 
 cache:
-    apt: true
-    ccache: true
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  fast_finish: true
+
+  include:
+    - os: linux
+      php: '7.2'
+      env: PHPUNIT_FLAGS="--coverage-clover build/logs/clover.xml"
+
+    - os: osx
+      osx_image: xcode7.3
+      language: generic
+      env:
+        - _OSX=10.11
+        - _PHP: php71
 
 install:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --no-interaction --ignore-platform-reqs
 
 before_script:
-    - ccache --version
-    - ccache --zero-stats
     - export USE_CCACHE=1
     - git clone https://github.com/phpsci/phpsci-ext.git
     - cd phpsci-ext
@@ -32,5 +45,10 @@ script:
     - cd $TRAVIS_BUILD_DIR
     - vendor/bin/phpunit $PHPUNIT_FLAGS
 
+
 after_success:
-    - ccache --show-stats
+  - |
+    if [[ $PHPUNIT_FLAGS != "" ]]; then
+      wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar
+      php php-coveralls.phar --verbose;
+    fi
