@@ -16,6 +16,10 @@ cache:
     apt: true
     ccache: true
 
+install:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --no-interaction --ignore-platform-reqs
+
 before_script:
     - ccache --version
     - ccache --zero-stats
@@ -28,7 +32,7 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - phpunit
+    - vendor/bin/phpunit $PHPUNIT_FLAGS
     - phpbench run
 
 after_success:
