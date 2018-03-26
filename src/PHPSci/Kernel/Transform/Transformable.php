@@ -32,4 +32,12 @@ trait Transformable
         return \CArray::toArray($this->ptr()->getPointer(), $this->ptr()->getRows(), $this->ptr()->getCols());
     }
 
+    /**
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    public function toDouble() {
+        return \CArray::toDouble($this->ptr()->getPointer());
+    }
+
 }

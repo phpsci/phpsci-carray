@@ -31,16 +31,22 @@ class ProductOperations extends BaseLinalg
             $this->params[1]->ptr()->getUUID(),
             $this->params[1]->ptr()->getCols()
         );
-        if($this->params[0]->ptr()->getCols() == 0) {
+        if($this->params[0]->ptr()->getCols() == 0 && $this->params[1]->ptr()->getCols() > 0) {
             return new MemoryPointer($rtn,
                 $this->params[1]->ptr()->getRows(),
                 $this->params[0]->ptr()->getCols()
             );
         }
-        if($this->params[0]->ptr()->getCols() > 0) {
+        if($this->params[0]->ptr()->getCols() > 0 ) {
             return new MemoryPointer($rtn,
                 $this->params[0]->ptr()->getRows(),
                 $this->params[1]->ptr()->getCols()
+            );
+        }
+        if($this->params[0]->ptr()->getCols() == 0 && $this->params[1]->ptr()->getCols() == 0) {
+            return new MemoryPointer($rtn,
+                0,
+                0
             );
         }
     }

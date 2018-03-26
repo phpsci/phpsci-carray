@@ -69,5 +69,13 @@ class MatmulTest extends TestCase
     }
 
 
+    public function testMatmul1D1D() {
+        $expected = 33;
+        $a = PHPSci::fromArray([1,2,3,4]);
+        $b = PHPSci::fromArray([4,9,1,2]);
+        $this->assertEquals($expected, ps::matmul($a,$b)->toDouble());
+    }
+
+
 
 }

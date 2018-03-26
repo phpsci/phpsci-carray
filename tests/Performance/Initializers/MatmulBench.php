@@ -14,6 +14,8 @@ use PHPSci\PHPSci;
 class MatmulBench
 {
 
+    public $matrix_a_bb;
+    public $matrix_b_bb;
     public $matrix_a_b;
     public $matrix_b_b;
     public $matrix_a_s;
@@ -23,11 +25,22 @@ class MatmulBench
      *
      */
     public function init() : void {
+        $this->matrix_a_bb = PHPSci::identity(5000);
+        $this->matrix_b_bb = PHPSci::identity(5000);
         $this->matrix_a_b = PHPSci::identity(1000);
         $this->matrix_b_b = PHPSci::identity(1000);
         $this->matrix_a_s = PHPSci::identity(100);
         $this->matrix_b_s = PHPSci::identity(100);
     }
+
+    /**
+     * @Revs(1)
+     * @Iterations(5)
+     */
+    public function benchReallyBigMatmul() {
+        $r = PHPSci::matmul($this->matrix_a_b, $this->matrix_b_b);
+    }
+
 
     /**
      * @Revs(1)
