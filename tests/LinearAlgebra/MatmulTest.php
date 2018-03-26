@@ -50,7 +50,7 @@ class MatmulTest extends TestCase
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
     public function testMatmulBigIdentity() {
-        $a = ps::identity(1000);
+        $a = ps::identity(100);
         $expected = $a->toArray();
         $result = ps::matmul($a, $a)->toArray();
         $this->assertEquals($expected, $result);
