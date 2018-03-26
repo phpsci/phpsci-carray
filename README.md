@@ -1,7 +1,10 @@
-# BABY PROJECT
-We are doing our best!
-
 # PHPSci
+[![Latest Stable Version](https://poser.pugx.org/phpsci/phpsci/v/stable)](https://packagist.org/packages/phpsci/phpsci)
+[![Total Downloads](https://poser.pugx.org/phpsci/phpsci/downloads)](https://packagist.org/packages/phpsci/phpsci)
+[![Latest Unstable Version](https://poser.pugx.org/phpsci/phpsci/v/unstable)](https://packagist.org/packages/phpsci/phpsci)
+[![License](https://poser.pugx.org/phpsci/phpsci/license)](https://packagist.org/packages/phpsci/phpsci)
+[![composer.lock](https://poser.pugx.org/phpsci/phpsci/composerlock)](https://packagist.org/packages/phpsci/phpsci)
+
 PHPSci is a PHP Library for scientific computing powered by C. You **must** compile and install
 [phpsci-ext](https://www.github.com/phpsci/phpsci-ext). 
 
