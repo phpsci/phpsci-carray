@@ -8,8 +8,8 @@ addons:
 dist: trusty
 php:
   - 7.0
-  - 7.1
-  - 7.2
+  - 7.1.9
+  - 7.2.4
   - nightly
 
 matrix:
@@ -40,11 +40,3 @@ before_script:
 script:
     - cd $TRAVIS_BUILD_DIR
     - vendor/bin/phpunit
-
-
-after_success:
-  - |
-    if [[ $PHPUNIT_FLAGS != "" ]]; then
-      wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar
-      php php-coveralls.phar --verbose;
-    fi
