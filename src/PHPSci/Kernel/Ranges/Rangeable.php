@@ -60,4 +60,25 @@ trait Rangeable
         );
     }
 
+    /**
+     * Return numbers spaced evenly on a log scale.
+     *
+     * @author                  Henrique Borba <henrique.borba.dev@gmail.com>
+     * @param float $start      base ** start is the starting value of the sequence.
+     * @param float $stop       base ** stop is the final value of the sequence
+     * @param int $num          Number of samples to generate. Default is 50.
+     * @param float $base       The base of the log space.
+     * @return CArrayWrapper
+     */
+    public static function logspace(float $start, float $stop, int $num = 50, float $base = 10) : CArrayWrapper {
+        $new_ptr = \CArray::logspace($start, $stop, $num, $base);
+        return new PHPSci(
+          new MemoryPointer(
+              $new_ptr,
+              $new_ptr->x,
+              $new_ptr->y
+          )
+        );
+    }
+
 }
