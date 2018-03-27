@@ -42,12 +42,12 @@ class MemoryPointer
     }
 
     /**
-     * Get current UUID
+     * Get current UUID (alias of getPointer)
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
     public function getUUID() {
-        return $this->uuid;
+        return $this->getPointer();
     }
 
     /**
