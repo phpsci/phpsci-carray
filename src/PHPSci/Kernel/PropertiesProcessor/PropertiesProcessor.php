@@ -1,5 +1,5 @@
 <?php
-namespace PHPSci\PropertiesProcessor;
+namespace PHPSci\Kernel\PropertiesProcessor;
 
 /**
  * Class PropertiesProcessor

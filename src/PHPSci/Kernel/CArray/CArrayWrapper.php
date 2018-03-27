@@ -4,6 +4,7 @@ namespace PHPSci\Kernel\CArray;
 use PHPSci\Kernel\Initializers\Creatable;
 use PHPSci\Kernel\LinearAlgebra\Operatable;
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
+use PHPSci\Kernel\PropertiesProcessor\Inflatable;
 use PHPSci\Kernel\Ranges\Rangeable;
 use PHPSci\Kernel\Transform\Transformable;
 use PHPSci\PHPSci;
@@ -16,8 +17,7 @@ use PHPSci\PHPSci;
  */
 abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
 {
-
-    use Transformable, Creatable, Operatable, Rangeable;
+    use Transformable, Creatable, Operatable, Rangeable, Printable, Inflatable;
 
     /**
      * @var
@@ -126,13 +126,7 @@ abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
         // TODO: Implement __invoke() method.
     }
 
-    /**
-     *
-     */
-    public function __toString()
-    {
-        // TODO: Implement __toString() method.
-    }
+
 
     /**
      * Get current Pointer Object

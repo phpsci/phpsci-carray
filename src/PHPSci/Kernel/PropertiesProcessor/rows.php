@@ -1,5 +1,5 @@
 <?php
-namespace PHPSci\PropertiesProcessor;
+namespace PHPSci\Kernel\PropertiesProcessor;
 
 
 use PHPSci\PHPSci;
@@ -21,6 +21,6 @@ class rows extends PropertiesProcessor
      */
     public static function run(PHPSci $obj)
     {
-        return $obj->getRows();
+        return $obj->ptr()->getRows();
     }
 }

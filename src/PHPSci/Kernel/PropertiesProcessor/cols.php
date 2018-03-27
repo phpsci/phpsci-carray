@@ -1,5 +1,5 @@
 <?php
-namespace PHPSci\PropertiesProcessor;
+namespace PHPSci\Kernel\PropertiesProcessor;
 
 
 use PHPSci\PHPSci;
@@ -13,11 +13,12 @@ use PHPSci\PHPSci;
 class cols extends PropertiesProcessor
 {
     /**
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param PHPSci $obj
      * @return int
      */
     public static function run(PHPSci $obj)
     {
-        return $obj->getCols();
+        return $obj->ptr()->getCols();
     }
 }
