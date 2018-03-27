@@ -11,6 +11,9 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/phpsci/phpsci/badge.svg?branch=master)](https://coveralls.io/github/phpsci/phpsci?branch=master)
 
+<p align="center">
+  <img src="https://avatars1.githubusercontent.com/u/36818275?s=400&u=db5f856095121f89938ffa637a4831f7afa09eee&v=4" />
+</p>
 
 
 PHPSci is a PHP Library for scientific computing powered by C. You **must** compile and install
