@@ -12,7 +12,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/phpsci/phpsci/badge.svg?branch=master)](https://coveralls.io/github/phpsci/phpsci?branch=master)
 
 <p align="center">
-  <img src="https://i.imgur.com/QoIbhqj.png" />
+  <img src="https://i.imgur.com/QoIbhqj.png" width="70%" />
 </p>
 
 
