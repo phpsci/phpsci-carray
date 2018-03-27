@@ -26,7 +26,6 @@ abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
 
 
     /**
-     *
      * @return int|void
      */
     public function count()
