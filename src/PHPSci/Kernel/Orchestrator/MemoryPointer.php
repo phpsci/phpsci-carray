@@ -23,9 +23,11 @@ class MemoryPointer
      * MemoryPointer constructor.
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @param \stdClass $ptr
+     * @param \CArray $ptr
+     * @param int $rows
+     * @param int $cols
      */
-    public function __construct(\stdClass $ptr, int $rows, int $cols)
+    public function __construct(\CArray $ptr, int $rows, int $cols)
     {
         $this->uuid = $ptr->uuid;
         $this->rows = $rows;

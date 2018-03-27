@@ -9,16 +9,17 @@ dist: trusty
 php:
   - 7.1
   - 7.2
+  - 7.2.3
 
 matrix:
   fast_finish: true
   allow_failures:
     - php: 7.1
+    - php: 7.2.3
 
 
 cache:
     apt: true
-    ccache: true
 
 install:
   - curl -s http://getcomposer.org/installer | php
@@ -27,7 +28,6 @@ install:
 before_script:
     - ccache --version
     - ccache --zero-stats
-    - export USE_CCACHE=1
     - git clone https://github.com/phpsci/phpsci-ext.git
     - cd phpsci-ext
     - ./travis/compile.sh
@@ -36,7 +36,5 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
+    - export USE_ZEND_ALLOC=0
     - vendor/bin/phpunit
-
-after_success:
-    - ccache --show-stats

@@ -40,4 +40,16 @@ trait Transformable
         return \CArray::toDouble($this->ptr()->getPointer());
     }
 
+    /**
+     * Convert the input CArray to an array.
+     *
+     * Created for NumPy compatibility.
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @param PHPSci $obj
+     * @return array
+     */
+    public static function asarray(PHPSci $obj) : array {
+        return $obj->toArray();
+    }
 }

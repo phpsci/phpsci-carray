@@ -47,7 +47,7 @@ class ArrayConvertTest extends TestCase
     public function testToArray1D() {
         $parr = [1,0,1,0,0,1,0,1];
         $a = ps::fromArray($parr);
-        $b = $a->toArray();
+        $b = ps::asarray($a);
         $this->assertObjectNotHasAttribute('uuid', $a);
         $this->assertEquals($parr, $b);
     }
