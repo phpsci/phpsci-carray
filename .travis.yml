@@ -36,5 +36,4 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - export USE_ZEND_ALLOC=0
     - vendor/bin/phpunit
