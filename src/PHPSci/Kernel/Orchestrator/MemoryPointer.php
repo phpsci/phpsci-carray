@@ -16,8 +16,8 @@ class MemoryPointer
      * @var
      */
     protected $uuid;
-    protected $rows;
-    protected $cols;
+    protected $x;
+    protected $y;
 
     /**
      * MemoryPointer constructor.
@@ -27,11 +27,11 @@ class MemoryPointer
      * @param int $rows
      * @param int $cols
      */
-    public function __construct(\CArray $ptr, int $rows, int $cols)
+    public function __construct(\CArray $ptr, int $x, int $y)
     {
         $this->uuid = $ptr->uuid;
-        $this->rows = $rows;
-        $this->cols = $cols;
+        $this->x = $x;
+        $this->y = $y;
     }
 
     /**
@@ -58,7 +58,7 @@ class MemoryPointer
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
     public function getRows() : int {
-        return $this->rows;
+        return $this->x;
     }
 
     /**
@@ -67,6 +67,6 @@ class MemoryPointer
      * @return int
      */
     public function getCols() : int {
-        return $this->cols;
+        return $this->y;
     }
 }
