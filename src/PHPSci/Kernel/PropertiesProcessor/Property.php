@@ -10,5 +10,9 @@ use PHPSci\PHPSci;
  */
 interface Property
 {
+    /**
+     * @param PHPSci $obj
+     * @return mixed
+     */
     public static function run(PHPSci $obj);
 }

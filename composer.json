@@ -17,7 +17,8 @@
   "require": {
     "php": "^7.2",
     "psr/log": "~1.0",
-    "phpbench/phpbench": "^0.14.0"
+    "phpbench/phpbench": "^0.14.0",
+    "squizlabs/php_codesniffer": "*"
   },
   "suggest": {
     "monolog/monolog": "Allows for client-level logging and tracing"

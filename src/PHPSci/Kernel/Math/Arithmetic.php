@@ -1,19 +1,33 @@
 <?php
+/**
+ * PHP Version 7
+ * Trait Arithmetic
+ *
+ * Allow arithmetic operations with CArrays
+ *
+ * @category Arithmetic_Operations
+ * @package  PHPSci\Kernel\Math
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
+ */
 namespace PHPSci\Kernel\Math;
 
-use PharIo\Version\Exception;
 use PHPSci\Kernel\CArray\CArrayWrapper;
 use PHPSci\Kernel\Exceptions\BroadcastErrorException;
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
 use PHPSci\PHPSci;
 
 /**
- * Trait Mathable
+ * Trait Arithmetic
  *
  * Allow arithmetic operations with CArrays
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
- * @package PHPSci\Kernel\Math
+ * @category Arithmetic_Operations
+ * @package  PHPSci\Kernel\Math
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
  */
 trait Arithmetic
 {
@@ -22,9 +36,10 @@ trait Arithmetic
      *
      * If both arguments are scalars (0D), a scalar is returned.
      *
-     * @author               Henrique Borba <henrique.borba.dev@gmail.com>
      * @param CArrayWrapper $a CArray A
      * @param CArrayWrapper $b CArray B
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return CArrayWrapper The sum of A x B element-wise
      * @throws BroadcastErrorException
      */
@@ -40,7 +55,10 @@ trait Arithmetic
                 $b->ptr()->getCols()
             );
         } catch (\Exception $e) {
-            throw new BroadcastErrorException([$a->rows, $a->cols],[$b->rows, $b->cols]);
+            throw new BroadcastErrorException(
+                [$a->rows, $a->cols],
+                [$b->rows, $b->cols]
+            );
         }
         return new PHPSci(
             new MemoryPointer(
@@ -50,5 +68,4 @@ trait Arithmetic
             )
         );
     }
-
 }

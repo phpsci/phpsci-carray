@@ -1,9 +1,7 @@
 <?php
 namespace PHPSci\Kernel\PropertiesProcessor;
 
-
 use PHPSci\PHPSci;
-
 
 /**
  * Class took
@@ -12,7 +10,6 @@ use PHPSci\PHPSci;
  */
 class took extends PropertiesProcessor
 {
-
     /**
      * @param PHPSci $obj
      * @return float

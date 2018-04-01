@@ -1,22 +1,39 @@
 <?php
-
+/**
+ * PHP Version 7
+ * Class BasicOperationsTest
+ *
+ * @category Test
+ * @package  PHPSci\Tests\Math
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
+ */
 namespace PHPSci\Tests\Math;
+
 use PHPSci\PHPSci as ps;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class BasicOperationsTest
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
- * @package PHPSci\Tests\Math
+ * @category Test
+ * @package  PHPSci\Tests\Math
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
  */
 class BasicOperationsTest extends TestCase
 {
 
     /**
+     * Test basic sum with axis = null
+     *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return void
      */
-    public function testBasicSumNoAxis() {
+    public function testBasicSumNoAxis()
+    {
         $expected = 2;
         $carray = ps::fromArray([0.5, 1.5]);
         $result = ps::sum($carray)->toDouble();
@@ -24,9 +41,13 @@ class BasicOperationsTest extends TestCase
     }
 
     /**
+     * Test basic sum using axis
+     *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return void
      */
-    public function testBasicSumAxis() {
+    public function testBasicSumAxis()
+    {
         $expected_y = [0,6];
         $expected_x = [1,5];
 

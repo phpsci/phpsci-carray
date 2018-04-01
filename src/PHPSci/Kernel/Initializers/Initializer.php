@@ -1,17 +1,17 @@
 <?php
 namespace PHPSci\Kernel\Initializers;
 
-use PHPSci\Kernel\Orchestrator\MemoryPointer;
-
 /**
  * Class Initializer
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
+ * @author  Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci\Kernel\Initializers
  */
 abstract class Initializer implements Initializable
 {
-
+    /**
+     * @var array
+     */
     protected $params;
 
     /**
@@ -21,5 +21,4 @@ abstract class Initializer implements Initializable
     {
         $this->params = func_get_args();
     }
-
 }

@@ -1,4 +1,14 @@
 <?php
+/**
+ * PHP Version 7
+ * Class ArithmeticTest
+ *
+ * @category Test
+ * @package  PHPSci\Tests\Math
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
+ */
 namespace PHPSci\Tests\Math;
 
 use PHPSci\Kernel\Exceptions\BroadcastError;
@@ -9,14 +19,20 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ArithmeticTest
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
- * @package PHPSci\Tests\Math
+ * @category Test
+ * @package  PHPSci\Tests\Math
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
  */
 class ArithmeticTest extends TestCase
 {
-
     /**
+     * Check add() with scalars
+     *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return void
+     * @throws \PHPSci\Kernel\Exceptions\BroadcastErrorException
      */
     public function testAddScalars()
     {
@@ -29,7 +45,11 @@ class ArithmeticTest extends TestCase
     }
 
     /**
+     * Test add with 1D matrices
+     *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return void
+     * @throws \PHPSci\Kernel\Exceptions\BroadcastErrorException
      */
     public function testAdd1D()
     {
@@ -48,8 +68,12 @@ class ArithmeticTest extends TestCase
     }
 
     /**
-     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * Test add() with 2D matrices
+     *
+     * @author            Henrique Borba <henrique.borba.dev@gmail.com>
      * @expectedException PHPSci\Kernel\Exceptions\BroadcastErrorException
+     * @return            void
+     * @throws            \PHPSci\Kernel\Exceptions\BroadcastErrorException
      */
     public function testAdd2D()
     {

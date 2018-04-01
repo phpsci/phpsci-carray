@@ -4,7 +4,7 @@ namespace PHPSci\Kernel\Orchestrator;
 /**
  * Class MemoryPointer
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
+ * @author  Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci\Kernel\Orchestrator
  */
 class MemoryPointer
@@ -18,19 +18,19 @@ class MemoryPointer
     protected $uuid;
     protected $x;
     protected $y;
-    protected $_carray_internal;
+    protected $carray_internal;
 
     /**
      * MemoryPointer constructor.
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @param \CArray $ptr
-     * @param int $x
-     * @param int $y
+     * @param  \CArray $ptr
+     * @param  int     $x
+     * @param  int     $y
      */
     public function __construct(\CArray $ptr, int $x, int $y)
     {
-        $this->_carray_internal = $ptr;
+        $this->carray_internal = $ptr;
         $this->uuid = $ptr->uuid;
         $this->x = $x;
         $this->y = $y;
@@ -41,7 +41,8 @@ class MemoryPointer
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
-    public function getPointer() {
+    public function getPointer()
+    {
         return $this->uuid;
     }
 
@@ -50,8 +51,9 @@ class MemoryPointer
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
-    public function getInternalCArray() {
-        return $this->_carray_internal;
+    public function getInternalCArray()
+    {
+        return $this->carray_internal;
     }
 
     /**
@@ -59,7 +61,8 @@ class MemoryPointer
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
-    public function getUUID() {
+    public function getUUID()
+    {
         return $this->getPointer();
     }
 
@@ -68,7 +71,8 @@ class MemoryPointer
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
-    public function getRows() : int {
+    public function getRows() : int
+    {
         return $this->x;
     }
 
@@ -77,7 +81,8 @@ class MemoryPointer
      *
      * @return int
      */
-    public function getCols() : int {
+    public function getCols() : int
+    {
         return $this->y;
     }
 }

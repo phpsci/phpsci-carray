@@ -1,13 +1,12 @@
 <?php
 namespace PHPSci\Kernel\PropertiesProcessor;
 
-
 use PHPSci\PHPSci;
 
 /**
  * MAGIC PROPERTY $cols
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
+ * @author  Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci\PropertiesProcessor
  */
 class cols extends PropertiesProcessor

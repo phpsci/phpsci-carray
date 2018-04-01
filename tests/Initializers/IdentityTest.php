@@ -1,6 +1,15 @@
 <?php
+/**
+ * PHP Version 7
+ * Class Identity
+ *
+ * @category Test
+ * @package  PHPSci\Tests\Initializers
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
+ */
 namespace PHPSci\Tests\Initializers;
-
 
 use PHPSci\PHPSci;
 use PHPUnit\Framework\TestCase;
@@ -8,8 +17,11 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class Identity
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
- * @package PHPSci\Tests\Initializers
+ * @category Test
+ * @package  PHPSci\Tests\Initializers
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
  */
 class IdentityTest extends TestCase
 {
@@ -18,6 +30,7 @@ class IdentityTest extends TestCase
      * Test big Identity Creation
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return void
      */
     public function testCreateBigIdentity() : void
     {
@@ -42,6 +55,7 @@ class IdentityTest extends TestCase
      * Test small Identity Creation
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return void
      */
     public function testCreateSmallIdentity() : void
     {

@@ -1,13 +1,12 @@
 <?php
 namespace PHPSci\Kernel\Initializers;
 
-
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
 
 /**
  * Interface Initializable
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
+ * @author  Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci\Kernel\Initializers
  */
 interface Initializable

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace PHPSci\Tests\Perfomance\Initializers;
 
-
 use PhpBench\Benchmark\Metadata\Annotations\BeforeMethods;
 use PhpBench\Benchmark\Metadata\Annotations\Iterations;
 use PhpBench\Benchmark\Metadata\Annotations\OutputTimeUnit;

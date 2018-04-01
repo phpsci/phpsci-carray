@@ -1,7 +1,6 @@
 <?php
 namespace PHPSci\Kernel\PropertiesProcessor;
 
-
 use PHPSci\PHPSci;
 
 /**
@@ -11,12 +10,11 @@ use PHPSci\PHPSci;
  */
 class rows extends PropertiesProcessor
 {
-
     /**
      * Magic $row property
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @param PHPSci $obj
+     * @param  PHPSci $obj
      * @return int
      */
     public static function run(PHPSci $obj)

@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * PHP Version 7
+ * Trait Rangeable
+ *
+ * @category Ranges
+ * @package  PHPSci\Kernel\Ranges
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
+ */
 namespace PHPSci\Kernel\Ranges;
 
 use PHPSci\Kernel\CArray\CArrayWrapper;
@@ -9,32 +18,47 @@ use PHPSci\PHPSci;
 /**
  * Trait Rangeable
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
- * @package PHPSci\Kernel\Ranges
+ * @category Ranges
+ * @package  PHPSci\Kernel\Ranges
+ * @author   Henrique Borba <henrique.borba.dev@gmail.com>
+ * @license  Apache 2.0
+ * @link     https://www.github.com/phpsci/phpsci
  */
 trait Rangeable
 {
-
     /**
      * Return evenly spaced CArray with values within a given interval.
      *
      * Values are generated within the half-open interval [start, stop)
      * (in other words, the interval including start but excluding stop)
      *
+     * @param float $stop  End of interval. The interval does not include
+     *                     this value, except in some cases where step is not an
+     *                     integer and floating point round-off affects the length
+     *                     of out.
+     * @param float $start Start of interval. The interval includes this
+     *                     value. The default start value is 0.
+     * @param float $step  Spacing between values. For any output out, this
+     *                     is the distance between two adjacent values,
+     *                     out[i+1] - out[i]. The default step size is 1.
+     *                     If step is specified as a position argument, start
+     *                     must also be given.
+     *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @param float $stop
-     * @param float $start
-     * @param float $step
      * @return CArrayWrapper
      */
-    public static function arange(float $stop, float $start = 0., float $step = 1.) : CArrayWrapper {
+    public static function arange(
+        float $stop,
+        float $start = 0.,
+        float $step = 1.
+    ) : CArrayWrapper {
         $new_ptr = \CArray::arange($start, $stop, $step);
         return new PHPSci(
-                new MemoryPointer(
-                    $new_ptr,
-                    $new_ptr->x,
-                    $new_ptr->y
-                )
+            new MemoryPointer(
+                $new_ptr,
+                $new_ptr->x,
+                $new_ptr->y
+            )
         );
     }
 
@@ -43,13 +67,19 @@ trait Rangeable
      *
      * Returns num evenly spaced samples, calculated over the interval [start, stop].
      *
+     * @param float $stop  The end value of the sequence.
+     * @param float $start The starting value of the sequence.
+     * @param float $num   Number of samples to generate. Default is 50.
+     *                     Must be non-negative.
+     *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @param float $stop
-     * @param float $start
-     * @param float $num
      * @return CArrayWrapper
      */
-    public static function linspace(float $stop, float $start = 0., float $num = 50) : CArrayWrapper {
+    public static function linspace(
+        float $stop,
+        float $start = 0.,
+        float $num = 50
+    ) : CArrayWrapper {
         $new_ptr = \CArray::linspace($start, $stop, $num);
         return new PHPSci(
             new MemoryPointer(
@@ -63,22 +93,27 @@ trait Rangeable
     /**
      * Return numbers spaced evenly on a log scale.
      *
-     * @author                  Henrique Borba <henrique.borba.dev@gmail.com>
-     * @param float $start      base ** start is the starting value of the sequence.
-     * @param float $stop       base ** stop is the final value of the sequence
-     * @param int $num          Number of samples to generate. Default is 50.
-     * @param float $base       The base of the log space.
+     * @param float $start base ** start is the starting value of the sequence.
+     * @param float $stop  base ** stop is the final value of the sequence
+     * @param int   $num   Number of samples to generate. Default is 50.
+     * @param float $base  The base of the log space.
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return CArrayWrapper
      */
-    public static function logspace(float $start, float $stop, int $num = 50, float $base = 10) : CArrayWrapper {
+    public static function logspace(
+        float $start,
+        float $stop,
+        int $num = 50,
+        float $base = 10
+    ) : CArrayWrapper {
         $new_ptr = \CArray::logspace($start, $stop, $num, $base);
         return new PHPSci(
-          new MemoryPointer(
-              $new_ptr,
-              $new_ptr->x,
-              $new_ptr->y
-          )
+            new MemoryPointer(
+                $new_ptr,
+                $new_ptr->x,
+                $new_ptr->y
+            )
         );
     }
-
 }

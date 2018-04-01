@@ -1,7 +1,6 @@
 <?php
 namespace PHPSci\Kernel\CArray;
 
-
 /**
  * Trait Printable
  *

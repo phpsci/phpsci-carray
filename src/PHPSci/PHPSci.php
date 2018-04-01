@@ -8,21 +8,21 @@ use PHPSci\Kernel\Printable;
 /**
  * Main PHPSci Object
  *
- * @author Henrique Borba <henrique.borba.dev@gmail.com>
+ * @author  Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci
  */
-class PHPSci extends CArrayWrapper {
-
+class PHPSci extends CArrayWrapper
+{
     /**
      * PHPSci constructor.
      */
     public function __construct($input)
     {
-        if(is_object($input) && get_class($input) == "PHPSci\Kernel\Orchestrator\MemoryPointer") {
+        if (is_object($input) && get_class($input) == "PHPSci\Kernel\Orchestrator\MemoryPointer") {
             $this->internal_pointer = $input;
             return;
         }
-        if(is_array($input)) {
+        if (is_array($input)) {
             $new_carray = PHPSci::fromArray($input);
             $this->internal_pointer = new MemoryPointer(
                 $new_carray->ptr()->getInternalCArray(),
@@ -31,7 +31,7 @@ class PHPSci extends CArrayWrapper {
             );
             return;
         }
-        if(is_double($input) || is_int($input) || is_float($input)) {
+        if (is_double($input) || is_int($input) || is_float($input)) {
             $new_carray = PHPSci::fromDouble($input);
             $this->internal_pointer = new MemoryPointer(
                 $new_carray->ptr()->getInternalCArray(),
@@ -41,6 +41,4 @@ class PHPSci extends CArrayWrapper {
             return;
         }
     }
-
-
 }
