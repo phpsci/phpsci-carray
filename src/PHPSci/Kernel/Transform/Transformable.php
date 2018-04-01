@@ -21,7 +21,7 @@ trait Transformable
     public static function fromArray(array $arr) : PHPSci
     {
         $ptr = \CArray::fromArray($arr);
-        return new PHPSci((new MemoryPointer($ptr, $ptr->x, $ptr->y)));
+        return new PHPSci(new MemoryPointer($ptr, $ptr->x, $ptr->y));
     }
 
     /**
@@ -69,5 +69,24 @@ trait Transformable
     public static function asarray(PHPSci $obj) : array
     {
         return $obj->toArray();
+    }
+
+    /**
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    public static function transpose(CArrayWrapper $arr) : CArrayWrapper
+    {
+        $rtn_carray = \CArray::transpose(
+            $arr->ptr()->getUUID(),
+            $arr->ptr()->getCols(),
+            $arr->ptr()->getRows()
+        );
+        return new PHPSci(
+            new MemoryPointer(
+                $rtn_carray,
+                $rtn_carray->x,
+                $rtn_carray->y
+            )
+        );
     }
 }

@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+$autoloader = include_once __DIR__. '/vendor/autoload.php';
+
+
+use PHPSci\SciBoard\BoardClient;
+
+$runner = new BoardClient($argv);
+$runner->run();
