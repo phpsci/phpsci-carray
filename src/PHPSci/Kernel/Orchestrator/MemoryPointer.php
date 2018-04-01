@@ -18,17 +18,19 @@ class MemoryPointer
     protected $uuid;
     protected $x;
     protected $y;
+    protected $_carray_internal;
 
     /**
      * MemoryPointer constructor.
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @param \CArray $ptr
-     * @param int $rows
-     * @param int $cols
+     * @param int $x
+     * @param int $y
      */
     public function __construct(\CArray $ptr, int $x, int $y)
     {
+        $this->_carray_internal = $ptr;
         $this->uuid = $ptr->uuid;
         $this->x = $x;
         $this->y = $y;
@@ -41,6 +43,15 @@ class MemoryPointer
      */
     public function getPointer() {
         return $this->uuid;
+    }
+
+    /**
+     * Get current internal CArray
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    public function getInternalCArray() {
+        return $this->_carray_internal;
     }
 
     /**

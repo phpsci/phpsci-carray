@@ -14,6 +14,8 @@ use PHPSci\PHPSci;
 trait Mathable
 {
 
+    use Arithmetic;
+
     /**
      * Sum of array elements over a given axis.
      *

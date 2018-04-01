@@ -1,6 +1,7 @@
 <?php
 namespace PHPSci\Kernel\Transform;
 
+use PHPSci\Kernel\CArray\CArrayWrapper;
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
 use PHPSci\PHPSci;
 
@@ -33,11 +34,24 @@ trait Transformable
     }
 
     /**
+     * Return Double of CArray 0D
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
     public function toDouble() {
         return \CArray::toDouble($this->ptr()->getPointer());
+    }
+
+    /**
+     * Convert PHP double to CArray 0D
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @param float $input
+     * @return CArrayWrapper
+     */
+    public static function fromDouble(float $input) : CArrayWrapper {
+        $ptr = \CArray::fromDouble($input);
+        return new PHPSci((new MemoryPointer($ptr , $ptr->x, $ptr->y)));
     }
 
     /**
