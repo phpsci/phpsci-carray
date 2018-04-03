@@ -3,13 +3,11 @@
 [![Total Downloads](https://poser.pugx.org/phpsci/phpsci/downloads)](https://packagist.org/packages/phpsci/phpsci)
 [![Latest Unstable Version](https://poser.pugx.org/phpsci/phpsci/v/unstable)](https://packagist.org/packages/phpsci/phpsci)
 [![License](https://poser.pugx.org/phpsci/phpsci/license)](https://packagist.org/packages/phpsci/phpsci)
-[![composer.lock](https://poser.pugx.org/phpsci/phpsci/composerlock)](https://packagist.org/packages/phpsci/phpsci)
 
-
+[![Documentation Status](https://readthedocs.org/projects/phpsci/badge/?version=latest)](http://phpsci.readthedocs.io/en/latest/?badge=latest)
 [![Build Status](https://travis-ci.org/phpsci/phpsci.svg?branch=master)](https://travis-ci.org/phpsci/phpsci)
 [![Build Status](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/build.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/phpsci/phpsci/badge.svg?branch=master)](https://coveralls.io/github/phpsci/phpsci?branch=master)
 
 <p align="center">
   <img src="https://i.imgur.com/QoIbhqj.png" width="70%" />
@@ -25,6 +23,7 @@ You **must** compile and install
 It enables scientific operations in PHP to be performed up to 800 
 times faster than current implementations.
 
+[http://phpsci.readthedocs.io/en/latest/](http://phpsci.readthedocs.io/en/latest/)
 
 ## Installation
 You can install PHPSci using composer:
