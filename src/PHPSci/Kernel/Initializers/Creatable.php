@@ -36,6 +36,8 @@ trait Creatable
      */
     public static function zeros(array $shape) : PHPSci
     {
+        if(!isset($shape[1]))
+            $shape[1] = 0;
         return new PHPSci(
             (new ZerosInitializer($shape[0], $shape[1]))->run()
         );

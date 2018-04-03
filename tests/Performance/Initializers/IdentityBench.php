@@ -28,8 +28,7 @@ class IdentityBench
      */
     public function benchSmallIdentity()
     {
-        $b = PHPSci::identity(1000);
-        $b->destroy();
+        $b = PHPSci::identity(10);
     }
 
     /**
@@ -38,8 +37,7 @@ class IdentityBench
      */
     public function benchBigIdentity()
     {
-        $a = PHPSci::identity(10000);
-        $a->destroy();
+        $a = PHPSci::identity(100);
     }
 
 }

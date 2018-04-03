@@ -76,8 +76,8 @@ trait Rangeable
      * @return CArrayWrapper
      */
     public static function linspace(
+        float $start,
         float $stop,
-        float $start = 0.,
         float $num = 50
     ) : CArrayWrapper {
         $new_ptr = \CArray::linspace($start, $stop, $num);

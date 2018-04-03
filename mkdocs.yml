@@ -1,0 +1,23 @@
+site_name: PHPSci
+theme: readthedocs
+repo_url: http://github.com/phpsci/phpsci
+site_url: http://phpsci.readthedocs.io/
+site_description: 'Documentation for PHPSci'
+docs_dir: docs/
+dev_addr: '0.0.0.0:8000'
+
+pages:
+- Home: index.md
+- Routines:
+  - Array Creation: array_initializers.md
+  - Array Manipulation: array_manipulation.md
+  - Linear Algebra: linalg.md
+  - Mathematical: math.md
+  - Random Sampling: random_sampling.md
+- SciBoard:
+  - Getting Started: sciboard_started.md
+- PHPSci Internals:
+  - CArray Object: carray.md
+  - Parallelism: parallelism.md
+- Performance: perf.md
+- PHPSci Project: project.md

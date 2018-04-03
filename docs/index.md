@@ -1,16 +1,3 @@
-# PHPSci
-[![Latest Stable Version](https://poser.pugx.org/phpsci/phpsci/v/stable)](https://packagist.org/packages/phpsci/phpsci)
-[![Total Downloads](https://poser.pugx.org/phpsci/phpsci/downloads)](https://packagist.org/packages/phpsci/phpsci)
-[![Latest Unstable Version](https://poser.pugx.org/phpsci/phpsci/v/unstable)](https://packagist.org/packages/phpsci/phpsci)
-[![License](https://poser.pugx.org/phpsci/phpsci/license)](https://packagist.org/packages/phpsci/phpsci)
-[![composer.lock](https://poser.pugx.org/phpsci/phpsci/composerlock)](https://packagist.org/packages/phpsci/phpsci)
-
-
-[![Build Status](https://travis-ci.org/phpsci/phpsci.svg?branch=master)](https://travis-ci.org/phpsci/phpsci)
-[![Build Status](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/build.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/phpsci/phpsci/badge.svg?branch=master)](https://coveralls.io/github/phpsci/phpsci?branch=master)
-
 <p align="center">
   <img src="https://i.imgur.com/QoIbhqj.png" width="70%" />
 </p>
@@ -142,4 +129,3 @@ before turning your PHPSci array into a PHP array.
 
 The `echo` command is considerably more efficient than the `toArray` 
 command. Try to use the toArray only when you want to use the results in a natively PHP function.
-
