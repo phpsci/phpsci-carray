@@ -78,8 +78,8 @@ trait Transformable
     {
         $rtn_carray = \CArray::transpose(
             $arr->ptr()->getUUID(),
-            $arr->ptr()->getCols(),
-            $arr->ptr()->getRows()
+            $arr->ptr()->getRows(),
+            $arr->ptr()->getCols()
         );
         return new PHPSci(
             new MemoryPointer(
