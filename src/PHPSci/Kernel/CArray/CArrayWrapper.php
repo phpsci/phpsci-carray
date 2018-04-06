@@ -82,7 +82,6 @@ abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
      */
     public function offsetSet($offset, $value)
     {
-
     }
 
     /**
