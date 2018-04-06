@@ -42,4 +42,22 @@ trait Operatable
             )->matmul()
         );
     }
+
+    /**
+     * Interface for ProductOperations inner
+     *
+     * @param CArrayWrapper $a
+     * @param CArrayWrapper $b
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return PHPSci
+     */
+    public static function inner(CArrayWrapper $a, CArrayWrapper $b) : PHPSci
+    {
+        return new PHPSci(
+            (
+                new ProductOperations($a, $b)
+            )->inner()
+        );
+    }
 }

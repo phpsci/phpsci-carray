@@ -78,4 +78,32 @@ class ProductOperations extends BaseLinalg
             );
         }
     }
+
+    /**
+     * Inner product of two arrays.
+     *
+     * Operated like Numpy:
+     *
+     * Ordinary inner product of vectors for 1-D arrays (without complex conjugation)
+     * in higher dimensions a sum product over the last axes.
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return MemoryPointer
+     */
+    public function inner() : MemoryPointer
+    {
+        $rtn = \CArray::inner(
+            $this->params[0]->ptr()->getUUID(),
+            $this->params[0]->ptr()->getRows(),
+            $this->params[0]->ptr()->getCols(),
+            $this->params[1]->ptr()->getUUID(),
+            $this->params[1]->ptr()->getRows(),
+            $this->params[1]->ptr()->getCols()
+        );
+        return new MemoryPointer(
+            $rtn,
+            $rtn->x,
+            $rtn->y
+        );
+    }
 }
