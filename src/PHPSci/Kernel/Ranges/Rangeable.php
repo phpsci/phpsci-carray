@@ -1,14 +1,20 @@
 <?php
-/**
- * PHP Version 7
- * Trait Rangeable
+/*
+ * Copyright 2018 Henrique Borba and contributors
  *
- * @category Ranges
- * @package  PHPSci\Kernel\Ranges
- * @author   Henrique Borba <henrique.borba.dev@gmail.com>
- * @license  Apache 2.0
- * @link     https://www.github.com/phpsci/phpsci
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 namespace PHPSci\Kernel\Ranges;
 
 use PHPSci\Kernel\CArray\CArrayWrapper;
@@ -51,8 +57,9 @@ trait Rangeable
         float $stop,
         float $start = 0.,
         float $step = 1.
-    ) : CArrayWrapper {
+    ): CArrayWrapper {
         $new_ptr = \CArray::arange($start, $stop, $step);
+
         return new PHPSci(
             new MemoryPointer(
                 $new_ptr,
@@ -79,8 +86,9 @@ trait Rangeable
         float $start,
         float $stop,
         float $num = 50
-    ) : CArrayWrapper {
+    ): CArrayWrapper {
         $new_ptr = \CArray::linspace($start, $stop, $num);
+
         return new PHPSci(
             new MemoryPointer(
                 $new_ptr,
@@ -106,8 +114,9 @@ trait Rangeable
         float $stop,
         int $num = 50,
         float $base = 10
-    ) : CArrayWrapper {
+    ): CArrayWrapper {
         $new_ptr = \CArray::logspace($start, $stop, $num, $base);
+
         return new PHPSci(
             new MemoryPointer(
                 $new_ptr,

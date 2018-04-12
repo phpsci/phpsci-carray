@@ -21,6 +21,7 @@ cache:
     apt: true
 
 install:
+  - pecl install ast
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --no-interaction --ignore-platform-reqs
 
@@ -35,6 +36,5 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - vendor/bin/phpunit
-    - ./vendor/bin/phpcs ./src/ --standard=PSR1 --ignore=src/PHPSci/Kernel/PropertiesProcessor
-    - ./vendor/bin/phpcs ./src/ --standard=PSR2 --ignore=src/PHPSci/Kernel/PropertiesProcessor
+    - make ci --keep-going COMPOSER='/bin/sh -c composer'
+    - composer validate
