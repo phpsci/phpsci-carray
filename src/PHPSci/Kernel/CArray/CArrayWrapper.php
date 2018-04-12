@@ -155,7 +155,7 @@ abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return MemoryPointer
      */
-    public function ptr() : MemoryPointer
+    public function ptr(): MemoryPointer
     {
         return $this->internal_pointer;
     }

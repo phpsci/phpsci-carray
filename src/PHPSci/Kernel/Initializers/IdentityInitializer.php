@@ -34,7 +34,7 @@ class IdentityInitializer extends Initializer
      *
      * @return mixed
      */
-    public function run() : MemoryPointer
+    public function run(): MemoryPointer
     {
         return new MemoryPointer(
             \CArray::identity($this->params[0]),

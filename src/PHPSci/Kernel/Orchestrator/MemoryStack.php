@@ -24,5 +24,4 @@ namespace PHPSci\Kernel\Orchestrator;
  */
 class MemoryStack
 {
-
 }

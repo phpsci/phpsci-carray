@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 namespace PHPSci\Kernel\LinearAlgebra;
 
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
@@ -48,7 +49,7 @@ class ProductOperations extends BaseLinalg
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return MemoryPointer
      */
-    public function matmul() : MemoryPointer
+    public function matmul(): MemoryPointer
     {
         $rtn = \CArray::matmul(
             $this->params[0]->ptr()->getUUID(),
@@ -95,7 +96,7 @@ class ProductOperations extends BaseLinalg
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return MemoryPointer
      */
-    public function inner() : MemoryPointer
+    public function inner(): MemoryPointer
     {
         $rtn = \CArray::inner(
             $this->params[0]->ptr()->getUUID(),
@@ -105,6 +106,7 @@ class ProductOperations extends BaseLinalg
             $this->params[1]->ptr()->getRows(),
             $this->params[1]->ptr()->getCols()
         );
+
         return new MemoryPointer(
             $rtn,
             $rtn->x,

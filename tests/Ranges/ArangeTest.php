@@ -42,10 +42,10 @@ class ArangeTest extends TestCase
         $expected = [0, 1, 2];
         $this->assertEquals($expected, ps::arange(3)->toArray());
 
-        $expected = [3,4,5,6];
+        $expected = [3, 4, 5, 6];
         $this->assertEquals($expected, ps::arange(7, 3)->toArray());
 
-        $expected = [3,5];
+        $expected = [3, 5];
         $this->assertEquals($expected, ps::arange(7, 3, 2)->toArray());
     }
 }

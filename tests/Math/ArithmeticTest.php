@@ -17,9 +17,7 @@
 
 namespace PHPSci\Tests\Math;
 
-use PHPSci\Kernel\Exceptions\BroadcastError;
 use PHPSci\PHPSci as ps;
-use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -37,8 +35,8 @@ class ArithmeticTest extends TestCase
      * Check add() with scalars
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @return void
      * @throws \PHPSci\Kernel\Exceptions\BroadcastErrorException
+     * @return void
      */
     public function testAddScalars()
     {
@@ -54,21 +52,21 @@ class ArithmeticTest extends TestCase
      * Test add with 1D matrices
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @return void
      * @throws \PHPSci\Kernel\Exceptions\BroadcastErrorException
+     * @return void
      */
     public function testAdd1D()
     {
-        $expected = [2,3,4,5];
+        $expected = [2, 3, 4, 5];
 
-        $a = ps::fromArray([1,2,3,4]);
+        $a = ps::fromArray([1, 2, 3, 4]);
         $b = ps::fromDouble(1);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
 
-        $expected = [2,4,6,8];
+        $expected = [2, 4, 6, 8];
 
-        $a = ps::fromArray([1,2,3,4]);
+        $a = ps::fromArray([1, 2, 3, 4]);
 
         $this->assertEquals($expected, ps::add($a, $a)->toArray());
     }
@@ -77,43 +75,43 @@ class ArithmeticTest extends TestCase
      * Test add() with 2D matrices
      *
      * @author            Henrique Borba <henrique.borba.dev@gmail.com>
-     * @expectedException PHPSci\Kernel\Exceptions\BroadcastErrorException
-     * @return            void
+     * @expectedException \PHPSci\Kernel\Exceptions\BroadcastErrorException
      * @throws            \PHPSci\Kernel\Exceptions\BroadcastErrorException
+     * @return            void
      */
     public function testAdd2D()
     {
-        $expected = [[2,3,4,5]];
+        $expected = [[2, 3, 4, 5]];
 
-        $a = ps::fromArray([[1,2,3,4]]);
+        $a = ps::fromArray([[1, 2, 3, 4]]);
         $b = ps::fromDouble(1);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
 
-        $a = ps::fromArray([[1,2,3,4]]);
-        $b = ps::fromArray([1,1,1,1]);
+        $a = ps::fromArray([[1, 2, 3, 4]]);
+        $b = ps::fromArray([1, 1, 1, 1]);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
 
-        $a = ps::fromArray([[1,2,3,4]]);
-        $b = ps::fromArray([[1,1,1,1]]);
+        $a = ps::fromArray([[1, 2, 3, 4]]);
+        $b = ps::fromArray([[1, 1, 1, 1]]);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
 
-        $expected = [[2,3,4,5],[2,3,4,5]];
-        $a = ps::fromArray([[1,2,3,4],[1,2,3,4]]);
-        $b = ps::fromArray([[1,1,1,1]]);
+        $expected = [[2, 3, 4, 5], [2, 3, 4, 5]];
+        $a = ps::fromArray([[1, 2, 3, 4], [1, 2, 3, 4]]);
+        $b = ps::fromArray([[1, 1, 1, 1]]);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
 
-        $expected = [[2,3,4,5],[2,3,4,5]];
-        $a = ps::fromArray([[1,2,3,4],[1,2,3,4]]);
-        $b = ps::fromArray([[1,1,1,1],[1,1,1,1]]);
+        $expected = [[2, 3, 4, 5], [2, 3, 4, 5]];
+        $a = ps::fromArray([[1, 2, 3, 4], [1, 2, 3, 4]]);
+        $b = ps::fromArray([[1, 1, 1, 1], [1, 1, 1, 1]]);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
 
-        $a = ps::fromArray([[1,2,3,4],[1,2,3,4],[1,2,3,4]]);
-        $b = ps::fromArray([[1,1,1,1],[1,1,1,1]]);
+        $a = ps::fromArray([[1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]]);
+        $b = ps::fromArray([[1, 1, 1, 1], [1, 1, 1, 1]]);
         ps::add($a, $b);
     }
 }

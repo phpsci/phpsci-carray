@@ -17,8 +17,8 @@
 
 namespace PHPSci\Tests\Initializers;
 
-use PHPUnit\Framework\TestCase;
 use PHPSci\PHPSci as ps;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ArrayConvertTest
@@ -31,7 +31,6 @@ use PHPSci\PHPSci as ps;
  */
 class ArrayConvertTest extends TestCase
 {
-
     /**
      * Test fromArray() with 2D array
      *
@@ -40,7 +39,7 @@ class ArrayConvertTest extends TestCase
      */
     public function testFromArray2D()
     {
-        $a = ps::fromArray([[1,0,1,0],[0,1,0,1]]);
+        $a = ps::fromArray([[1, 0, 1, 0], [0, 1, 0, 1]]);
         $this->assertObjectNotHasAttribute('uuid', $a);
     }
 
@@ -52,7 +51,7 @@ class ArrayConvertTest extends TestCase
      */
     public function testToArray2D()
     {
-        $parr = [[1,0,1,0],[0,1,0,1]];
+        $parr = [[1, 0, 1, 0], [0, 1, 0, 1]];
         $a = ps::fromArray($parr);
         $b = $a->toArray();
         $this->assertObjectNotHasAttribute('uuid', $a);
@@ -67,7 +66,7 @@ class ArrayConvertTest extends TestCase
      */
     public function testFromArray1D()
     {
-        $a = ps::fromArray([1,0,1,0,0,1,0,1]);
+        $a = ps::fromArray([1, 0, 1, 0, 0, 1, 0, 1]);
         $this->assertObjectNotHasAttribute('uuid', $a);
     }
 
@@ -79,7 +78,7 @@ class ArrayConvertTest extends TestCase
      */
     public function testToArray1D()
     {
-        $parr = [1,0,1,0,0,1,0,1];
+        $parr = [1, 0, 1, 0, 0, 1, 0, 1];
         $a = ps::fromArray($parr);
         $b = ps::asarray($a);
         $this->assertObjectNotHasAttribute('uuid', $a);
@@ -112,5 +111,4 @@ class ArrayConvertTest extends TestCase
         $this->assertObjectNotHasAttribute('uuid', $a);
         $this->assertEquals($parr, $b);
     }
-
 }

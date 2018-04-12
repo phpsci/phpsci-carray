@@ -31,7 +31,6 @@ use PHPUnit\Framework\TestCase;
  */
 class BasicOperationsTest extends TestCase
 {
-
     /**
      * Test basic sum with axis = null
      *
@@ -54,16 +53,14 @@ class BasicOperationsTest extends TestCase
      */
     public function testBasicSumAxis()
     {
-        $expected_y = [0,6];
-        $expected_x = [1,5];
+        $expected_y = [0, 6];
+        $expected_x = [1, 5];
 
-        $carray = ps::fromArray([[0,1], [0,5]]);
+        $carray = ps::fromArray([[0, 1], [0, 5]]);
         $result_y = ps::sum($carray, 0);
         $result_x = ps::sum($carray, 1);
 
         $this->assertEquals($expected_y, $result_y->toArray());
         $this->assertEquals($expected_x, $result_x->toArray());
     }
-
-
 }

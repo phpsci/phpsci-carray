@@ -49,7 +49,7 @@ trait Mathable
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return PHPSci
      */
-    public static function sum(CArrayWrapper $a, int $axis = null) : PHPSci
+    public static function sum(CArrayWrapper $a, int $axis = null): PHPSci
     {
         if (!isset($axis)) {
             $out = \CArray::sum(
@@ -66,6 +66,7 @@ trait Mathable
                 $axis
             );
         }
+
         return new PHPSci(
             new MemoryPointer(
                 $out,

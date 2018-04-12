@@ -32,5 +32,5 @@ interface Initializable
      *
      * @return mixed
      */
-    public function run() : MemoryPointer;
+    public function run(): MemoryPointer;
 }

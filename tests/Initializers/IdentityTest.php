@@ -31,14 +31,13 @@ use PHPUnit\Framework\TestCase;
  */
 class IdentityTest extends TestCase
 {
-
     /**
      * Test big Identity Creation
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return void
      */
-    public function testCreateBigIdentity() : void
+    public function testCreateBigIdentity(): void
     {
         $wanted = [
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -53,9 +52,8 @@ class IdentityTest extends TestCase
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         ];
         $generated = PHPSci::identity(10)->toArray();
-        $this->assertEquals($wanted, (array)$generated);
+        $this->assertEquals($wanted, (array) $generated);
     }
-
 
     /**
      * Test small Identity Creation
@@ -63,14 +61,13 @@ class IdentityTest extends TestCase
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return void
      */
-    public function testCreateSmallIdentity() : void
+    public function testCreateSmallIdentity(): void
     {
         $wanted = [
             [1, 0],
             [0, 1],
         ];
         $generated = PHPSci::identity(2)->toArray();
-        $this->assertEquals($wanted, (array)$generated);
+        $this->assertEquals($wanted, (array) $generated);
     }
-
 }

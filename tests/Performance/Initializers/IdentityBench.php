@@ -31,11 +31,8 @@ use PHPSci\PHPSci;
  */
 class IdentityBench
 {
-
-
-    public function init() : void
+    public function init(): void
     {
-
     }
 
     /**
@@ -55,5 +52,4 @@ class IdentityBench
     {
         $a = PHPSci::identity(100);
     }
-
 }

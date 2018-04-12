@@ -40,7 +40,7 @@ trait Operatable
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return PHPSci
      */
-    public static function matmul(CArrayWrapper $a, CArrayWrapper $b) : PHPSci
+    public static function matmul(CArrayWrapper $a, CArrayWrapper $b): PHPSci
     {
         return new PHPSci(
             (
@@ -58,7 +58,7 @@ trait Operatable
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      * @return PHPSci
      */
-    public static function inner(CArrayWrapper $a, CArrayWrapper $b) : PHPSci
+    public static function inner(CArrayWrapper $a, CArrayWrapper $b): PHPSci
     {
         return new PHPSci(
             (

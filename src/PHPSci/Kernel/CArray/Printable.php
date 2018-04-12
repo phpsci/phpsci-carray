@@ -33,6 +33,7 @@ trait Printable
     public function __toString()
     {
         echo \CArray::print_r($this->ptr()->getPointer(), $this->rows, $this->cols);
+
         return '';
     }
 }

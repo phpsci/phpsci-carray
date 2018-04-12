@@ -36,7 +36,7 @@ trait Creatable
      * @param  int $n Number of rows
      * @return PHPSci
      */
-    public static function identity(int $n) : PHPSci
+    public static function identity(int $n): PHPSci
     {
         return new PHPSci(
             (new IdentityInitializer($n))->run()
@@ -50,11 +50,12 @@ trait Creatable
      * @param  array $shape
      * @return PHPSci
      */
-    public static function zeros(array $shape) : PHPSci
+    public static function zeros(array $shape): PHPSci
     {
         if (!isset($shape[1])) {
             $shape[1] = 0;
         }
+
         return new PHPSci(
             (new ZerosInitializer($shape[0], $shape[1]))->run()
         );

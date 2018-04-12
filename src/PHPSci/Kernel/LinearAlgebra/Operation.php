@@ -28,5 +28,4 @@ namespace PHPSci\Kernel\LinearAlgebra;
  */
 interface Operation
 {
-
 }

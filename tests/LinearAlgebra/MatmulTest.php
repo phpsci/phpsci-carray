@@ -18,8 +18,8 @@
 namespace PHPSci\Tests\LinearAlgebra;
 
 use PHPSci\PHPSci;
-use PHPUnit\Framework\TestCase;
 use PHPSci\PHPSci as ps;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class MatmulTest
@@ -32,7 +32,6 @@ use PHPSci\PHPSci as ps;
  */
 class MatmulTest extends TestCase
 {
-
     /**
      * Test (2,3) * (3,2) dot product using matmul
      *
@@ -43,10 +42,10 @@ class MatmulTest extends TestCase
     {
         $expected = [
             [58, 64],
-            [139, 154]
+            [139, 154],
         ];
-        $a = ps::fromArray([[1,2,3],[4,5,6]]);
-        $b = ps::fromArray([[7,8],[9,10],[11,12]]);
+        $a = ps::fromArray([[1, 2, 3], [4, 5, 6]]);
+        $b = ps::fromArray([[7, 8], [9, 10], [11, 12]]);
         $returned = ps::matmul($a, $b);
         $this->assertEquals($expected, $returned->toArray());
     }
@@ -63,7 +62,6 @@ class MatmulTest extends TestCase
         $expected = $a->toArray();
         $result = ps::matmul($a, $a)->toArray();
         $this->assertEquals($expected, $result);
-
     }
 
     /**
@@ -88,10 +86,10 @@ class MatmulTest extends TestCase
      */
     public function testMatmul2D1D()
     {
-        $expected = [30,33,51,24];
-        $expected_2 = [19,45,24,41];
-        $a = PHPSci::fromArray([[1,2,3,4],[4,9,1,2],[2,3,5,7],[1,4,1,3]]);
-        $b = PHPSci::fromArray([1,2,3,4]);
+        $expected = [30, 33, 51, 24];
+        $expected_2 = [19, 45, 24, 41];
+        $a = PHPSci::fromArray([[1, 2, 3, 4], [4, 9, 1, 2], [2, 3, 5, 7], [1, 4, 1, 3]]);
+        $b = PHPSci::fromArray([1, 2, 3, 4]);
         $this->assertEquals($expected, ps::matmul($a, $b)->toArray());
         $this->assertEquals($expected_2, ps::matmul($b, $a)->toArray());
     }
@@ -105,11 +103,8 @@ class MatmulTest extends TestCase
     public function testMatmul1D1D()
     {
         $expected = 33;
-        $a = PHPSci::fromArray([1,2,3,4]);
-        $b = PHPSci::fromArray([4,9,1,2]);
+        $a = PHPSci::fromArray([1, 2, 3, 4]);
+        $b = PHPSci::fromArray([4, 9, 1, 2]);
         $this->assertEquals($expected, ps::matmul($a, $b)->toDouble());
     }
-
-
-
 }

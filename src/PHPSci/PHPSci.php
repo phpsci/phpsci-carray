@@ -19,7 +19,6 @@ namespace PHPSci;
 
 use PHPSci\Kernel\CArray\CArrayWrapper;
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
-use PHPSci\Kernel\Printable;
 
 /**
  * Main PHPSci Object
@@ -31,11 +30,13 @@ class PHPSci extends CArrayWrapper
 {
     /**
      * PHPSci constructor.
+     * @param mixed $input
      */
     public function __construct($input)
     {
         if (is_object($input) && get_class($input) == "PHPSci\Kernel\Orchestrator\MemoryPointer") {
             $this->internal_pointer = $input;
+
             return;
         }
         if (is_array($input)) {
@@ -45,6 +46,7 @@ class PHPSci extends CArrayWrapper
                 $new_carray->ptr()->getRows(),
                 $new_carray->ptr()->getCols()
             );
+
             return;
         }
         if (is_double($input) || is_int($input) || is_float($input)) {
@@ -54,6 +56,7 @@ class PHPSci extends CArrayWrapper
                 $new_carray->ptr()->getRows(),
                 $new_carray->ptr()->getCols()
             );
+
             return;
         }
     }

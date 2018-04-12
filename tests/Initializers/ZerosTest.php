@@ -40,11 +40,11 @@ class ZerosTest extends TestCase
     public function testCreateSmallZeros()
     {
         $wanted = [
-            [ 0 , 0 ],
-            [ 0 , 0 ],
-            [ 0 , 0 ]
+            [0, 0],
+            [0, 0],
+            [0, 0],
         ];
-        $generated = PHPSci::zeros([3,2])->toArray();
+        $generated = PHPSci::zeros([3, 2])->toArray();
         $this->assertEquals($wanted, $generated);
     }
 
@@ -57,10 +57,10 @@ class ZerosTest extends TestCase
     public function testCreateSquareZeros()
     {
         $wanted = [
-            [ 0 , 0 ],
-            [ 0 , 0 ]
+            [0, 0],
+            [0, 0],
         ];
-        $generated = PHPSci::zeros([2,2])->toArray();
+        $generated = PHPSci::zeros([2, 2])->toArray();
         $this->assertEquals($wanted, $generated);
     }
 
@@ -73,19 +73,18 @@ class ZerosTest extends TestCase
     public function testCreateBigZeros()
     {
         $wanted = [
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
-            [ 0 , 0, 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
-        $generated = PHPSci::zeros([10,10])->toArray();
+        $generated = PHPSci::zeros([10, 10])->toArray();
         $this->assertEquals($wanted, $generated);
     }
 }
-

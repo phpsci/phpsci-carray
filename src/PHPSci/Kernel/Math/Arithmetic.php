@@ -44,10 +44,10 @@ trait Arithmetic
      * @param CArrayWrapper $b CArray B
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @return CArrayWrapper The sum of A x B element-wise
      * @throws BroadcastErrorException
+     * @return CArrayWrapper The sum of A x B element-wise
      */
-    public static function add(CArrayWrapper $a, CArrayWrapper $b) : CArrayWrapper
+    public static function add(CArrayWrapper $a, CArrayWrapper $b): CArrayWrapper
     {
         try {
             $result = \CArray::add(
@@ -64,6 +64,7 @@ trait Arithmetic
                 [$b->rows, $b->cols]
             );
         }
+
         return new PHPSci(
             new MemoryPointer(
                 $result,

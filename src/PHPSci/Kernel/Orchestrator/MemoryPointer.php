@@ -87,7 +87,7 @@ class MemoryPointer
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
-    public function getRows() : int
+    public function getRows(): int
     {
         return $this->x;
     }
@@ -97,7 +97,7 @@ class MemoryPointer
      *
      * @return int
      */
-    public function getCols() : int
+    public function getCols(): int
     {
         return $this->y;
     }

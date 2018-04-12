@@ -24,5 +24,4 @@ namespace PHPSci\Kernel\PropertiesProcessor;
  */
 abstract class PropertiesProcessor implements Property
 {
-
 }

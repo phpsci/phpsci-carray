@@ -57,8 +57,9 @@ trait Rangeable
         float $stop,
         float $start = 0.,
         float $step = 1.
-    ) : CArrayWrapper {
+    ): CArrayWrapper {
         $new_ptr = \CArray::arange($start, $stop, $step);
+
         return new PHPSci(
             new MemoryPointer(
                 $new_ptr,
@@ -85,8 +86,9 @@ trait Rangeable
         float $start,
         float $stop,
         float $num = 50
-    ) : CArrayWrapper {
+    ): CArrayWrapper {
         $new_ptr = \CArray::linspace($start, $stop, $num);
+
         return new PHPSci(
             new MemoryPointer(
                 $new_ptr,
@@ -112,8 +114,9 @@ trait Rangeable
         float $stop,
         int $num = 50,
         float $base = 10
-    ) : CArrayWrapper {
+    ): CArrayWrapper {
         $new_ptr = \CArray::logspace($start, $stop, $num, $base);
+
         return new PHPSci(
             new MemoryPointer(
                 $new_ptr,
