@@ -28,8 +28,7 @@
     }
   },
   "require-dev": {
-    "phpbench/phpbench": "^0.14.0",
-    "phpunit/phpunit": "^7",
-    "phpsci/sciboard": "dev-master"
+    "phpbench/phpbench": "^0.14",
+    "phpunit/phpunit": "^7"
   }
 }
