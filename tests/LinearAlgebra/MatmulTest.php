@@ -88,8 +88,8 @@ class MatmulTest extends TestCase
     {
         $expected = [30, 33, 51, 24];
         $expected_2 = [19, 45, 24, 41];
-        $a = PHPSci::fromArray([[1, 2, 3, 4], [4, 9, 1, 2], [2, 3, 5, 7], [1, 4, 1, 3]]);
-        $b = PHPSci::fromArray([1, 2, 3, 4]);
+        $a = ps::fromArray([[1, 2, 3, 4], [4, 9, 1, 2], [2, 3, 5, 7], [1, 4, 1, 3]]);
+        $b = ps::fromArray([1, 2, 3, 4]);
         $this->assertEquals($expected, ps::matmul($a, $b)->toArray());
         $this->assertEquals($expected_2, ps::matmul($b, $a)->toArray());
     }
@@ -103,8 +103,8 @@ class MatmulTest extends TestCase
     public function testMatmul1D1D()
     {
         $expected = 33;
-        $a = PHPSci::fromArray([1, 2, 3, 4]);
-        $b = PHPSci::fromArray([4, 9, 1, 2]);
+        $a = ps::fromArray([1, 2, 3, 4]);
+        $b = ps::fromArray([4, 9, 1, 2]);
         $this->assertEquals($expected, ps::matmul($a, $b)->toDouble());
     }
 }

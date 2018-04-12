@@ -48,7 +48,7 @@ trait Transformable
      */
     public function toArray()
     {
-        return \CArray::toArray($this->ptr()->getPointer(), $this->ptr()->getRows(), $this->ptr()->getCols());
+        return \CArray::toArray($this->ptr()->getInternalCArray());
     }
 
     /**
