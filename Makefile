@@ -45,7 +45,6 @@ all: test
 
 ci: SILENT=
 ci: prerequisites ci-phpunit ci-analyze
-	$(SILENT) $(COMPOSER) validate --strict || true
 
 ci-phpunit: ci-cs
 	$(SILENT) $(PHP) $(PHPUNIT) $(PHPUNIT_ARGS)
@@ -63,7 +62,7 @@ ci-cs: prerequisites
 ##############################################################
 
 test: phpunit analyze
-	$(SILENT) $(COMPOSER) validate --strict || true
+	$(SILENT) $(COMPOSER) validate || true
 
 test-prerequisites: prerequisites composer.lock
 
