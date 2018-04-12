@@ -21,6 +21,7 @@ cache:
     apt: true
 
 install:
+  - pecl install ast
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --no-interaction --ignore-platform-reqs
 
@@ -35,4 +36,4 @@ before_script:
 
 script:
     - cd $TRAVIS_BUILD_DIR
-    - vendor/bin/phpunit
+    - make ci --keep-going COMPOSER='/bin/sh -c composer'
