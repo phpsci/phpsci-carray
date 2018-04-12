@@ -36,5 +36,3 @@ before_script:
 script:
     - cd $TRAVIS_BUILD_DIR
     - vendor/bin/phpunit
-    - ./vendor/bin/phpcs ./src/ --standard=PSR1 --ignore=src/PHPSci/Kernel/PropertiesProcessor
-    - ./vendor/bin/phpcs ./src/ --standard=PSR2 --ignore=src/PHPSci/Kernel/PropertiesProcessor
