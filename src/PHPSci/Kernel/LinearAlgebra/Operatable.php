@@ -76,7 +76,7 @@ trait Operatable
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
-    public static function inv(CArrayWrapper $a) : CArrayWrapper
+    public static function inv(CArrayWrapper $a): CArrayWrapper
     {
         return new PHPSci(
             (

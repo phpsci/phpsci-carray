@@ -30,9 +30,8 @@ class InvertOperations extends BaseLinalg
     /**
      * Compute the inverse of a matrix.
      *
-     * @return MemoryPointer
-     *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     * @return MemoryPointer
      */
     public function inv(): MemoryPointer
     {
