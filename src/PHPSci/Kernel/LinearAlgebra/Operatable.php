@@ -17,6 +17,7 @@
 
 namespace PHPSci\Kernel\LinearAlgebra;
 
+use PHP_CodeSniffer\Tokenizers\PHP;
 use PHPSci\Kernel\CArray\CArrayWrapper;
 use PHPSci\PHPSci;
 
@@ -64,6 +65,23 @@ trait Operatable
             (
                 new ProductOperations($a, $b)
             )->inner()
+        );
+    }
+
+    /**
+     * Compute the inverse of a matrix.
+     *
+     * @param CArrayWrapper $a
+     * @return CArrayWrapper
+     *
+     * @author Henrique Borba <henrique.borba.dev@gmail.com>
+     */
+    public static function inv(CArrayWrapper $a) : CArrayWrapper
+    {
+        return new PHPSci(
+            (
+                new InvertOperations($a)
+            )->inv()
         );
     }
 }

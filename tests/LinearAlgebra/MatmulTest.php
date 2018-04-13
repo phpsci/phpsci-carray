@@ -79,22 +79,6 @@ class MatmulTest extends TestCase
     }
 
     /**
-     * Test matmul() using 2D * 1D
-     *
-     * @author Henrique Borba <henrique.borba.dev@gmail.com>
-     * @return void
-     */
-    public function testMatmul2D1D()
-    {
-        $expected = [30, 33, 51, 24];
-        $expected_2 = [19, 45, 24, 41];
-        $a = ps::fromArray([[1, 2, 3, 4], [4, 9, 1, 2], [2, 3, 5, 7], [1, 4, 1, 3]]);
-        $b = ps::fromArray([1, 2, 3, 4]);
-        $this->assertEquals($expected, ps::matmul($a, $b)->toArray());
-        $this->assertEquals($expected_2, ps::matmul($b, $a)->toArray());
-    }
-
-    /**
      * Test matmul() with two 1D matrices
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
