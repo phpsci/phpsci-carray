@@ -5,6 +5,7 @@ addons:
     packages:
       - libopenblas-dev
       - libopenblas-base
+      - liblapacke-dev
 dist: trusty
 php:
   - 7.1
