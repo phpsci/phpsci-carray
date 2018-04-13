@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 namespace PHPSci\Kernel\LinearAlgebra;
 
 use PHPSci\Kernel\Orchestrator\MemoryPointer;
@@ -33,7 +34,7 @@ class InvertOperations extends BaseLinalg
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
-    public function inv() : MemoryPointer
+    public function inv(): MemoryPointer
     {
         $rtn_carray = \CArray::inv(
             $this->params[0]->ptr()->getInternalCArray()
