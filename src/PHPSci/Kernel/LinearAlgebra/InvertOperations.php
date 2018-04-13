@@ -29,8 +29,7 @@ class InvertOperations extends BaseLinalg
     /**
      * Compute the inverse of a matrix.
      *
-     * @param CArrayWrapper $a
-     * @return CArrayWrapper
+     * @return MemoryPointer
      *
      * @author Henrique Borba <henrique.borba.dev@gmail.com>
      */
@@ -39,6 +38,7 @@ class InvertOperations extends BaseLinalg
         $rtn_carray = \CArray::inv(
             $this->params[0]->ptr()->getInternalCArray()
         );
+
         return new MemoryPointer(
            $rtn_carray,
            $rtn_carray->x,
