@@ -138,7 +138,7 @@ abstract class CArrayWrapper implements Stackable, \ArrayAccess, \Countable
      */
     public function destroy()
     {
-        \CArray::destroy($this->ptr()->getUUID(), $this->ptr()->getRows(), $this->ptr()->getCols());
+        \CArray::destroy($this->ptr()->getInternalCArray());
     }
 
     /**

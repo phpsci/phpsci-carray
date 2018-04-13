@@ -95,9 +95,7 @@ trait Transformable
     public static function transpose(CArrayWrapper $arr): CArrayWrapper
     {
         $rtn_carray = \CArray::transpose(
-            $arr->ptr()->getUUID(),
-            $arr->ptr()->getRows(),
-            $arr->ptr()->getCols()
+            $arr->ptr()->getInternalCArray()
         );
 
         return new PHPSci(

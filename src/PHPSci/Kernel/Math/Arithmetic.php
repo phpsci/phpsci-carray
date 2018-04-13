@@ -51,12 +51,8 @@ trait Arithmetic
     {
         try {
             $result = \CArray::add(
-                $a->ptr()->getUUID(),
-                $a->ptr()->getRows(),
-                $a->ptr()->getCols(),
-                $b->ptr()->getUUID(),
-                $b->ptr()->getRows(),
-                $b->ptr()->getCols()
+                $a->ptr()->getInternalCArray(),
+                $b->ptr()->getInternalCArray()
             );
         } catch (\Exception $e) {
             throw new BroadcastErrorException(

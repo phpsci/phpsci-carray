@@ -53,16 +53,12 @@ trait Mathable
     {
         if (!isset($axis)) {
             $out = \CArray::sum(
-                $a->ptr()->getUUID(),
-                $a->ptr()->getRows(),
-                $a->ptr()->getCols()
+                $a->ptr()->getInternalCArray()
             );
         }
         if (isset($axis)) {
             $out = \CArray::sum(
-                $a->ptr()->getUUID(),
-                $a->ptr()->getRows(),
-                $a->ptr()->getCols(),
+                $a->ptr()->getInternalCArray(),
                 $axis
             );
         }

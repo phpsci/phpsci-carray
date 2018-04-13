@@ -52,11 +52,8 @@ class ProductOperations extends BaseLinalg
     public function matmul(): MemoryPointer
     {
         $rtn = \CArray::matmul(
-            $this->params[0]->ptr()->getUUID(),
-            $this->params[0]->ptr()->getRows(),
-            $this->params[0]->ptr()->getCols(),
-            $this->params[1]->ptr()->getUUID(),
-            $this->params[1]->ptr()->getCols()
+            $this->params[0]->ptr()->getInternalCArray(),
+            $this->params[1]->ptr()->getInternalCArray()
         );
         if ($this->params[0]->ptr()->getCols() == 0
             and $this->params[1]->ptr()->getCols() > 0
@@ -99,12 +96,8 @@ class ProductOperations extends BaseLinalg
     public function inner(): MemoryPointer
     {
         $rtn = \CArray::inner(
-            $this->params[0]->ptr()->getUUID(),
-            $this->params[0]->ptr()->getRows(),
-            $this->params[0]->ptr()->getCols(),
-            $this->params[1]->ptr()->getUUID(),
-            $this->params[1]->ptr()->getRows(),
-            $this->params[1]->ptr()->getCols()
+            $this->params[0]->ptr()->getInternalCArray(),
+            $this->params[1]->ptr()->getInternalCArray()
         );
 
         return new MemoryPointer(
