@@ -20,7 +20,7 @@ You **must** compile and install
 [PHPSci CArray Extension](https://www.github.com/phpsci/phpsci-ext).
 
 
-It enables scientific operations in PHP to be performed up to 800 
+It enables scientific operations in PHP to be performed up to 2000 
 times faster than current implementations.
 
 [http://phpsci.readthedocs.io/en/latest/](http://phpsci.readthedocs.io/en/latest/)
@@ -32,6 +32,35 @@ composer require phpsci/phpsci:dev-master
 ```
 
 > **ATTENTION:** You must install PHPSci extension, otherwise it won't work.
+
+## Performance
+`Orange` PHP `Blue` PHPSci
+
+<p align="center">
+  <img src="https://i.imgur.com/kAnaq2Y.png" width="70%" />
+</p>
+
+**PHP**
+```php
+(100,100): 0.036118984222412 sec
+(200,200): 0.2786500453949 sec
+(300,300): 0.96729803085327 sec
+(400,400): 2.7810060977936 sec
+(500,500): 5.2478280067444 sec
+(600,600): 9.7698769569397 sec
+(700,700): 14.908197879791 sec
+```
+
+**PHPSci**
+```php
+(100,100): 0.002432107925415 sec
+(200,200): 0.00038599967956543 sec
+(300,300): 0.0011770725250244 sec
+(400,400): 0.0022358894348145 sec
+(500,500): 0.0036449432373047 sec
+(600,600): 0.00559401512146 sec
+(700,700): 0.0095341205596924 sec
+```
 
 
 ## Getting Started
