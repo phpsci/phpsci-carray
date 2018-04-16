@@ -75,9 +75,8 @@ class ArithmeticTest extends TestCase
      * Test add() with 2D matrices
      *
      * @author            Henrique Borba <henrique.borba.dev@gmail.com>
-     * @expectedException \PHPSci\Kernel\Exceptions\BroadcastErrorException
-     * @throws            \PHPSci\Kernel\Exceptions\BroadcastErrorException
      * @return            void
+     * @throws \PHPSci\Kernel\Exceptions\BroadcastErrorException
      */
     public function testAdd2D()
     {
@@ -87,31 +86,45 @@ class ArithmeticTest extends TestCase
         $b = ps::fromDouble(1);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
+    }
+
+    public function testAdd2Dv2()
+    {
+        $expected = [[2, 3, 4, 5]];
 
         $a = ps::fromArray([[1, 2, 3, 4]]);
         $b = ps::fromArray([1, 1, 1, 1]);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
+    }
+
+    public function testAdd2Dv3()
+    {
+        $expected = [[2, 3, 4, 5]];
 
         $a = ps::fromArray([[1, 2, 3, 4]]);
         $b = ps::fromArray([[1, 1, 1, 1]]);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
+    }
 
+    public function testAdd2Dv4()
+    {
         $expected = [[2, 3, 4, 5], [2, 3, 4, 5]];
         $a = ps::fromArray([[1, 2, 3, 4], [1, 2, 3, 4]]);
         $b = ps::fromArray([[1, 1, 1, 1]]);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
+    }
 
+    public function testAdd2Dv5()
+    {
         $expected = [[2, 3, 4, 5], [2, 3, 4, 5]];
         $a = ps::fromArray([[1, 2, 3, 4], [1, 2, 3, 4]]);
         $b = ps::fromArray([[1, 1, 1, 1], [1, 1, 1, 1]]);
 
         $this->assertEquals($expected, ps::add($a, $b)->toArray());
-
-        $a = ps::fromArray([[1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]]);
-        $b = ps::fromArray([[1, 1, 1, 1], [1, 1, 1, 1]]);
-        ps::add($a, $b);
     }
+
+
 }
