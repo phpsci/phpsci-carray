@@ -38,7 +38,6 @@ class InvertOperations extends BaseLinalg
         $rtn_carray = \CArray::inv(
             $this->params[0]->ptr()->getInternalCArray()
         );
-
         return new MemoryPointer(
            $rtn_carray,
            $rtn_carray->x,

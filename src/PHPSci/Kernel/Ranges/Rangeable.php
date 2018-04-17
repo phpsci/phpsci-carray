@@ -54,9 +54,9 @@ trait Rangeable
      * @return CArrayWrapper
      */
     public static function arange(
-        float $stop,
-        float $start = 0.,
-        float $step = 1.
+        $stop,
+        $start = 0.,
+        $step = 1.
     ): CArrayWrapper {
         $new_ptr = \CArray::arange($start, $stop, $step);
 
@@ -83,9 +83,9 @@ trait Rangeable
      * @return CArrayWrapper
      */
     public static function linspace(
-        float $start,
-        float $stop,
-        float $num = 50
+        $start,
+        $stop,
+        $num = 50
     ): CArrayWrapper {
         $new_ptr = \CArray::linspace($start, $stop, $num);
 
@@ -110,10 +110,10 @@ trait Rangeable
      * @return CArrayWrapper
      */
     public static function logspace(
-        float $start,
-        float $stop,
+        $start,
+        $stop,
         int $num = 50,
-        float $base = 10
+        $base = 10
     ): CArrayWrapper {
         $new_ptr = \CArray::logspace($start, $stop, $num, $base);
 

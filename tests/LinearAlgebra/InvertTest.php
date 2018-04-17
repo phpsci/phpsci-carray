@@ -29,8 +29,8 @@ class InvertTest extends TestCase
     public function testInvertBasic()
     {
         $expected = [
-          [-2.0000002384186, 1.0000001192093],
-          [1.5000001192093, -0.50000005960464]
+          [-2.0, 1.0],
+          [1.5, -0.5]
         ];
         $a = ps::fromArray([[1, 2], [3, 4]]);
         $b = ps::inv($a);
