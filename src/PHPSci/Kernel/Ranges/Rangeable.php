@@ -58,7 +58,7 @@ trait Rangeable
         $start = 0.,
         $step = 1.
     ): CArrayWrapper {
-        $new_ptr = \CArray::arange($start, $stop, $step);
+        $new_ptr = \CArray::arange($stop, $start, $step);
 
         return new PHPSci(
             new MemoryPointer(
