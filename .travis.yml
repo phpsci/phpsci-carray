@@ -4,7 +4,6 @@ addons:
   apt:
     packages:
       - libopenblas-dev
-      - libopenblas-base
       - liblapacke-dev
 dist: trusty
 php:
@@ -31,7 +30,10 @@ before_script:
     - ccache --zero-stats
     - git clone https://github.com/phpsci/phpsci-ext.git
     - cd phpsci-ext
-    - ./travis/compile.sh
+    - phpize
+    - ./configure
+    - make
+    - make install
     - cd ..
     - phpenv config-add travis/build.ini
 
