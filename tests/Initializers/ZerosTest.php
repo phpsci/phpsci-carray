@@ -44,7 +44,7 @@ class ZerosTest extends TestCase
             [0, 0],
             [0, 0],
         ];
-        $generated = PHPSci::zeros([3, 2])->toArray();
+        $generated = PHPSci::toArray(PHPSci::zeros([3, 2]));
         $this->assertEquals($wanted, $generated);
     }
 
@@ -60,7 +60,7 @@ class ZerosTest extends TestCase
             [0, 0],
             [0, 0],
         ];
-        $generated = PHPSci::zeros([2, 2])->toArray();
+        $generated = PHPSci::toArray(PHPSci::zeros([2, 2]));
         $this->assertEquals($wanted, $generated);
     }
 
@@ -84,7 +84,7 @@ class ZerosTest extends TestCase
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
-        $generated = PHPSci::zeros([10, 10])->toArray();
+        $generated = PHPSci::toArray(PHPSci::zeros([10, 10]));
         $this->assertEquals($wanted, $generated);
     }
 }

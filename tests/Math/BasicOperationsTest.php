@@ -41,8 +41,8 @@ class BasicOperationsTest extends TestCase
     {
         $expected = 2;
         $carray = ps::fromArray([0.5, 1.5]);
-        $result = ps::sum($carray)->toDouble();
-        $this->assertEquals($expected, $result);
+        $result = ps::sum($carray);
+        $this->assertEquals($expected, ps::toDouble($result));
     }
 
     /**
@@ -60,7 +60,7 @@ class BasicOperationsTest extends TestCase
         $result_y = ps::sum($carray, 0);
         $result_x = ps::sum($carray, 1);
 
-        $this->assertEquals($expected_y, $result_y->toArray());
-        $this->assertEquals($expected_x, $result_x->toArray());
+        $this->assertEquals($expected_y, ps::toArray($result_y));
+        $this->assertEquals($expected_x, ps::toArray($result_x));
     }
 }

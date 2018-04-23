@@ -51,7 +51,7 @@ class IdentityTest extends TestCase
             [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         ];
-        $generated = PHPSci::identity(10)->toArray();
+        $generated = PHPSci::toArray(PHPSci::identity(10));
         $this->assertEquals($wanted, (array) $generated);
     }
 
@@ -67,7 +67,7 @@ class IdentityTest extends TestCase
             [1, 0],
             [0, 1],
         ];
-        $generated = PHPSci::identity(2)->toArray();
+        $generated = PHPSci::toArray(PHPSci::identity(2));
         $this->assertEquals($wanted, (array) $generated);
     }
 }

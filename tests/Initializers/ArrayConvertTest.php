@@ -40,7 +40,7 @@ class ArrayConvertTest extends TestCase
     public function testFromArray2D()
     {
         $a = ps::fromArray([[1, 0, 1, 0], [0, 1, 0, 1]]);
-        $this->assertObjectNotHasAttribute('uuid', $a);
+        $this->assertObjectHasAttribute('uuid', $a);
     }
 
     /**
@@ -53,8 +53,8 @@ class ArrayConvertTest extends TestCase
     {
         $parr = [[1, 0, 1, 0], [0, 1, 0, 1]];
         $a = ps::fromArray($parr);
-        $b = $a->toArray();
-        $this->assertObjectNotHasAttribute('uuid', $a);
+        $b = ps::toArray($a);
+        $this->assertObjectHasAttribute('uuid', $a);
         $this->assertEquals($parr, $b);
     }
 
@@ -67,7 +67,7 @@ class ArrayConvertTest extends TestCase
     public function testFromArray1D()
     {
         $a = ps::fromArray([1, 0, 1, 0, 0, 1, 0, 1]);
-        $this->assertObjectNotHasAttribute('uuid', $a);
+        $this->assertObjectHasAttribute('uuid', $a);
     }
 
     /**
@@ -80,8 +80,8 @@ class ArrayConvertTest extends TestCase
     {
         $parr = [1, 0, 1, 0, 0, 1, 0, 1];
         $a = ps::fromArray($parr);
-        $b = ps::asarray($a);
-        $this->assertObjectNotHasAttribute('uuid', $a);
+        $b = ps::toArray($a);
+        $this->assertObjectHasAttribute('uuid', $a);
         $this->assertEquals($parr, $b);
     }
 
@@ -94,7 +94,7 @@ class ArrayConvertTest extends TestCase
     public function testFromDouble0D()
     {
         $a = ps::fromDouble(1);
-        $this->assertObjectNotHasAttribute('uuid', $a);
+        $this->assertObjectHasAttribute('uuid', $a);
     }
 
     /**
@@ -107,8 +107,8 @@ class ArrayConvertTest extends TestCase
     {
         $parr = 1;
         $a = ps::fromDouble(1);
-        $b = $a->toDouble();
-        $this->assertObjectNotHasAttribute('uuid', $a);
+        $b = ps::toDouble($a);
+        $this->assertObjectHasAttribute('uuid', $a);
         $this->assertEquals($parr, $b);
     }
 }

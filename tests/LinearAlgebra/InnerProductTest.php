@@ -35,7 +35,7 @@ class InnerProductTest extends TestCase
         $expected = [7, 14, 7];
         $a = ps::fromArray([1, 2, 1]);
         $b = ps::fromDouble(7);
-        $this->assertEquals($expected, ps::inner($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::inner($a, $b)));
     }
 
     /**
@@ -46,7 +46,7 @@ class InnerProductTest extends TestCase
         $expected = 2;
         $a = ps::fromArray([1, 2, 3]);
         $b = ps::fromArray([0, 1, 0]);
-        $this->assertEquals($expected, ps::inner($a, $b)->toDouble());
+        $this->assertEquals($expected,  ps::toDouble(ps::inner($a, $b)));
     }
 
     /**
@@ -60,7 +60,7 @@ class InnerProductTest extends TestCase
         ];
         $a = ps::identity(2);
         $b = ps::fromDouble(7);
-        $this->assertEquals($expected, ps::inner($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::inner($a, $b)));
     }
 
     /**
@@ -74,6 +74,6 @@ class InnerProductTest extends TestCase
         ];
         $a = ps::fromArray([[1, 2, 1], [1, 3, 1]]);
         $b = ps::fromArray([[2, 1, 2], [2, 3, 2]]);
-        $this->assertEquals($expected, ps::inner($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::inner($a, $b)));
     }
 }

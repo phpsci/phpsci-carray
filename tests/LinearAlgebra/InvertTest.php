@@ -34,6 +34,6 @@ class InvertTest extends TestCase
         ];
         $a = ps::fromArray([[1, 2], [3, 4]]);
         $b = ps::inv($a);
-        $this->assertEquals($expected, $b->toArray());
+        $this->assertEquals($expected, ps::toArray($b));
     }
 }

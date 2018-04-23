@@ -45,7 +45,7 @@ class ArithmeticTest extends TestCase
         $a = ps::fromDouble(1);
         $b = ps::fromDouble(4);
 
-        $this->assertEquals($expected, ps::add($a, $b)->toDouble());
+        $this->assertEquals($expected, ps::toDouble(ps::add($a, $b)));
     }
 
     /**
@@ -62,13 +62,13 @@ class ArithmeticTest extends TestCase
         $a = ps::fromArray([1, 2, 3, 4]);
         $b = ps::fromDouble(1);
 
-        $this->assertEquals($expected, ps::add($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::add($a, $b)));
 
         $expected = [2, 4, 6, 8];
 
         $a = ps::fromArray([1, 2, 3, 4]);
 
-        $this->assertEquals($expected, ps::add($a, $a)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::add($a, $a)));
     }
 
     /**
@@ -85,7 +85,7 @@ class ArithmeticTest extends TestCase
         $a = ps::fromArray([[1, 2, 3, 4]]);
         $b = ps::fromDouble(1);
 
-        $this->assertEquals($expected, ps::add($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::add($a, $b)));
     }
 
     public function testAdd2Dv2()
@@ -95,7 +95,7 @@ class ArithmeticTest extends TestCase
         $a = ps::fromArray([[1, 2, 3, 4]]);
         $b = ps::fromArray([1, 1, 1, 1]);
 
-        $this->assertEquals($expected, ps::add($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::add($a, $b)));
     }
 
     public function testAdd2Dv3()
@@ -105,7 +105,7 @@ class ArithmeticTest extends TestCase
         $a = ps::fromArray([[1, 2, 3, 4]]);
         $b = ps::fromArray([[1, 1, 1, 1]]);
 
-        $this->assertEquals($expected, ps::add($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::add($a, $b)));
     }
 
     public function testAdd2Dv4()
@@ -114,7 +114,7 @@ class ArithmeticTest extends TestCase
         $a = ps::fromArray([[1, 2, 3, 4], [1, 2, 3, 4]]);
         $b = ps::fromArray([[1, 1, 1, 1]]);
 
-        $this->assertEquals($expected, ps::add($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::add($a, $b)));
     }
 
     public function testAdd2Dv5()
@@ -123,7 +123,7 @@ class ArithmeticTest extends TestCase
         $a = ps::fromArray([[1, 2, 3, 4], [1, 2, 3, 4]]);
         $b = ps::fromArray([[1, 1, 1, 1], [1, 1, 1, 1]]);
 
-        $this->assertEquals($expected, ps::add($a, $b)->toArray());
+        $this->assertEquals($expected, ps::toArray(ps::add($a, $b)));
     }
 
 

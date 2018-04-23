@@ -40,11 +40,11 @@ class LogspaceTest extends TestCase
     public function testLogspaceRangeInitializer()
     {
         $expected = [100.0, 215.44346900318845, 464.15888336127773, 1000.0];
-        $returned = PHPSci::logspace(2, 3, 4)->toArray();
+        $returned =  PHPSci::toArray(PHPSci::logspace(2, 3, 4, 10));
         $this->assertEquals($expected, $returned);
 
         $expected = [4.0, 5.039684199579493, 6.3496042078727974, 8.0];
-        $returned = PHPSci::logspace(2, 3, 4, 2)->toArray();
+        $returned = PHPSci::toArray(PHPSci::logspace(2, 3, 4, 2));
         $this->assertEquals($expected, $returned);
     }
 }

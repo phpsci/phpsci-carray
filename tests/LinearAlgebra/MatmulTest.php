@@ -47,7 +47,7 @@ class MatmulTest extends TestCase
         $a = ps::fromArray([[1, 2, 3], [4, 5, 6]]);
         $b = ps::fromArray([[7, 8], [9, 10], [11, 12]]);
         $returned = ps::matmul($a, $b);
-        $this->assertEquals($expected, $returned->toArray());
+        $this->assertEquals($expected, ps::toArray($returned));
     }
 
     /**
@@ -59,8 +59,8 @@ class MatmulTest extends TestCase
     public function testMatmulSmallIdentity()
     {
         $a = ps::identity(2);
-        $expected = $a->toArray();
-        $result = ps::matmul($a, $a)->toArray();
+        $expected = ps::toArray($a);
+        $result = ps::toArray(ps::matmul($a, $a));
         $this->assertEquals($expected, $result);
     }
 
@@ -73,8 +73,8 @@ class MatmulTest extends TestCase
     public function testMatmulBigIdentity()
     {
         $a = ps::identity(100);
-        $expected = $a->toArray();
-        $result = ps::matmul($a, $a)->toArray();
+        $expected = ps::toArray($a);
+        $result = ps::toArray(ps::matmul($a, $a));
         $this->assertEquals($expected, $result);
     }
 
@@ -89,6 +89,6 @@ class MatmulTest extends TestCase
         $expected = 33;
         $a = ps::fromArray([1, 2, 3, 4]);
         $b = ps::fromArray([4, 9, 1, 2]);
-        $this->assertEquals($expected, ps::matmul($a, $b)->toDouble());
+        $this->assertEquals($expected,  ps::toDouble(ps::matmul($a, $b)));
     }
 }

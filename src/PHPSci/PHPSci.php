@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Henrique Borba and contributors
+ * Copyright 2018 PHPSci Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Author: Henrique Borba <henrique.borba.dev@gmail.com>
  */
-
 namespace PHPSci;
 
-use PHPSci\Kernel\CArray\CArrayWrapper;
-use PHPSci\Kernel\Orchestrator\MemoryPointer;
+use PHPSci\Kernel\CArray\CInterface;
 
 /**
  * Main PHPSci Object
@@ -26,38 +26,6 @@ use PHPSci\Kernel\Orchestrator\MemoryPointer;
  * @author  Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci
  */
-class PHPSci extends CArrayWrapper
+class PHPSci extends \CArray implements CInterface
 {
-    /**
-     * PHPSci constructor.
-     * @param mixed $input
-     */
-    public function __construct($input)
-    {
-        if (is_object($input) && get_class($input) == "PHPSci\Kernel\Orchestrator\MemoryPointer") {
-            $this->internal_pointer = $input;
-
-            return;
-        }
-        if (is_array($input)) {
-            $new_carray = PHPSci::fromArray($input);
-            $this->internal_pointer = new MemoryPointer(
-                $new_carray->ptr()->getInternalCArray(),
-                $new_carray->ptr()->getRows(),
-                $new_carray->ptr()->getCols()
-            );
-
-            return;
-        }
-        if (is_double($input) || is_int($input) || is_float($input)) {
-            $new_carray = PHPSci::fromDouble($input);
-            $this->internal_pointer = new MemoryPointer(
-                $new_carray->ptr()->getInternalCArray(),
-                $new_carray->ptr()->getRows(),
-                $new_carray->ptr()->getCols()
-            );
-
-            return;
-        }
-    }
 }
