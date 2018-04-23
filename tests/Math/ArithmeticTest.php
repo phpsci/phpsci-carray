@@ -75,8 +75,8 @@ class ArithmeticTest extends TestCase
      * Test add() with 2D matrices
      *
      * @author            Henrique Borba <henrique.borba.dev@gmail.com>
-     * @return            void
      * @throws \PHPSci\Kernel\Exceptions\BroadcastErrorException
+     * @return            void
      */
     public function testAdd2D()
     {
@@ -125,6 +125,4 @@ class ArithmeticTest extends TestCase
 
         $this->assertEquals($expected, ps::toArray(ps::add($a, $b)));
     }
-
-
 }

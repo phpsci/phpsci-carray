@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 namespace PHPSci\Tests\LinearAlgebra;
 
 use PHPSci\PHPSci as ps;
@@ -30,7 +31,7 @@ class InvertTest extends TestCase
     {
         $expected = [
           [-2.0, 1.0],
-          [1.5, -0.5]
+          [1.5, -0.5],
         ];
         $a = ps::fromArray([[1, 2], [3, 4]]);
         $b = ps::inv($a);

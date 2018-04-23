@@ -46,7 +46,7 @@ class InnerProductTest extends TestCase
         $expected = 2;
         $a = ps::fromArray([1, 2, 3]);
         $b = ps::fromArray([0, 1, 0]);
-        $this->assertEquals($expected,  ps::toDouble(ps::inner($a, $b)));
+        $this->assertEquals($expected, ps::toDouble(ps::inner($a, $b)));
     }
 
     /**

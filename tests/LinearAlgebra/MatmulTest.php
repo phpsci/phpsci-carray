@@ -89,6 +89,6 @@ class MatmulTest extends TestCase
         $expected = 33;
         $a = ps::fromArray([1, 2, 3, 4]);
         $b = ps::fromArray([4, 9, 1, 2]);
-        $this->assertEquals($expected,  ps::toDouble(ps::matmul($a, $b)));
+        $this->assertEquals($expected, ps::toDouble(ps::matmul($a, $b)));
     }
 }
