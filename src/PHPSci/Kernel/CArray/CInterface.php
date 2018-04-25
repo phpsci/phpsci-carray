@@ -26,94 +26,115 @@ namespace PHPSci\Kernel\CArray;
 interface CInterface
 {
     /**
+     * @param \CArray $a
+     * @param \CArray $b
      * @return \CArray
      */
-    public static function add();
+    public static function add(\CArray $a, \CArray $b): \CArray;
 
     /**
+     * @param \CArray $a
+     * @param \CArray $b
      * @return \CArray
      */
-    public static function subtract();
+    public static function subtract(\CArray $a, \CArray $b): \CArray;
 
     /**
+     * @param \CArray $a
+     * @param int $axis
      * @return \CArray
      */
-    public static function sum();
+    public static function sum(\CArray $a, int $axis): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function exp();
+    public static function exp(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function log();
+    public static function log(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function log10();
+    public static function log10(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function log2();
+    public static function log2(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function log1p();
+    public static function log1p(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function tan();
+    public static function tan(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function sin();
+    public static function sin(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function cos();
+    public static function cos(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function arctan();
+    public static function arctan(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function arcsin();
+    public static function arcsin(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function arccos();
+    public static function arccos(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function sinh();
+    public static function sinh(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function cosh();
+    public static function cosh(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function tanh();
+    public static function tanh(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function transpose();
+    public static function transpose(\CArray $a): \CArray;
 
     /**
      * @return \CArray
@@ -121,127 +142,182 @@ interface CInterface
     public function flatten();
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function atleast_1d();
+    public static function atleast_1d(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function atleast_2d();
+    public static function atleast_2d(\CArray $a): \CArray;
 
     /**
+     * @param int $x
+     * @param int $y
+     * @param int $k
      * @return \CArray
      */
-    public static function eye();
+    public static function eye(int $x, int $y, int $k): \CArray;
 
     /**
+     * @param int $n
      * @return \CArray
      */
-    public static function identity();
+    public static function identity(int $n): \CArray;
 
     /**
+     * @param int $x
+     * @param int $y
      * @return \CArray
      */
-    public static function ones();
+    public static function ones(int $x, int $y): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function ones_like();
+    public static function ones_like(\CArray $a): \CArray;
 
     /**
+     * @param array $shape
      * @return \CArray
      */
-    public static function zeros();
+    public static function zeros(array $shape): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function zeros_like();
+    public static function zeros_like(\CArray $a): \CArray;
 
     /**
+     * @param $num
+     * @param int $x
+     * @param int $y
      * @return \CArray
      */
-    public static function full();
+    public static function full($num, int $x, int $y): \CArray;
 
     /**
+     * @param \CArray $a
+     * @param $num
      * @return \CArray
      */
-    public static function full_like();
+    public static function full_like(\CArray $a, $num): \CArray;
 
     /**
+     * @param array $a
      * @return \CArray
      */
-    public static function fromArray();
+    public static function fromArray(array $a): \CArray;
 
     /**
+     * @param $stop
+     * @param $start
+     * @param $step
      * @return \CArray
      */
-    public static function arange();
+    public static function arange($stop, $start, $step): \CArray;
 
     /**
+     * @param $start
+     * @param $stop
+     * @param int $num
      * @return \CArray
      */
-    public static function linspace();
+    public static function linspace($start, $stop, int $num): \CArray;
 
     /**
+     * @param $start
+     * @param $stop
+     * @param int $num
+     * @param $base
      * @return \CArray
      */
-    public static function logspace();
+    public static function logspace($start, $stop, int $num, $base): \CArray;
 
     /**
+     * @param int $x
+     * @param int $y
      * @return \CArray
      */
-    public static function standard_normal();
+    public static function standard_normal(int $x): \CArray;
 
     /**
+     * @param \CArray $a
+     * @param \CArray $b
      * @return \CArray
      */
-    public static function matmul();
+    public static function matmul(\CArray $a, \CArray $b): \CArray;
 
     /**
+     * @param \CArray $a
+     * @param \CArray $b
      * @return \CArray
      */
-    public static function inner();
+    public static function inner(\CArray $a, \CArray $b): \CArray;
 
     /**
-     * @return \CArray
+     * @param \CArray $a
+     * @return array
      */
-    public static function svd();
+    public static function svd(\CArray $a): array;
 
     /**
-     * @return \CArray
+     * @param \CArray $a
+     * @return array
      */
-    public static function eig();
+    public static function eig(\CArray $a): array;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function eigvals();
+    public static function eigvals(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
+     * @param \CArray $b
      * @return \CArray
      */
-    public static function solve();
+    public static function solve(\CArray $a, \CArray $b): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function inv();
+    public static function inv(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
+     * @param string $order
      * @return \CArray
      */
-    public static function norm();
+    public static function norm(\CArray $a, string $order = 'fro'): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function cond();
+    public static function cond(\CArray $a): \CArray;
 
     /**
+     * @param \CArray $a
      * @return \CArray
      */
-    public static function det();
+    public static function det(\CArray $a): \CArray;
+
+    /**
+     * @param object $a
+     * @return mixed
+     */
+    public static function toArray(\CArray $a): array;
+
+    /**
+     * @param \CArray $a
+     * @return mixed
+     */
+    public static function toDouble(\CArray $a);
 }

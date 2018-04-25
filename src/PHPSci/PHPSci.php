@@ -18,6 +18,7 @@
 namespace PHPSci;
 
 use PHPSci\Kernel\CArray\CInterface;
+use PHPSci\Kernel\CArray\Wrapper;
 
 /**
  * Main PHPSci Object
@@ -27,4 +28,5 @@ use PHPSci\Kernel\CArray\CInterface;
  */
 class PHPSci extends \CArray implements CInterface
 {
+    use Wrapper;
 }
