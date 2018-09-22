@@ -2,6 +2,17 @@
   <img src="https://i.imgur.com/QoIbhqj.png" width="70%" />
 </p>
 
+[![Latest Stable Version](https://poser.pugx.org/phpsci/phpsci/v/stable)](https://packagist.org/packages/phpsci/phpsci)
+[![Total Downloads](https://poser.pugx.org/phpsci/phpsci/downloads)](https://packagist.org/packages/phpsci/phpsci)
+[![Latest Unstable Version](https://poser.pugx.org/phpsci/phpsci/v/unstable)](https://packagist.org/packages/phpsci/phpsci)
+[![License](https://poser.pugx.org/phpsci/phpsci/license)](https://packagist.org/packages/phpsci/phpsci)
+
+[![Documentation Status](https://readthedocs.org/projects/phpsci/badge/?version=latest)](http://phpsci.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/phpsci/phpsci.svg?branch=master)](https://travis-ci.org/phpsci/phpsci)
+[![Build Status](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/build.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phpsci/phpsci/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpsci/phpsci/?branch=master)
+
+
 # Efficient PHP library for data scientists   
 
 PHPSci is a PHP Library for scientific computing powered by C. 
@@ -56,22 +67,11 @@ $a = PHPSci::fromArray([[1,2],[3,4]]);
 print_r($a);
 ```
 ```php
-PHPSci\PHPSci Object
+CArray Object
 (
-    [internal_pointer:protected] => PHPSci\Kernel\Orchestrator\MemoryPointer Object
-        (
-            [uuid:protected] => 1
-            [x:protected] => 2
-            [y:protected] => 2
-            [carray_internal:protected] => CArray Object
-                (
-                    [uuid] => 1
-                    [x] => 2
-                    [y] => 2
-                )
-
-        )
-
+    [uuid] => 0
+    [x] => 2
+    [y] => 2
 )
 ```
 
@@ -79,11 +79,6 @@ This happens because `print_r` only works with PHP's natural functions, objects,
 which is not the case for a CArray. 
 An array of PHPSci is just a pointer to memory. It carries with it the position of memory 
 where its data has been allocated.
-
-
-The `MemoryPointer` object is a mirror of the `CArray` object, it carries with it the information 
-needed to communicate with the C backend.
-
 
 To view your data, you can use the `echo` method or transform your CArray into a PHP array.
 

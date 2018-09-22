@@ -623,4 +623,13 @@ trait Wrapper
     {
         return parent::toDouble($a);
     }
+
+    /**
+     * @param \CArray $a
+     * @return mixed
+     */
+    public function flatten()
+    {
+        return parent::flatten();
+    }
 }

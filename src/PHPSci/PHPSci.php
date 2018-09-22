@@ -17,6 +17,7 @@
 
 namespace PHPSci;
 
+use PHPSci\Exceptions\InvalidCArrayInputException;
 use PHPSci\Kernel\CArray\CInterface;
 use PHPSci\Kernel\CArray\Wrapper;
 
@@ -26,7 +27,21 @@ use PHPSci\Kernel\CArray\Wrapper;
  * @author  Henrique Borba <henrique.borba.dev@gmail.com>
  * @package PHPSci
  */
-class PHPSci extends \CArray implements CInterface
+class PHPSci
 {
-    use Wrapper;
+    /**
+     * @param $input
+     * @return \CArray
+     * @throws InvalidCArrayInputException
+     */
+    public static function carray($input)
+    {
+        if(is_array($input)) {
+            return CArray::fromArray($input);
+        }
+        if(is_double($input) || is_float($input)) {
+            return CArray::fromDouble($input);
+        }
+        throw new InvalidCArrayInputException();
+    }
 }

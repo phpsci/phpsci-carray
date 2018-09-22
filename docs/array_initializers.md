@@ -3,11 +3,19 @@ Useful methods for initializing / creating arrays.
 
 - [Ones and Zeros](#Ones and Zeros)
     - [zeros](#zeros) - Return PHPSci Array full of zeros
+    - [zeros_like](#zeros_like)
+    - [ones](#ones)
+    - [ones_like](#ones_like)
+    - [full](#full)
+    - [full_like](#full_like)
+    - [eye](#eye)
     - [identity](#identity) - Return the identity PHPSci array
 - [Ranges](#Ranges)
     - [arange](#arange) - Return evenly spaced values within a given interval.
     - [logspace](#logspace) - Return numbers spaced evenly on a log scale.
     - [linspace](#linspace) - Return evenly spaced numbers over a specified interval.
+- [Distributions](#Distributions)
+    - [standard_normal](#standard_normal)    
 - [PHP native data](#PHP native data)
     - [fromArray](#fromarray) - Return PHPSci Array from input array
     - [toArray](#toarray)  - Return array from input PHPSci array

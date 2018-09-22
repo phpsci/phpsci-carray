@@ -40,12 +40,12 @@ class ArangeTest extends TestCase
     public function testArangeBasic()
     {
         $expected = [0, 1, 2];
-        $this->assertEquals($expected, ps::toArray(ps::arange(3, 0, 1)));
+        $this->assertEquals($expected, ps::toArray(ps::arange(0, 3, 1)));
 
         $expected = [3, 4, 5, 6];
-        $this->assertEquals($expected, ps::toArray(ps::arange(7, 3, 1)));
+        $this->assertEquals($expected, ps::toArray(ps::arange(3, 7, 1)));
 
         $expected = [3, 5];
-        $this->assertEquals($expected, ps::toArray(ps::arange(7, 3, 2)));
+        $this->assertEquals($expected, ps::toArray(ps::arange(3, 7, 2)));
     }
 }
