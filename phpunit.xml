@@ -8,7 +8,7 @@
         beStrictAboutChangesToGlobalState="true"
         enforceTimeLimit="true"
 >
-    <testsuite name="PHP-ML Test Suite">
+    <testsuite name="PHPSci Test Suite">
         <directory>tests</directory>
     </testsuite>
 
