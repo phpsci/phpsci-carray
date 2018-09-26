@@ -16,7 +16,7 @@
   ],
   "require": {
     "php": "^7.1",
-    "psr/log": "~1.0",
+    "psr/log": "~1.0"
   },
   "suggest": {
     "monolog/monolog": "Allows for client-level logging and tracing"
