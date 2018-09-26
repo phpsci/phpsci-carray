@@ -516,6 +516,15 @@ trait Wrapper
     }
 
     /**
+     * @param \CArray $a
+     * @return array
+     */
+    public static function unique(\CArray $a)
+    {
+        return parent::unique($a);
+    }
+
+    /**
      * Compute the eigenvalues and right eigenvectors of a square CArray.
      *
      * @param \CArray $a CArrays for which the eigenvalues and right eigenvectors will be computed
@@ -552,6 +561,18 @@ trait Wrapper
     public static function solve(\CArray $a, \CArray $b): \CArray
     {
         return parent::solve($a, $b);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param int|null $axis
+     * @return
+     */
+    public static function argmax(\CArray $a, int $axis = null)
+    {
+        if(!isset($axis))
+            return parent::argmax($a);
+        return parent::argmax($a, $axis);
     }
 
     /**
@@ -631,5 +652,159 @@ trait Wrapper
     public function flatten()
     {
         return parent::flatten();
+    }
+
+    /**
+     * @param \CArray $a
+     * @return
+     */
+    public static function negative(\CArray $a)
+    {
+        return parent::negative($a);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param \CArray $b
+     * @return
+     */
+    public static function multiply(\CArray $a, \CArray $b)
+    {
+        return parent::multiply($a, $b);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param \CArray $b
+     * @return
+     */
+    public static function divide(\CArray $a, \CArray $b)
+    {
+        return parent::divide($a, $b);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param int $axis
+     * @return
+     */
+    public static function mean(\CArray $a, int $axis = null)
+    {
+        if(!isset($axis)) {
+            return parent::mean($a);
+        }
+        return parent::mean($a, $axis);
+    }
+
+    /**
+     * Same as Numpy.var
+     *
+     * @param \CArray $a
+     * @return mixed
+     */
+    public static function var(\CArray $a)
+    {
+        return parent::var($a);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param \CArray $b
+     * @return
+     */
+    public static function square(\CArray $a)
+    {
+        return parent::square($a);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param \CArray $b
+     * @return
+     */
+    public static function abs(\CArray $a)
+    {
+        return parent::abs($a);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param \CArray $b
+     * @return
+     */
+    public static function in1d(\CArray $a, \CArray $b)
+    {
+        return parent::in1d($a, $b);
+    }
+
+    /**
+     * Search values and return their index keys.
+     *
+     * @param \CArray $a
+     * @param double $needle
+     * @return
+     */
+    public static function search_keys(\CArray $a, $needle)
+    {
+        return parent::search_keys($a, $needle);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param null $axis
+     * @return
+     */
+    public static function all(\CArray $a, $axis = null)
+    {
+        if(!isset($axis)) {
+            return parent::all($a);
+        }
+        return parent::all($a, $axis);
+    }
+
+    /**
+     * @param \CArray $a
+     * @param \CArray $b
+     * @return
+     */
+    public static function absolute(\CArray $a)
+    {
+        return parent::absolute($a);
+    }
+
+    /**
+     * @param \CArray $a
+     * @return float
+     */
+    public static function amin(\CArray $a)
+    {
+        return parent::amin($a);
+    }
+
+    /**
+     * @param \CArray $a
+     * @return float
+     */
+    public static function amax(\CArray $a)
+    {
+        return parent::amax($a);
+    }
+
+    /**
+     * @param double $a
+     * @return
+     */
+    public static function fromDouble(float $a)
+    {
+        return parent::fromDouble($a);
+    }
+
+    /**
+     * @param length
+     * @return
+     */
+    public static function randint(int $length = 0)
+    {
+        return parent::randint();
     }
 }

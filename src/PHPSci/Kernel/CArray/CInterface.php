@@ -320,4 +320,24 @@ interface CInterface
      * @return mixed
      */
     public static function toDouble(\CArray $a);
+
+    /**
+     * @param \CArray $a
+     * @return mixed
+     */
+    public static function negative(\CArray $a);
+
+    /**
+     * @param \CArray $a
+     * @param \CArray $b
+     * @return mixed
+     */
+    public static function multiply(\CArray $a, \CArray $b);
+
+    /**
+     * @param \CArray $a
+     * @param \CArray $b
+     * @return mixed
+     */
+    public static function divide(\CArray $a, \CArray $b);
 }
