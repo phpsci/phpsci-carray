@@ -17,9 +17,6 @@
   "require": {
     "php": "^7.1",
     "psr/log": "~1.0",
-    "phpsci/sciboard": "dev-master",
-    "jpgraph/jpgraph": "^4.0",
-    "jean-damien/pchart": "^2.1"
   },
   "suggest": {
     "monolog/monolog": "Allows for client-level logging and tracing"
