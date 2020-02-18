@@ -1,9 +1,8 @@
-PHP_ARG_ENABLE(carray, whether to enable CArray computing library,
-[  --disable-carray          Disable CArray computing library], yes)
+PHP_ARG_WITH(carray, whether to enable CArray computing library,
+[  --witch-carray          Disable CArray computing library], yes)
 
 if test "$PHP_CARRAY" != "no"; then
   AC_DEFINE([HAVE_CARRAY],1 ,[whether to enable  CArray computing library])
-  AC_HEADER_STDC
 
 AC_CHECK_HEADERS(
     [/opt/OpenBLAS/include/lapacke.h],
@@ -78,32 +77,33 @@ AC_CHECK_HEADERS(
 
 PHP_CHECK_LIBRARY(clBLAS,clblasSgemm,
 [
-  PHP_ADD_LIBRARY(clBLAS)
+  PHP_ADD_LIBRARY(clBLAS,,CARRAY_SHARED_LIBADD)
   AC_DEFINE(HAVE_CLBLAS,1,[Have CLBLAS support])
 
   PHP_CHECK_LIBRARY(OpenCL,clGetPlatformIDs,
   [
-    PHP_ADD_LIBRARY(OpenCL)
+    PHP_ADD_LIBRARY(OpenCL,,CARRAY_SHARED_LIBADD)
     AC_DEFINE(HAVE_OPENCL,1,[Have OpenCL support])
+    AC_MSG_RESULT([OpenCL detected ])
   ],[
-    AC_MSG_RESULT([OpenCL not detected (OpenCL BLAS not available).])
+    AC_MSG_WARN([OpenCL not detected (OpenCL BLAS not available).])
   ],[
     -lOpenCL
   ])
 ],[
   AC_MSG_RESULT([clBLAS not detected (OpenCL BLAS not available).])
 ],[
-  -lclBLAS
+  -LclBLAS
 ])
 
 
 PHP_CHECK_LIBRARY(blas,cblas_sdot,
 [
-  PHP_ADD_LIBRARY(blas)
+  PHP_ADD_LIBRARY(blas,,CARRAY_SHARED_LIBADD)
 ],[
   PHP_CHECK_LIBRARY(openblas,cblas_sdot,
   [
-    PHP_ADD_LIBRARY(openblas)
+    PHP_ADD_LIBRARY(openblas,,CARRAY_SHARED_LIBADD)
     AC_DEFINE(HAVE_BLAS,1,[ ])
   ],[
     AC_MSG_RESULT([wrong openblas/blas version or library not found.])
@@ -117,14 +117,13 @@ PHP_CHECK_LIBRARY(blas,cblas_sdot,
 PHP_CHECK_LIBRARY(lapacke,LAPACKE_sgetrf,
 [
   AC_DEFINE(HAVE_LAPACKE,1,[ ])
-  PHP_ADD_LIBRARY(lapacke)
+  PHP_ADD_LIBRARY(lapacke,,CARRAY_SHARED_LIBADD)
 ],[
   AC_MSG_RESULT([wrong lapacke version or library not found])
 ],[
   -llapacke
 ])
 
-CFLAGS="$CFLAGS -lopenblas -llapacke -lblas -llapack -lclBLAS -lOpenCL"
 
 PHP_NEW_EXTENSION(carray,
 	  phpsci.c \
@@ -170,7 +169,7 @@ PHP_NEW_EXTENSION(carray,
       kernel/range.c \
       kernel/conversion_utils.c \
 	  kernel/buffer.c ,
-	  $ext_shared,, )
+	  $ext_shared)
   PHP_INSTALL_HEADERS([ext/carray], [phpsci.h, kernel/carray.h, kernel/types.h])
   PHP_SUBST(CARRAY_SHARED_LIBADD)
 fi
