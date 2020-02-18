@@ -1,6 +1,9 @@
 PHP_ARG_WITH(carray, whether to enable CArray computing library,
 [  --witch-carray          Disable CArray computing library], yes)
 
+PHP_ARG_ENABLE(carray-opencl, whether to enable OpenCL support,
+[  --enable-carray-opencl     whether to enable OpenCL support], no, no)
+
 if test "$PHP_CARRAY" != "no"; then
   AC_DEFINE([HAVE_CARRAY],1 ,[whether to enable  CArray computing library])
 
@@ -73,37 +76,40 @@ AC_CHECK_HEADERS(
     [[#include "/usr/include/clBLAS.h"]]
 )
 
+if test "$PHP_CARRAY_OPENCL" != "no"; then
+    PHP_CHECK_LIBRARY(clBLAS,clblasSgemm,
+    [
+      PHP_ADD_LIBRARY(clBLAS,,CARRAY_SHARED_LIBADD)
+      AC_DEFINE(HAVE_CLBLAS,1,[Have CLBLAS support])
 
+      PHP_CHECK_LIBRARY(OpenCL,clGetPlatformIDs,
+      [
+        PHP_ADD_LIBRARY(OpenCL,,CARRAY_SHARED_LIBADD)
+        AC_DEFINE(HAVE_OPENCL,1,[Have OpenCL support])
+        AC_MSG_RESULT([OpenCL detected ])
+      ],[
+        AC_MSG_WARN([OpenCL not detected (OpenCL BLAS not available).])
+      ],[
+        -lOpenCL
+      ])
+    ],[
+      AC_MSG_RESULT([clBLAS not detected (OpenCL BLAS not available).])
+    ],[
+      -LclBLAS
+    ])
+fi
 
-PHP_CHECK_LIBRARY(clBLAS,clblasSgemm,
+PHP_CHECK_LIBRARY(cblas,cblas_sdot,
 [
-  PHP_ADD_LIBRARY(clBLAS,,CARRAY_SHARED_LIBADD)
-  AC_DEFINE(HAVE_CLBLAS,1,[Have CLBLAS support])
-
-  PHP_CHECK_LIBRARY(OpenCL,clGetPlatformIDs,
-  [
-    PHP_ADD_LIBRARY(OpenCL,,CARRAY_SHARED_LIBADD)
-    AC_DEFINE(HAVE_OPENCL,1,[Have OpenCL support])
-    AC_MSG_RESULT([OpenCL detected ])
-  ],[
-    AC_MSG_WARN([OpenCL not detected (OpenCL BLAS not available).])
-  ],[
-    -lOpenCL
-  ])
-],[
-  AC_MSG_RESULT([clBLAS not detected (OpenCL BLAS not available).])
-],[
-  -LclBLAS
-])
-
-
-PHP_CHECK_LIBRARY(blas,cblas_sdot,
-[
-  PHP_ADD_LIBRARY(blas,,CARRAY_SHARED_LIBADD)
+  AC_DEFINE(HAVE_CBLAS,1,[ ])
+  AC_DEFINE(HAVE_BLAS,1,[ ])
+  PHP_ADD_LIBRARY(cblas,,CARRAY_SHARED_LIBADD)
+  AC_MSG_RESULT([CBlas detected ])
 ],[
   PHP_CHECK_LIBRARY(openblas,cblas_sdot,
   [
     PHP_ADD_LIBRARY(openblas,,CARRAY_SHARED_LIBADD)
+    AC_MSG_RESULT([OpenBLAS detected ])
     AC_DEFINE(HAVE_BLAS,1,[ ])
   ],[
     AC_MSG_RESULT([wrong openblas/blas version or library not found.])
@@ -111,7 +117,7 @@ PHP_CHECK_LIBRARY(blas,cblas_sdot,
     -lopenblas
   ])
 ],[
-  -lblas
+  -lcblas
 ])
 
 PHP_CHECK_LIBRARY(lapacke,LAPACKE_sgetrf,
