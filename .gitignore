@@ -1,11 +1,34 @@
-# COMPOSER
-composer.lock
-vendor/
-composer.phar
-.php_cs.cache
+# TEST
+test.php
 
 # EDITOR
 .idea
+.libs
+
+# COMPILER
+.lo
+autom4te.cache
+*.lo
+.o
+.la
+*.la
+*.o
+modules
+include
+build
+config.h
+config.h.in
+config.log
+config.nice
+config.status
+configure
+configure.ac
+libtool
+Makefile
+Makefile.fragments
+Makefile.objects
+run-tests.php
+vgcore.*
 
 # OS
 .DS_Store

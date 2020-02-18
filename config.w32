@@ -1,0 +1,41 @@
+ARG_ENABLE("carray", "enable carray", "no");
+
+
+if (PHP_CARRAY != "no") {
+    if (!CHECK_LIB("libopenblas_a.lib", "carray", PHP_PHP_BUILD + "\\libs")) {
+        ERROR("Unable to find libopenblas.lib");
+    }
+    if (CHECK_LIB("libopenblas_a.lib", "carray", PHP_PHP_BUILD + "\\libs") &&
+        CHECK_HEADER_ADD_INCLUDE("cblas.h", "CFLAGS_OPENBLAS", PHP_PHP_BUILD + "\\include") &&
+        CHECK_HEADER_ADD_INCLUDE("lapacke.h", "CFLAGS_LAPACKE", PHP_PHP_BUILD + "\\include"))  {
+        EXTENSION("carray", "phpsci.c", PHP_CARRAY_SHARED, "-I"+configure_module_dirname);
+        ADD_SOURCES(configure_module_dirname  + "/kernel",
+            "exceptions.c"
+            , "carray");
+        ADD_SOURCES(configure_module_dirname  + "/kernel/carray",
+            "carray.c tuple.c"
+            , "carray");
+        ADD_SOURCES(configure_module_dirname  + "/kernel/carray/utils",
+            "carray_printer.c"
+            , "carray");
+        ADD_SOURCES(configure_module_dirname  + "/kernel/memory_pointer",
+            "memory_pointer.c utils.c"
+            , "carray");
+        ADD_SOURCES(configure_module_dirname  + "/kernel/buffer",
+            "memory_manager.c"
+            , "carray");
+        ADD_SOURCES(configure_module_dirname  + "/kernel/php",
+            "php_array.c"
+            , "carray");
+        ADD_SOURCES(configure_module_dirname  + "/operations",
+            "initializers.c linalg.c ranges.c basic_operations.c random.c arithmetic.c exponents.c logarithms.c trigonometric.c hyperbolic.c transformations.c magic_properties.c"
+            , "carray");
+        ADD_SOURCES(configure_module_dirname  + "/operations/linalg",
+            "norms.c others.c eigenvalues.c equations.c"
+            , "carray");
+
+    } else {
+        ERROR( "OpenBlas not found! " );
+    }
+
+}

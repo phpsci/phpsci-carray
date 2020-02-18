@@ -1,19 +1,36 @@
-site_name: PHPSci
+site_name: PHPSci CArray
 theme: readthedocs
-repo_url: http://github.com/phpsci/phpsci
-site_url: http://phpsci.readthedocs.io/
-site_description: 'Documentation for PHPSci'
+repo_url: http://github.com/phpsci/phpsci-ext
+site_url: http://phpsci-carray.readthedocs.io/
+site_description: 'Documentation for PHPSci CArray Extension for PHP.'
 docs_dir: docs/
 dev_addr: '0.0.0.0:8000'
 
 pages:
 - Home: index.md
 - Routines:
-  - Array Creation: array_initializers.md
-  - Array Manipulation: array_manipulation.md
-  - Linear Algebra: linalg.md
-  - Mathematical: math.md
-- PHPSci Internals:
-  - CArray Object: carray.md
-  - Parallelism: parallelism.md
-- Performance: perf.md
+    - CArray Object: routines/carray_object.md
+    - Ones and Zeros: routines/ones_and_zeros.md
+    - Numerical Ranges: routines/numerical_ranges.md
+    - Transpose: routines/transpose.md
+    - Dimensions: routines/dimensions.md
+    - Indexing: routines/indexing.md
+    - Matrix & Vector Products: routines/ma_products.md
+    - Decompositions: routines/decompositions.md
+    - Matrix Norms: routines/ma_norms.md
+    - Equations & Inverse: routines/equations_and_inverse.md
+    - Trigonometric:  routines/trigonometric.md
+    - Hyperbolic:  routines/hyperbolic.md
+    - Rounding: routines/rounding.md
+    - Sums, products, differences: routines/sum_products_and_diff.md
+    - Exponents and logarithms: routines/exponents_loga.md
+    - Arithmetic: routines/arithmetic.md
+    - Sorting: routines/sorting.md
+    - Searching: routines/searching.md
+    - Random Sampling: routines/random.md
+    - Rearranging: routines/rearranging.md
+    - Distributions: routines/distributions.md
+    - Statistics: routines/statistics.md
+- CArray Internals:
+  - Internals Explanation: internals/explanation.md
+  - C Reference: internals/carray_api.md
