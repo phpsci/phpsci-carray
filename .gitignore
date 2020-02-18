@@ -13,11 +13,12 @@ autom4te.cache
 .la
 *.la
 *.o
-modules
-include
-build
+./modules/
+./include/
+./build/
 config.h
 config.h.in
+Makefile
 config.log
 config.nice
 config.status
