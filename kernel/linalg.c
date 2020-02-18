@@ -468,7 +468,7 @@ CArray_Det(CArray * a, MemoryPointer * out)
     status = LAPACKE_dgetrf(
             LAPACK_ROW_MAJOR,
             CArray_DIMS(a)[0],
-            CArray_DIMS(a)[1],
+            CArray_DIMS(a)[0],
             data,
             CArray_DIMS(a)[0],
             ipiv
@@ -496,6 +496,8 @@ CArray_Det(CArray * a, MemoryPointer * out)
         acc_logdet += log(abs_element);
         src += CArray_DIMS(a)[0]+1;
     }
+
+    sign = acc_sign;
 
     rtn = emalloc(sizeof(CArray));
     rtn_descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
@@ -538,7 +540,7 @@ DOUBLE_vdot(char *ip1, int is1, char *ip2, int is2,
         while (n > 0) {
             int chunk = n < CARRAY_CBLAS_CHUNK ? n : CARRAY_CBLAS_CHUNK;
             double tmp[2];
-#ifdef HAVE_BLAS
+#ifdef HAVE_CBLAS
             cblas_zdotc_sub((int)n, ip1, is1b, ip2, is2b, tmp);
 #endif
             sum[0] += (double)tmp[0];
@@ -583,8 +585,6 @@ CArray_Vdot(CArray * target_a, CArray * target_b, MemoryPointer * out)
     } else {
         a = target_a;
     }
-
-
 
     if (CArray_DESCR(target_b)->type_num != TYPE_DOUBLE_INT) {
         CArrayDescriptor *descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
@@ -672,7 +672,6 @@ CArray_Vdot(CArray * target_a, CArray * target_b, MemoryPointer * out)
             goto fail;
     }
 
-
     vdot(ip1, stride1, ip2, stride2, op, n);
 
     if (casted_a) {
@@ -693,6 +692,8 @@ CArray_Vdot(CArray * target_a, CArray * target_b, MemoryPointer * out)
     CArrayDescriptor_DECREF(CArray_DESCR(ap2));
     CArray_Free(ap1);
     CArray_Free(ap2);
+
+
     return ret;
 fail:
     //Py_XDECREF(ap1);
