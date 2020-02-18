@@ -18,15 +18,15 @@
 #include "../alloc.h"
 #include "common.h"
 
-#ifdef HAVE_BLAS
+#ifdef HAVE_CBLAS
 #include "cblas.h"
 
 /*
  * Helper: dispatch to appropriate cblas_?gemm for typenum.
  */
 static void
-gemm(int typenum, enum CBLAS_ORDER order,
-     enum CBLAS_TRANSPOSE transA, enum CBLAS_TRANSPOSE transB,
+gemm(int typenum, CBLAS_ORDER order,
+     CBLAS_TRANSPOSE transA, CBLAS_TRANSPOSE transB,
      int m, int n, int k,
      CArray *A, int lda, CArray *B, int ldb, CArray *R)
 {
@@ -53,7 +53,7 @@ gemm(int typenum, enum CBLAS_ORDER order,
  * Helper: dispatch to appropriate cblas_?syrk for typenum.
  */
 static void
-syrk(int typenum, enum CBLAS_ORDER order, enum CBLAS_TRANSPOSE trans,
+syrk(int typenum, CBLAS_ORDER order, CBLAS_TRANSPOSE trans,
      int n, int k,
      CArray *A, int lda, CArray *R)
 {
@@ -141,7 +141,7 @@ _bad_strides(CArray * ap)
  * Helper: dispatch to appropriate cblas_?gemv for typenum.
  */
 static void
-gemv(int typenum, enum CBLAS_ORDER order, enum CBLAS_TRANSPOSE trans,
+gemv(int typenum, CBLAS_ORDER order, CBLAS_TRANSPOSE trans,
      CArray *A, int lda, CArray *X, int incX,
      CArray *R)
 {
@@ -414,7 +414,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
     else if (ap1shape == _matrix && ap2shape != _matrix) {
         /* Matrix vector multiplication -- Level 2 BLAS */
         /* lda must be MAX(M,1) */
-        enum CBLAS_ORDER Order;
+        CBLAS_ORDER Order;
         int ap2s;
 
         if (!CArray_ISONESEGMENT(ap1)) {
@@ -441,7 +441,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
     }
     else if (ap1shape != _matrix && ap2shape == _matrix) {
         /* Vector matrix multiplication -- Level 2 BLAS */
-        enum CBLAS_ORDER Order;
+        CBLAS_ORDER Order;
         int ap1s;
 
         if (!CArray_ISONESEGMENT(ap2)) {
@@ -477,8 +477,8 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
          * Matrix matrix multiplication -- Level 3 BLAS
          *  L x M  multiplied by M x N
          */
-        enum CBLAS_ORDER Order;
-        enum CBLAS_TRANSPOSE Trans1, Trans2;
+        CBLAS_ORDER Order;
+        CBLAS_TRANSPOSE Trans1, Trans2;
         int M, N, L;
 
         /* Optimization possible: */
