@@ -204,9 +204,8 @@ CArray_Correlate2(CArray * op1, CArray * op2, int mode, MemoryPointer * out)
         add_to_buffer(out, ret, sizeof(CArray));
     }
 
+    CArrayDescriptor_DECREF(typec);
     CArrayDescriptor_FREE(typec);
-    CArray_DECREF(ap1);
-    CArray_DECREF(ap2);
     return ret;
 clean_ret:
     CArray_DECREF(ret);
