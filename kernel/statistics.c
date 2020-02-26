@@ -205,7 +205,15 @@ CArray_Correlate2(CArray * op1, CArray * op2, int mode, MemoryPointer * out)
     }
 
     CArrayDescriptor_DECREF(typec);
-    CArrayDescriptor_FREE(typec);
+
+    if (ap1->data != op1->data) {
+        CArray_Free(ap1);
+    }
+
+    if (ap2->data != op2->data) {
+        CArray_Free(ap2);
+    }
+
     return ret;
 clean_ret:
     CArray_DECREF(ret);
