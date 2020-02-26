@@ -47,6 +47,10 @@ raw_array_is_aligned(int ndim, int *shape, char *data, int *strides, int alignme
 int
 IsAligned(CArray * array)
 {
+    if (CArray_DESCR(array) == NULL) {
+        return 0;
+    }
+
     return raw_array_is_aligned(CArray_NDIM(array), CArray_DIMS(array),
                                 CArray_DATA(array), CArray_STRIDES(array),
                                 CArray_DESCR(array)->alignment);

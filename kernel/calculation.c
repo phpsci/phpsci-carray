@@ -228,7 +228,7 @@ CArray_Prod(CArray * self, int * axis, int rtype, MemoryPointer * out_ptr)
     CArrayIterator * it = NULL;
 
     ret = (CArray *)emalloc(sizeof(CArray));
-    descr = (CArrayDescriptor*)emalloc(sizeof(CArrayDescriptor));
+    descr = (CArrayDescriptor*)ecalloc(1, sizeof(CArrayDescriptor));
     arr = CArray_CheckAxis(self, axis, 0);
     
     if(axis != NULL) {

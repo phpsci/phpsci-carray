@@ -1509,8 +1509,6 @@ CArray_SetWritebackIfCopyBase(CArray *arr, CArray *base)
     CArray_ENABLEFLAGS(arr, CARRAY_ARRAY_WRITEBACKIFCOPY);
     CArray_CLEARFLAGS(base, CARRAY_ARRAY_WRITEABLE);
 
-    return 0;
-
   fail:
     CArray_DECREF(base);
     return -1;

@@ -107,18 +107,20 @@ void
 _free_data_owner(MemoryPointer * ptr)
 {
     CArray * array = CArray_FromMemoryPointer(ptr);
+
     CArrayDescriptor_DECREF(array->descriptor);
+
     if(array->descriptor->refcount < 0) {
         CArrayDescriptor_FREE(CArray_DESCR(array));
     }
-    
+
     CArray_DECREF(array);
     efree(array->dimensions);
     efree(array->strides);
     if(array->refcount < 0) {
         efree(array->data);
         buffer_remove(ptr);
-    }    
+    }
 }
 
 /**
