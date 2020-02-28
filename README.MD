@@ -30,7 +30,7 @@ It's really easy to compile this extension using Linux environments.
 ```commandline
 $ add-apt-repository -y ppa:ondrej/php
 $ apt-get update
-$ apt-get install libblas-dev libatlas-base-dev php7.2-dev
+$ apt-get install libblas-dev libatlas-base-dev liblapacke-dev php7.2-dev
 $ phpize
 $ ./configure
 $ make test
