@@ -510,6 +510,17 @@ check_and_adjust_axis(int *axis, int ndim)
     return check_and_adjust_axis_msg(axis, ndim);
 }
 
+/* Auxiliary routine: printing a matrix */
+static inline void
+print_matrix( char* desc, int m, int n, double* a, int lda ) {
+    int i, j;
+    printf( "\n %s\n", desc );
+    for( i = 0; i < m; i++ ) {
+        for( j = 0; j < n; j++ ) printf( " %6.2f", a[i+j*lda] );
+        printf( "\n" );
+    }
+}
+
 /*
  * Like ceil(value), but check for overflow.
  *

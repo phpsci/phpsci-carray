@@ -1027,6 +1027,7 @@ PHP_METHOD(CArray, matmul)
     ZEND_PARSE_PARAMETERS_END();    
     ZVAL_TO_MEMORYPOINTER(target1, &target1_ptr, NULL);
     ZVAL_TO_MEMORYPOINTER(target2, &target2_ptr, NULL);
+    
     target_ca1 = CArray_FromMemoryPointer(&target1_ptr);
     target_ca2 = CArray_FromMemoryPointer(&target2_ptr);
     output_ca = CArray_Matmul(target_ca1, target_ca2, NULL, &result_ptr);
@@ -1054,6 +1055,31 @@ PHP_METHOD(CArray, inv)
     if (rtn_ca != NULL) {
         RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
     }
+}
+PHP_METHOD(CArray, solve)
+{
+    MemoryPointer out, a_ptr, b_ptr;
+    CArray *a_ca, *rtn_ca, *b_ca;
+    zval *a, *b;
+    ZEND_PARSE_PARAMETERS_START(2, 2)
+        Z_PARAM_ZVAL(a)
+        Z_PARAM_ZVAL(b)
+    ZEND_PARSE_PARAMETERS_END();
+
+    ZVAL_TO_MEMORYPOINTER(a, &a_ptr, NULL);
+    ZVAL_TO_MEMORYPOINTER(b, &b_ptr, NULL);
+    a_ca = CArray_FromMemoryPointer(&a_ptr);
+    b_ca = CArray_FromMemoryPointer(&b_ptr);
+
+    rtn_ca = CArray_Solve(a_ca, b_ca, &out);
+
+    if (rtn_ca == NULL) {
+        return;
+    }
+
+    FREE_FROM_MEMORYPOINTER(&a_ptr);
+    FREE_FROM_MEMORYPOINTER(&b_ptr);
+    RETURN_MEMORYPOINTER(return_value, &out);
 }
 /**
  * @todo Implement more norm types
@@ -1271,6 +1297,9 @@ PHP_METHOD(CArray, zeros)
         dtype = emalloc(sizeof(char));
         *dtype = 'd';
     }
+
+    // @todo Validate input array (check for empty shape array)
+
     shape = ZVAL_TO_TUPLE(zshape, &ndim);
     CArray_Zeros(shape, ndim, *dtype, &order, &ptr);
     efree(shape);
@@ -2719,6 +2748,7 @@ static zend_function_entry carray_class_methods[] =
 
         // LINEAR ALGEBRA
         PHP_ME(CArray, matmul, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CArray, solve, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CArray, inv, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CArray, vdot, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CArray, inner, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

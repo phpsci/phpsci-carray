@@ -737,7 +737,7 @@ _select_carray_funcs(CArrayDescriptor *descr)
     CArray_VectorUnaryFunc * castfunc;
     CArray_ArrFuncs * functions;
     if(descr->f == NULL) {
-        functions = emalloc(sizeof(CArray_ArrFuncs));
+        functions = ecalloc(1, sizeof(CArray_ArrFuncs));
         descr->f = functions;
     }
 

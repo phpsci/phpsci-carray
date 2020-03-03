@@ -740,7 +740,6 @@ CArray_Negative(CArray * a, MemoryPointer * out)
 
     rtn = CArray_Multiply(a, negative_ca, out);
 
-    CArrayDescriptor_FREE(CArray_DESCR(negative_ca));
     CArray_Free(negative_ca);
     return rtn;
 }

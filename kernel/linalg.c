@@ -36,6 +36,37 @@ static double d_minus_one;
 static double d_ninf;
 static double d_nan;
 
+typedef struct linearize_data_struct
+{
+    int rows;
+    int columns;
+    int row_strides;
+    int column_strides;
+    int output_lead_dim;
+} LINEARIZE_DATA_t;
+
+static inline void
+init_linearize_data_ex(LINEARIZE_DATA_t *lin_data,
+        int rows,
+        int columns,
+        int row_strides,
+        int column_strides,
+        int output_lead_dim)
+{
+    lin_data->rows = rows;
+    lin_data->columns = columns;
+    lin_data->row_strides = row_strides;
+    lin_data->column_strides = column_strides;
+    lin_data->output_lead_dim = output_lead_dim;
+}
+
+static inline void
+init_linearize_data(LINEARIZE_DATA_t *lin_data, int rows, int columns,
+        int row_strides, int column_strides)
+{
+    init_linearize_data_ex(lin_data, rows, columns, row_strides, column_strides, columns);
+}
+
 static inline void *
 linearize_DOUBLE_matrix(double *dst_in,
                         double *src_in,
@@ -182,7 +213,7 @@ CArray_Matmul(CArray * ap1, CArray * ap2, CArray * out, MemoryPointer * ptr)
         return clblas_matrixproduct(typenum, ap1, ap2, out, ptr);
     }
 #endif
-
+    
     if(typenum == TYPE_INTEGER_INT) {
         dot = &INT_dot;
     }
@@ -865,6 +896,95 @@ CArray_InnerProduct(CArray *op1, CArray *op2, MemoryPointer *out)
     CArrayDescriptor_DECREF(typec);
     CArrayDescriptor_FREE(typec);
     return ret;
+fail:
+    return NULL;
+}
+
+static void
+DOUBLE_solve(CArray *a, CArray *b, CArray *out)
+{
+    int * ipiv = emalloc(sizeof(int) * CArray_DIMS(a)[0]);
+    int status;
+    double *dataA = emalloc(sizeof(double) * CArray_SIZE(a));
+    double *dataB = emalloc(sizeof(double) * CArray_SIZE(b));
+
+    if (!CArray_CHKFLAGS(a, CARRAY_ARRAY_C_CONTIGUOUS)) {
+        linearize_DOUBLE_matrix(dataA, DDATA(a), a);
+    } else {
+        memcpy(dataA, DDATA(a), sizeof(double) * CArray_SIZE(a));
+    }
+
+    if (!CArray_CHKFLAGS(b, CARRAY_ARRAY_C_CONTIGUOUS)) {
+        linearize_DOUBLE_matrix(dataB, DDATA(b), b);
+    } else {
+        memcpy(dataB, DDATA(b), sizeof(double) * CArray_SIZE(b));
+    }
+
+    int n = CArray_DIMS(a)[0];
+    int nrhs = 1;
+
+    status = LAPACKE_dgesv(LAPACK_ROW_MAJOR,
+                           n,
+                           nrhs,
+                           dataA,
+                           CArray_DIMS(a)[0],
+                           ipiv,
+                           dataB,
+                           1);
+
+    print_matrix("Solution", n, nrhs, dataB, CArray_DIMS(a)[0]);
+    if (status > 0) {
+        throw_valueerror_exception("The diagonal element of the triangular factor of A is zero, so that A is singular");
+    }
+
+
+}
+
+CArray *
+CArray_Solve(CArray *target_a, CArray *target_b, MemoryPointer * out)
+{
+    CArray *rtn;
+    int casted_a = 0, casted_b = 0;
+    CArray *a = NULL, *b = NULL;
+
+    if (CArray_DESCR(target_a)->type_num != TYPE_DOUBLE_INT) {
+        CArrayDescriptor *descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
+        if (CArray_CHKFLAGS(target_a, CARRAY_ARRAY_F_CONTIGUOUS)) {
+            a = CArray_NewLikeArray(target_a, CARRAY_FORTRANORDER, descr, 0);
+        }
+        if (CArray_CHKFLAGS(target_a, CARRAY_ARRAY_C_CONTIGUOUS)) {
+            a = CArray_NewLikeArray(target_a, CARRAY_CORDER, descr, 0);
+        }
+        if(CArray_CastTo(a, target_a) < 0) {
+            goto fail;
+        }
+        casted_a = 1;
+    } else {
+        a = target_a;
+    }
+
+    if (CArray_DESCR(target_b)->type_num != TYPE_DOUBLE_INT) {
+        CArrayDescriptor *descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
+        if (CArray_CHKFLAGS(target_b, CARRAY_ARRAY_F_CONTIGUOUS)) {
+            b = CArray_NewLikeArray(target_b, CARRAY_FORTRANORDER, descr, 0);
+        }
+        if (CArray_CHKFLAGS(target_b, CARRAY_ARRAY_C_CONTIGUOUS)) {
+            b = CArray_NewLikeArray(target_b, CARRAY_CORDER, descr, 0);
+        }
+        if(CArray_CastTo(b, target_b) < 0) {
+            goto fail;
+        }
+        casted_b = 1;
+    } else {
+        b = target_b;
+    }
+
+   if (CArray_TYPE(a) == TYPE_DOUBLE_INT && CArray_TYPE(b) == TYPE_DOUBLE_INT) {
+       DOUBLE_solve(a, b, rtn);
+   }
+
+   return NULL;
+
 fail:
     return NULL;
 }

@@ -201,7 +201,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
 
     ap1shape = _select_matrix_shape(ap1);
     ap2shape = _select_matrix_shape(ap2);
-
+    
     if (ap1shape == _scalar || ap2shape == _scalar) {
         CArray *oap1, *oap2;
         oap1 = ap1; oap2 = ap2;
@@ -293,7 +293,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
         l = CArray_DIM(ap1, CArray_NDIM(ap1) - 1);
 
         if (CArray_DIM(ap2, 0) != l) {
-            //dot_alignment_error(ap1, PyArray_NDIM(ap1) - 1, ap2, 0);
+            throw_notimplemented_exception();
             goto fail;
         }
         nd = CArray_NDIM(ap1) + CArray_NDIM(ap2) - 2;
@@ -316,6 +316,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
 
     numbytes = CArray_NBYTES(out_buf);
     memset(CArray_DATA(out_buf), 0, numbytes);
+    
     if (numbytes == 0 || l == 0) {
         CArray_DECREF(ap1);
         CArray_DECREF(ap2);
@@ -468,8 +469,8 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
         else {
             ap1s = CArray_STRIDE(ap1, 0) / CArray_ITEMSIZE(ap1);
         }
-
         gemv(typenum, Order, CblasTrans, ap2, lda, ap1, ap1s, out_buf);
+        CArray_INCREF(out_buf);
     }
     else {
         /*
