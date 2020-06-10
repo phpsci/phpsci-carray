@@ -1,7 +1,3 @@
-//
-// Created by Henrique Borba on 19/11/2018.
-//
-
 #ifndef PHPSCI_EXT_BUFFER_H
 #define PHPSCI_EXT_BUFFER_H
 
