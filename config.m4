@@ -173,10 +173,11 @@ PHP_NEW_EXTENSION(carray,
       kernel/random.c \
       kernel/storage.c \
       kernel/range.c \
+      kernel/random/distributions.c \
       kernel/conversion_utils.c \
 	  kernel/buffer.c ,
 	  $ext_shared)
-  PHP_INSTALL_HEADERS([ext/carray], [phpsci.h, kernel/carray.h, kernel/types.h])
+  PHP_INSTALL_HEADERS([ext/carray], [phpsci.h, kernel/carray.h, kernel/types.h, kernel/buffer.h])
   PHP_SUBST(CARRAY_SHARED_LIBADD)
 fi
 

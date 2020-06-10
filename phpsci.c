@@ -58,6 +58,7 @@
 #include "kernel/clip.h"
 #include "kernel/storage.h"
 #include "kernel/round.h"
+#include "kernel/random/distributions.h"
 
 #ifdef HAVE_CLBLAS
 #include "kernel/gpu.h"
@@ -2456,6 +2457,25 @@ PHP_METHOD(CArray, rand)
     RETURN_MEMORYPOINTER(return_value, &out);
     FREE_TUPLE(dims);
 }
+PHP_METHOD(CArray, poisson)
+{
+    zval * size;
+    int len, *dims;
+    double lambda;
+    MemoryPointer out;
+    ZEND_PARSE_PARAMETERS_START(2, 2)
+        Z_PARAM_ARRAY(size)
+        Z_PARAM_DOUBLE(lambda)
+    ZEND_PARSE_PARAMETERS_END();
+
+    dims = ZVAL_TO_TUPLE(size, &len);
+
+    CArray_Poisson(dims, lambda, &out);
+
+    RETURN_MEMORYPOINTER(return_value, &out);
+    FREE_TUPLE(dims);
+}
+
 
 /**
  * MISC
@@ -2692,6 +2712,7 @@ static zend_function_entry carray_class_methods[] =
 
         // RANDOM
         PHP_ME(CArray, rand, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CArray, poisson, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 
         // MISC
         PHP_ME(CArray, fill, NULL, ZEND_ACC_PUBLIC)
