@@ -16,11 +16,9 @@ struct MemoryStack {
     int capacity;
     int freed;
     size_t bsize;
-} MemoryStack;
-
+};
 
 extern struct MemoryStack PHPSCI_MAIN_MEM_STACK;
-
 
 void add_to_buffer(MemoryPointer * ptr, struct CArray * array, size_t size);
 void buffer_to_capacity(int new_capacity, size_t size);
