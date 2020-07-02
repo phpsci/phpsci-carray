@@ -215,9 +215,25 @@ PHP_METHOD(CRubix, implodeRow)
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::shape
+ */
 PHP_METHOD(CRubix, shape)
 {
+    MemoryPointer ptr;
+    CArray * target;
+    zval * obj = getThis();
+    zval tmp_zval;
+    int i;
 
+    ZVAL_TO_MEMORYPOINTER(obj, &ptr, NULL);
+    target = CArray_FromMemoryPointer(&ptr);
+
+    array_init_size(return_value, CArray_NDIM(target));
+    for (i = 0; i < CArray_NDIM(target); i++) {
+        ZVAL_LONG(&tmp_zval, CArray_DIMS(target)[i]);
+        zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), &tmp_zval);
+    }
 }
 
 PHP_METHOD(CRubix, shapeString)
@@ -235,6 +251,9 @@ PHP_METHOD(CRubix, size)
 
 }
 
+/**
+ *
+ */
 PHP_METHOD(CRubix, m)
 {
 

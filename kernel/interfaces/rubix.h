@@ -14,11 +14,11 @@ extern zend_module_entry crubix_module_entry;
 /**
  * Rubix-ML CArray Interface Definition
  */
-PHP_METHOD(CRubix, identity);
-PHP_METHOD(CRubix, zeros);
-PHP_METHOD(CRubix, ones);
-PHP_METHOD(CRubix, diagonal);
-PHP_METHOD(CRubix, fill);
+PHP_METHOD(CRubix, identity);             //OK
+PHP_METHOD(CRubix, zeros);                //OK
+PHP_METHOD(CRubix, ones);                 //OK
+PHP_METHOD(CRubix, diagonal);             //OK
+PHP_METHOD(CRubix, fill);                 //OK
 PHP_METHOD(CRubix, rand);
 PHP_METHOD(CRubix, gaussian);
 PHP_METHOD(CRubix, poisson);
