@@ -105,13 +105,11 @@ PHP_METHOD(CRubix, diagonal)
     char dtype = 'd', order = 'C';
     MemoryPointer a_ptr, rtn_ptr;
     CArray *target_array, *outarray;
-    int len, *dims;
+    int len;
     zval *elements;
     ZEND_PARSE_PARAMETERS_START(1, 1)
         Z_PARAM_ARRAY(elements)
     ZEND_PARSE_PARAMETERS_END();
-
-    dims = ZVAL_TO_TUPLE(elements, &len);
 
     if (zend_hash_num_elements(Z_ARRVAL_P(elements)) < 1) {
         throw_valueerror_exception("Dimensionality must be greater than 0 on all axes.");
@@ -358,11 +356,6 @@ PHP_METHOD(CRubix, map)
 }
 
 PHP_METHOD(CRubix, reduce)
-{
-
-}
-
-PHP_METHOD(CRubix, transpose)
 {
 
 }

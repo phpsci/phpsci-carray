@@ -462,7 +462,7 @@ Hashtable_type(zval * target_zval, char * type)
             Hashtable_type(element, type);
             break;
         }
-        if (Z_TYPE_P(element) == IS_LONG) {
+        if (Z_TYPE_P(element) == IS_LONG && *type != 'd') {
             *type = 'i';
             break;
         }
