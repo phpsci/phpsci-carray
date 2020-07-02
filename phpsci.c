@@ -193,6 +193,14 @@ void RETURN_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr)
     zend_update_property_long(carray_sc_entry, return_value, "ndim", sizeof("ndim") - 1, arr->ndim);
 }
 
+void RETURN_RUBIX_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr)
+{
+    object_init_ex(return_value, crubix_sc_entry);
+    CArray *arr = CArray_FromMemoryPointer(ptr);
+    zend_update_property_long(carray_sc_entry, return_value, "uuid", sizeof("uuid") - 1, ptr->uuid);
+    zend_update_property_long(carray_sc_entry, return_value, "ndim", sizeof("ndim") - 1, arr->ndim);
+}
+
 static int
 TYPESTR_TO_INT(char * str)
 {
@@ -2708,6 +2716,7 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, diagonal, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, fill, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, shape, NULL, ZEND_ACC_PUBLIC)
+        PHP_ME(CRubix, m, NULL, ZEND_ACC_PUBLIC)
 };
 
 /**

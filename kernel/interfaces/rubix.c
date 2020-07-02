@@ -32,7 +32,7 @@ PHP_METHOD(CRubix, identity)
     output = CArray_Eye((int)n, (int)n, 0, NULL, &ptr);
 
     if (output != NULL) {
-        RETURN_MEMORYPOINTER(return_value, &ptr);
+        RETURN_RUBIX_MEMORYPOINTER(return_value, &ptr);
     }
 }
 
@@ -62,7 +62,7 @@ PHP_METHOD(CRubix, zeros)
 
     CArray_Zeros(shape, ndim, dtype, &order, &ptr);
 
-    RETURN_MEMORYPOINTER(return_value,&ptr);
+    RETURN_RUBIX_MEMORYPOINTER(return_value,&ptr);
     efree(shape);
 }
 
@@ -92,7 +92,7 @@ PHP_METHOD(CRubix, ones)
 
     CArray_Ones(shape, ndim, &dtype, &order, &ptr);
 
-    RETURN_MEMORYPOINTER(return_value,&ptr);
+    RETURN_RUBIX_MEMORYPOINTER(return_value,&ptr);
     efree(shape);
 }
 
@@ -132,7 +132,7 @@ PHP_METHOD(CRubix, diagonal)
         DDATA(outarray)[(i * shape[0]) + i] = DDATA(target_array)[i];
     }
 
-    RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
+    RETURN_RUBIX_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
 /**
@@ -169,7 +169,7 @@ PHP_METHOD(CRubix, fill)
     CArray_FillWithScalar(outarray, scalar);
 
     CArrayScalar_FREE(scalar);
-    RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
+    RETURN_RUBIX_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
 /**
@@ -252,16 +252,37 @@ PHP_METHOD(CRubix, size)
 }
 
 /**
- *
+ * RubixML/Tensor/Matrix::m
  */
 PHP_METHOD(CRubix, m)
 {
+    MemoryPointer ptr;
+    CArray * target;
+    zval * obj = getThis();
+    zval tmp_zval;
+    int i;
 
+    ZVAL_TO_MEMORYPOINTER(obj, &ptr, NULL);
+    target = CArray_FromMemoryPointer(&ptr);
+
+    RETURN_LONG(CArray_DIMS(target)[0]);
 }
 
+/**
+ * RubixML/Tensor/Matrix::n
+ */
 PHP_METHOD(CRubix, n)
 {
+    MemoryPointer ptr;
+    CArray * target;
+    zval * obj = getThis();
+    zval tmp_zval;
+    int i;
 
+    ZVAL_TO_MEMORYPOINTER(obj, &ptr, NULL);
+    target = CArray_FromMemoryPointer(&ptr);
+
+    RETURN_LONG(CArray_DIMS(target)[0]);
 }
 
 PHP_METHOD(CRubix, row)

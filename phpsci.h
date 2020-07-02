@@ -46,4 +46,5 @@ extern zend_module_entry carray_module_entry;
 void RETURN_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr);
 int * ZVAL_TO_TUPLE(zval * obj, int * size);
 void ZVAL_TO_MEMORYPOINTER(zval * obj, MemoryPointer * ptr, char * type);
+void RETURN_RUBIX_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr);
 #endif //PHPSCI_EXT_PHPSCI_H
