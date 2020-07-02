@@ -59,6 +59,7 @@
 #include "kernel/storage.h"
 #include "kernel/round.h"
 #include "kernel/random/distributions.h"
+#include "kernel/interfaces/rubix.h"
 
 #ifdef HAVE_CLBLAS
 #include "kernel/gpu.h"
@@ -80,8 +81,20 @@ static inline zend_object *carray_create_object(zend_class_entry *ce) /* {{{ */
     return &intern->std;
 }
 
-static
-void ZVAL_TO_MEMORYPOINTER(zval * obj, MemoryPointer * ptr, char * type)
+static inline zend_object *crubix_create_object(zend_class_entry *ce) /* {{{ */
+{
+    end_carray_cdata * intern = emalloc(sizeof(end_carray_cdata) + zend_object_properties_size(ce));
+
+    zend_object_std_init(&intern->std, ce);
+    object_properties_init(&intern->std, ce);
+
+    intern->std.handlers = &carray_object_handlers;
+
+    return &intern->std;
+}
+
+void
+ZVAL_TO_MEMORYPOINTER(zval * obj, MemoryPointer * ptr, char * type)
 {
     ptr->free = 0;
     if (Z_TYPE_P(obj) == IS_ARRAY) {
@@ -146,7 +159,6 @@ void * FREE_TUPLE(int * tuple)
         efree(tuple);
 }
 
-static
 int * ZVAL_TO_TUPLE(zval * obj, int * size)
 {
     zval * element;
@@ -173,11 +185,10 @@ zval * MEMORYPOINTER_TO_ZVAL(MemoryPointer * ptr)
     return a;
 }
 
-static
 void RETURN_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr)
 {
     object_init_ex(return_value, carray_sc_entry);
-    CArray * arr = CArray_FromMemoryPointer(ptr);
+    CArray *arr = CArray_FromMemoryPointer(ptr);
     zend_update_property_long(carray_sc_entry, return_value, "uuid", sizeof("uuid") - 1, ptr->uuid);
     zend_update_property_long(carray_sc_entry, return_value, "ndim", sizeof("ndim") - 1, arr->ndim);
 }
@@ -1189,10 +1200,7 @@ PHP_METHOD(CArray, inner)
 }
 PHP_METHOD(CArray, outer)
 {
-    zval * a;
-    ZEND_PARSE_PARAMETERS_START(1, 1)
-            Z_PARAM_ZVAL(a)
-    ZEND_PARSE_PARAMETERS_END();
+
 }
 PHP_METHOD(CArray, eig)
 {
@@ -1792,7 +1800,7 @@ PHP_METHOD(CArray, diagonal)
     target_array = CArray_FromMemoryPointer(&a_ptr);
     CArray * rtn_array = CArray_Diagonal(target_array, offset, axis1, axis2, &rtn_ptr);
     if(rtn_array == NULL) {
-        throw_axis_exception("");
+        return NULL;
     }
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
@@ -2467,11 +2475,8 @@ PHP_METHOD(CArray, poisson)
         Z_PARAM_ARRAY(size)
         Z_PARAM_DOUBLE(lambda)
     ZEND_PARSE_PARAMETERS_END();
-
     dims = ZVAL_TO_TUPLE(size, &len);
-
     CArray_Poisson(dims, lambda, &out);
-
     RETURN_MEMORYPOINTER(return_value, &out);
     FREE_TUPLE(dims);
 }
@@ -2694,6 +2699,14 @@ PHP_METHOD(CArray, load)
     RETURN_MEMORYPOINTER(return_value, &rtn);
 }
 
+
+static zend_function_entry crubix_class_methods[] =
+{
+        PHP_ME(CRubix, identity, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, zeros, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, ones, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, diagonal, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+};
 
 /**
  * CLASS METHODS
@@ -2994,22 +3007,37 @@ carray_cast(zval *readobj, zval *retval, int type) {
 static PHP_MINIT_FUNCTION(carray)
 {
     zend_class_entry ce;
+    zend_class_entry cerubix;
+
+    // Initialize Classes
     INIT_CLASS_ENTRY(ce, "CArray", carray_class_methods);
+    INIT_CLASS_ENTRY(cerubix, "CRubix", crubix_class_methods);
+
+    // Register CArray Class
     carray_sc_entry = zend_register_internal_class(&ce);
     carray_sc_entry->create_object = carray_create_object;
 
+    // Register PHP Object Handcarray_sc_entrylers
     memcpy(&carray_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
     carray_object_handlers.do_operation = carray_do_operation;
     carray_object_handlers.compare_objects = carray_compare;
     carray_object_handlers.count_elements = carray_count;
 
+    // Register RubixML Interface
+    crubix_sc_entry = zend_register_internal_class_ex(&cerubix, carray_sc_entry);
+
 #ifdef HAVE_CLBLAS
+    // If --with-opencl flag is set, initialize GPU context
     start_clblas_context();
 #endif
 
+    // Pretend CArray is a PHP Array for compatibility
     zend_class_implements(carray_sc_entry, 1, zend_ce_arrayaccess);
 
+    // Register Exception Classes
     init_exception_objects();
+
+    // Pray
     return SUCCESS;
 }
 

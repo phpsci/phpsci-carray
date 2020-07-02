@@ -168,6 +168,7 @@ PHP_NEW_EXTENSION(carray,
       kernel/clip.c \
       kernel/search.c \
       kernel/common/sort.c \
+      kernel/interfaces/rubix.c \
       kernel/common/compare.c \
       kernel/exp_logs.c \
       kernel/random.c \

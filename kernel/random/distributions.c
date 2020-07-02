@@ -3,7 +3,7 @@
 #include "../buffer.h"
 
 /**
- * Generate Poisson Random Distribution
+ * Poisson Random Distribution
  *
  * @param m
  * @param n
@@ -15,7 +15,7 @@ CArray_Poisson(int *shape, double lambda, MemoryPointer *out)
 {
     CArray *result;
     CArrayDescriptor *descr;
-    double max = (double) INT_MAX;
+    double max = INT_MAX;
     time_t t;
     double l = exp(-lambda);
     double k;
@@ -27,6 +27,7 @@ CArray_Poisson(int *shape, double lambda, MemoryPointer *out)
     result = CArray_NewFromDescr_int(result, descr, 2, shape, NULL, NULL,
                                      NULL, NULL, 1, 0);
 
+    // Random Seed
     srand((unsigned) time(&t));
 
     for (i = 0; i < CArray_DESCR(result)->numElements; i++) {
@@ -37,9 +38,7 @@ CArray_Poisson(int *shape, double lambda, MemoryPointer *out)
            k = k + 1.0;
            p *= rand() / max;
         }
-
         DDATA(result)[i] = (double) k - 1;
-
     }
 
     if (out != NULL) {

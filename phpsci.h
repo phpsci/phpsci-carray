@@ -31,6 +31,7 @@
 #include "TSRM.h"
 #endif
 #include "php.h"
+#include "kernel/carray.h"
 
 
 static zend_class_entry *carray_sc_entry;
@@ -41,4 +42,8 @@ static zend_class_entry *carray_iterator_sc_entry;
 extern zend_module_entry carray_module_entry;
 
 #define phpext_carray_ptr &carray_module_entry
+
+void RETURN_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr);
+int * ZVAL_TO_TUPLE(zval * obj, int * size);
+void ZVAL_TO_MEMORYPOINTER(zval * obj, MemoryPointer * ptr, char * type);
 #endif //PHPSCI_EXT_PHPSCI_H
