@@ -2706,6 +2706,7 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, zeros, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, ones, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, diagonal, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, fill, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 };
 
 /**
@@ -2728,7 +2729,7 @@ static zend_function_entry carray_class_methods[] =
         PHP_ME(CArray, poisson, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 
         // MISC
-        PHP_ME(CArray, fill, NULL, ZEND_ACC_PUBLIC)
+        PHP_ME(CArray, fill, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CArray, clip, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CArray, convolve, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 

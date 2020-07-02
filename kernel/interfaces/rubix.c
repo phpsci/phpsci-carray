@@ -8,6 +8,7 @@
 #include "php.h"
 #include "php_ini.h"
 #include "../common/exceptions.h"
+#include "../scalar.h"
 
 /**
  * RubixML/Tensor/Matrix::identity
@@ -134,11 +135,46 @@ PHP_METHOD(CRubix, diagonal)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * RubixML/Tensor/Matrix::fill
+ */
 PHP_METHOD(CRubix, fill)
 {
+    CArray *outarray;
+    char dtype = 'd', order = 'C';
+    MemoryPointer rtn_ptr;
+    zend_long m, n;
+    double value;
+    CArrayScalar *scalar;
 
+    ZEND_PARSE_PARAMETERS_START(3, 3)
+        Z_PARAM_DOUBLE(value)
+        Z_PARAM_LONG(m)
+        Z_PARAM_LONG(n)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (m < 1 || n < 1) {
+        throw_valueerror_exception("Dimensionality must be greater than 0 on all axes.");
+        return NULL;
+    }
+
+    int *shape = emalloc(sizeof(int) * 2);
+    shape[0] = (int)m;
+    shape[1] = (int)n;
+
+    CArray_Zeros(shape, 2, dtype, &order, &rtn_ptr);
+    outarray = CArray_FromMemoryPointer(&rtn_ptr);
+
+    scalar = CArrayScalar_NewDouble(value);
+    CArray_FillWithScalar(outarray, scalar);
+
+    CArrayScalar_FREE(scalar);
+    RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * RubixML/Tensor/Matrix::rand
+ */
 PHP_METHOD(CRubix, rand)
 {
 
