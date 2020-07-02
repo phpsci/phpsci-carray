@@ -2717,6 +2717,8 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, fill, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, shape, NULL, ZEND_ACC_PUBLIC)
         PHP_ME(CRubix, m, NULL, ZEND_ACC_PUBLIC)
+        PHP_ME(CRubix, n, NULL, ZEND_ACC_PUBLIC)
+        PHP_ME(CRubix, size, NULL, ZEND_ACC_PUBLIC)
 };
 
 /**
