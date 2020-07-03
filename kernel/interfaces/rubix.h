@@ -14,11 +14,11 @@ extern zend_module_entry crubix_module_entry;
 /**
  * Rubix-ML CArray Interface Definition
  */
-PHP_METHOD(CRubix, identity);             //OK
-PHP_METHOD(CRubix, zeros);                //OK
-PHP_METHOD(CRubix, ones);                 //OK
-PHP_METHOD(CRubix, diagonal);             //OK
-PHP_METHOD(CRubix, fill);                 //OK
+PHP_METHOD(CRubix, identity);             //OK  PASSED
+PHP_METHOD(CRubix, zeros);                //OK  PASSED
+PHP_METHOD(CRubix, ones);                 //OK  PASSED
+PHP_METHOD(CRubix, diagonal);             //OK  PASSED
+PHP_METHOD(CRubix, fill);                 //OK  PASSED
 PHP_METHOD(CRubix, rand);
 PHP_METHOD(CRubix, gaussian);
 PHP_METHOD(CRubix, poisson);
@@ -27,12 +27,11 @@ PHP_METHOD(CRubix, minimum);
 PHP_METHOD(CRubix, maximum);
 PHP_METHOD(CRubix, stack);
 PHP_METHOD(CRubix, implodeRow);
-PHP_METHOD(CRubix, shape);
-PHP_METHOD(CRubix, shapeString);
+PHP_METHOD(CRubix, shape);               //OK   PASSED
 PHP_METHOD(CRubix, isSquare);
-PHP_METHOD(CRubix, size);
-PHP_METHOD(CRubix, m);
-PHP_METHOD(CRubix, n);
+PHP_METHOD(CRubix, size);                //OK   PASSED
+PHP_METHOD(CRubix, m);                   //OK   PASSED
+PHP_METHOD(CRubix, n);                   //OK   PASSED
 PHP_METHOD(CRubix, row);
 PHP_METHOD(CRubix, rowAsVector);
 PHP_METHOD(CRubix, column);
@@ -46,7 +45,6 @@ PHP_METHOD(CRubix, argmin);
 PHP_METHOD(CRubix, argmax);
 PHP_METHOD(CRubix, map);
 PHP_METHOD(CRubix, reduce);
-PHP_METHOD(CRubix, transpose);
 PHP_METHOD(CRubix, inverse);
 PHP_METHOD(CRubix, det);
 PHP_METHOD(CRubix, trace);

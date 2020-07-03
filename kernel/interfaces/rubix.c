@@ -26,13 +26,13 @@ PHP_METHOD(CRubix, identity)
     if (n < 1) {
         throw_valueerror_exception(
                 "Dimensionality must be greater than 0 on all axes.");
-        return NULL;
+        return;
     }
 
     output = CArray_Eye((int)n, (int)n, 0, NULL, &ptr);
 
     if (output != NULL) {
-        RETURN_RUBIX_MEMORYPOINTER(return_value, &ptr);
+        RETURN_MEMORYPOINTER(return_value, &ptr);
     }
 }
 
@@ -53,7 +53,7 @@ PHP_METHOD(CRubix, zeros)
 
     if (m < 1 || n < 1) {
         throw_valueerror_exception("Dimensionality must be greater than 0 on all axes.");
-        return NULL;
+        return;
     }
 
     int *shape = emalloc(sizeof(int) * 2);
@@ -83,7 +83,7 @@ PHP_METHOD(CRubix, ones)
 
     if (m < 1 || n < 1) {
         throw_valueerror_exception("Dimensionality must be greater than 0 on all axes.");
-        return NULL;
+        return;
     }
 
     int *shape = emalloc(sizeof(int) * 2);
@@ -113,7 +113,7 @@ PHP_METHOD(CRubix, diagonal)
 
     if (zend_hash_num_elements(Z_ARRVAL_P(elements)) < 1) {
         throw_valueerror_exception("Dimensionality must be greater than 0 on all axes.");
-        return NULL;
+        return;
     }
 
     ZVAL_TO_MEMORYPOINTER(elements, &a_ptr, &dtype);
@@ -126,6 +126,8 @@ PHP_METHOD(CRubix, diagonal)
     CArray_Zeros(shape, 2, dtype, &order, &rtn_ptr);
     outarray = CArray_FromMemoryPointer(&rtn_ptr);
 
+    // CArray diagonal works differently, in this case we
+    // implement Rubix algorithm below.
     for (i = 0; i < shape[0]; i++) {
         DDATA(outarray)[(i * shape[0]) + i] = DDATA(target_array)[i];
     }
@@ -153,7 +155,7 @@ PHP_METHOD(CRubix, fill)
 
     if (m < 1 || n < 1) {
         throw_valueerror_exception("Dimensionality must be greater than 0 on all axes.");
-        return NULL;
+        return;
     }
 
     int *shape = emalloc(sizeof(int) * 2);
@@ -234,14 +236,29 @@ PHP_METHOD(CRubix, shape)
     }
 }
 
-PHP_METHOD(CRubix, shapeString)
-{
-
-}
-
+/**
+ * RubixML/Tensor/Matrix::isSquare
+ */
 PHP_METHOD(CRubix, isSquare)
 {
+    MemoryPointer ptr;
+    CArray *target;
 
+    zval *obj = getThis();
+    ZVAL_TO_MEMORYPOINTER(obj, &ptr, NULL);
+    target = CArray_FromMemoryPointer(&ptr);
+
+    if (CArray_NDIM(target) != 2) {
+        ZVAL_BOOL(return_value, 0);
+        return;
+    }
+
+    if (CArray_DIMS(target)[0] == CArray_DIMS(target)[1]) {
+        ZVAL_BOOL(return_value, 1);
+        return;
+    }
+
+    ZVAL_BOOL(return_value, 0);
 }
 
 /**

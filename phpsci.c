@@ -121,7 +121,8 @@ ZVAL_TO_MEMORYPOINTER(zval * obj, MemoryPointer * ptr, char * type)
         convert_to_long(obj);
 
         if (zval_get_long(obj) > INT_MAX) {
-            throw_overflow_exception("CArrays only works with int32 and float64 values, LONG INT detected.");
+            throw_overflow_exception("CArrays only works with int32 and "
+                                     "float64 values, LONG INT detected.");
         }
 
         IDATA(self)[0] = (int)zval_get_long(obj);
@@ -185,15 +186,23 @@ zval * MEMORYPOINTER_TO_ZVAL(MemoryPointer * ptr)
     return a;
 }
 
-void RETURN_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr)
+void
+RETURN_MEMORYPOINTER(zval *return_value, MemoryPointer *ptr)
 {
+    zend_class_entry *scope = zend_get_executed_scope();
+    if(!strcmp(scope->name->val, "CRubix")) {
+        RETURN_RUBIX_MEMORYPOINTER(return_value, ptr);
+        return;
+    }
+
     object_init_ex(return_value, carray_sc_entry);
     CArray *arr = CArray_FromMemoryPointer(ptr);
     zend_update_property_long(carray_sc_entry, return_value, "uuid", sizeof("uuid") - 1, ptr->uuid);
     zend_update_property_long(carray_sc_entry, return_value, "ndim", sizeof("ndim") - 1, arr->ndim);
 }
 
-void RETURN_RUBIX_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr)
+void
+RETURN_RUBIX_MEMORYPOINTER(zval * return_value, MemoryPointer * ptr)
 {
     object_init_ex(return_value, crubix_sc_entry);
     CArray *arr = CArray_FromMemoryPointer(ptr);
@@ -1808,7 +1817,7 @@ PHP_METHOD(CArray, diagonal)
     target_array = CArray_FromMemoryPointer(&a_ptr);
     CArray * rtn_array = CArray_Diagonal(target_array, offset, axis1, axis2, &rtn_ptr);
     if(rtn_array == NULL) {
-        return NULL;
+        return;
     }
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
@@ -2707,7 +2716,9 @@ PHP_METHOD(CArray, load)
     RETURN_MEMORYPOINTER(return_value, &rtn);
 }
 
-
+/**
+ * RubixML Tensor Interface
+ */
 static zend_function_entry crubix_class_methods[] =
 {
         PHP_ME(CRubix, identity, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
@@ -2719,6 +2730,7 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, m, NULL, ZEND_ACC_PUBLIC)
         PHP_ME(CRubix, n, NULL, ZEND_ACC_PUBLIC)
         PHP_ME(CRubix, size, NULL, ZEND_ACC_PUBLIC)
+        PHP_ME(CRubix, isSquare, NULL, ZEND_ACC_PUBLIC)
 };
 
 /**
