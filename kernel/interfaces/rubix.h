@@ -28,7 +28,6 @@ PHP_METHOD(CRubix, maximum);
 PHP_METHOD(CRubix, stack);
 PHP_METHOD(CRubix, implodeRow);
 PHP_METHOD(CRubix, shape);               //OK   PASSED
-PHP_METHOD(CRubix, isSquare);
 PHP_METHOD(CRubix, size);                //OK   PASSED
 PHP_METHOD(CRubix, m);                   //OK   PASSED
 PHP_METHOD(CRubix, n);                   //OK   PASSED

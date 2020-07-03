@@ -237,31 +237,6 @@ PHP_METHOD(CRubix, shape)
 }
 
 /**
- * RubixML/Tensor/Matrix::isSquare
- */
-PHP_METHOD(CRubix, isSquare)
-{
-    MemoryPointer ptr;
-    CArray *target;
-
-    zval *obj = getThis();
-    ZVAL_TO_MEMORYPOINTER(obj, &ptr, NULL);
-    target = CArray_FromMemoryPointer(&ptr);
-
-    if (CArray_NDIM(target) != 2) {
-        ZVAL_BOOL(return_value, 0);
-        return;
-    }
-
-    if (CArray_DIMS(target)[0] == CArray_DIMS(target)[1]) {
-        ZVAL_BOOL(return_value, 1);
-        return;
-    }
-
-    ZVAL_BOOL(return_value, 0);
-}
-
-/**
  * RubixML/Tensor/Matrix::size
  */
 PHP_METHOD(CRubix, size)
