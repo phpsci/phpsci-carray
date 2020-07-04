@@ -13,5 +13,4 @@ int CArray_CanCastTo(CArrayDescriptor *from, CArrayDescriptor *to);
 int CArray_CanCastSafely(int fromtype, int totype);
 int CArray_CastTo(CArray *out, CArray *mp);
 int CArray_FillWithScalar(CArray * arr, CArrayScalar * sc);
-int CArray_CanCastTo(CArrayDescriptor *from, CArrayDescriptor *to);
 #endif //PHPSCI_EXT_CONVERT_H
