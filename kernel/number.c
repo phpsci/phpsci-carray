@@ -108,7 +108,7 @@ _carray_power_int_int(CArrayIterator * a, CArrayIterator * b, CArray * out, int 
 
 void *
 _carray_mod_double_double(CArrayIterator * a, CArrayIterator * b, CArray * out, int out_index) {
-    DDATA(out)[out_index] = fmod(*(IT_DDATA(a)), *(IT_DDATA(b)));
+    DDATA(out)[out_index] = ((*(IT_DDATA(a))) / (*(IT_DDATA(b))) - floor((*(IT_DDATA(a))) / (*(IT_DDATA(b))))) * (*(IT_DDATA(b)));
 }
 
 void *
