@@ -750,14 +750,73 @@ _carray_sqrt_double(CArrayIterator * it, CArray * out, int index)
     DDATA(out)[index] = sqrt(*(IT_DDATA(it)));
 }
 
-
 static void *
 _carray_sqrt_int(CArrayIterator * it, CArray * out, int index)
+{
+    DDATA(out)[index] = abs(((int)*(IT_IDATA(it))));
+}
+
+static void *
+_carray_absolute_double(CArrayIterator * it, CArray * out, int index)
+{
+    DDATA(out)[index] = fabs(*(IT_DDATA(it)));
+}
+
+static void *
+_carray_absolute_int(CArrayIterator * it, CArray * out, int index)
 {
     DDATA(out)[index] = sqrt(((double)*(IT_IDATA(it))));
 }
 
+CArray *
+CArray_Absolute(CArray *a, MemoryPointer *out)
+{
+    CArrayDescriptor * descr;
+    CArray * rtn = emalloc(sizeof(CArray));
+    CArrayIterator * it1;
+    void * (*data_op)(CArrayIterator *, CArray *, int);
 
+    descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
+    rtn = CArray_NewFromDescr(rtn, descr, CArray_NDIM(a), CArray_DIMS(a), NULL, NULL, 0, NULL);
+    it1 = CArray_NewIter(a);
+
+    switch (CArray_TYPE(a)) {
+        case TYPE_DOUBLE_INT:
+            data_op = &_carray_absolute_double;
+            break;
+        case TYPE_INTEGER_INT:
+            data_op = &_carray_absolute_int;
+            break;
+        default:
+            goto fail;
+            break;
+    }
+
+    do {
+        data_op(it1, rtn, it1->index);
+        CArrayIterator_NEXT(it1);
+    } while(CArrayIterator_NOTDONE(it1));
+
+
+    if (out != NULL) {
+        add_to_buffer(out, rtn, sizeof(CArray));
+    }
+
+    CArrayIterator_FREE(it1);
+
+    return rtn;
+    fail:
+    return NULL;
+}
+
+
+/**
+ * CArray::sqrt
+ *
+ * @param a
+ * @param out
+ * @return
+ */
 CArray *
 CArray_Sqrt(CArray *a, MemoryPointer *out)
 {

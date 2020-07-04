@@ -12,4 +12,5 @@ CArray * CArray_Mod(CArray *m1, CArray *m2, MemoryPointer * ptr);
 CArray * CArray_Negative(CArray * a, MemoryPointer * out);
 CArray * CArray_Sqrt(CArray *a, MemoryPointer *out);
 CArray * CArray_Reciprocal(CArray *a, MemoryPointer *out);
+CArray * CArray_Absolute(CArray *a, MemoryPointer *out);
 #endif //PHPSCI_EXT_NUMBER_H
