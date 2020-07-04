@@ -383,6 +383,7 @@ CArray_Slice_Str(CArray *self, char *index, MemoryPointer *out)
     int i, ndim;
     int step = 0;
     int *dimensions = _dimensions_from_slice_str(self, index, &ndim, &step, strides);
+    CArrayDescriptor *newDescr;
 
     if (dimensions == NULL) {
         return NULL;
@@ -392,7 +393,8 @@ CArray_Slice_Str(CArray *self, char *index, MemoryPointer *out)
         return NULL;
     }
 
-    rtn = CArray_NewFromDescr_int(rtn, CArray_DESCR(self), ndim, dimensions, strides, CArray_DATA(self),
+    newDescr = CArray_DescrNew(CArray_DESCR(self));
+    rtn = CArray_NewFromDescr_int(rtn, newDescr, ndim, dimensions, strides, CArray_DATA(self),
                                   0, self, 0, 0);
 
     rtn->flags = (CARRAY_ARRAY_C_CONTIGUOUS | CARRAY_ARRAY_WRITEABLE | CARRAY_ARRAY_ALIGNED);
@@ -403,7 +405,6 @@ CArray_Slice_Str(CArray *self, char *index, MemoryPointer *out)
         add_to_buffer(out, rtn, sizeof(CArray));
     }
 
-    CArrayDescriptor_INCREF(CArray_DESCR(rtn));
     efree(strides);
     efree(dimensions);
     return rtn;
