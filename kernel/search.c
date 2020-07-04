@@ -210,7 +210,6 @@ CArray_Argmax(CArray * target, int * axis, MemoryPointer * out)
     if (*axis != CArray_NDIM(ap)-1) {
         CArray_DECREF(ap);
         CArrayDescriptor_DECREF(CArray_DESCR(target));
-        CArray_Free(target);
         CArray_Free(ap);
     } else {
         CArrayDescriptor_FREE(tmp_descr);
@@ -310,7 +309,6 @@ CArray_Argmin(CArray * target, int * axis, MemoryPointer * out)
     if (*axis != CArray_NDIM(ap)-1) {
         CArray_DECREF(ap);
         CArrayDescriptor_DECREF(CArray_DESCR(target));
-        CArray_Free(target);
         CArray_Free(ap);
     } else {
         CArrayDescriptor_FREE(tmp_descr);
