@@ -405,6 +405,7 @@ CArray_Slice_Str(CArray *self, char *index, MemoryPointer *out)
         add_to_buffer(out, rtn, sizeof(CArray));
     }
 
+    CArrayDescriptor_INCREF(CArray_DESCR(rtn));
     efree(strides);
     efree(dimensions);
     return rtn;
