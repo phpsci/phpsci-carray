@@ -4,6 +4,8 @@
 #include "../buffer.h"
 #include "../alloc.h"
 #include "common.h"
+#include "exceptions.h"
+#include "cblas.h"
 
 
 #ifdef HAVE_CLBLAS
@@ -11,6 +13,7 @@
 #include "clblas_funcs.h"
 #include "clBLAS.h"
 #include "../gpu.h"
+#include "cblas_funcs.h"
 
 static MatrixShape
 _select_matrix_shape(CArray *array)
@@ -105,7 +108,7 @@ cldaxpy(int n_elements, int alpha, double *a, int incX, double *b, int incY) {
 
     err = clblasDaxpy((size_t)n_elements, alphad, bufA, 0, incX, bufB, 0, incY, 1, &queue, 0, NULL, &event);
 
-    return NULL;
+    return;
 }
 
 /*
@@ -189,6 +192,14 @@ clgemm(int typenum, clblasOrder order,
 
 }
 
+/**
+ * @param typenum
+ * @param ap1
+ * @param ap2
+ * @param out
+ * @param ptr
+ * @return
+ */
 CArray *
 clblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryPointer * ptr)
 {
