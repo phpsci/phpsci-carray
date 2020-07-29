@@ -15,4 +15,7 @@ CArray * CArray_Vdot(CArray * target_a, CArray * target_b, MemoryPointer * out);
 CArray ** CArray_Svd(CArray * a, int full_matrices, int compute_uv, MemoryPointer * out);
 CArray * CArray_InnerProduct(CArray *a, CArray *b, MemoryPointer *out);
 CArray * CArray_Solve(CArray *target_a, CArray *target_b, MemoryPointer * out);
+
+
+void * linearize_DOUBLE_matrix(double *dst_in, double *src_in, CArray * a);
 #endif

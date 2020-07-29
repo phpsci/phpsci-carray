@@ -13,7 +13,7 @@
   |     http://www.apache.org/licenses/LICENSE-2.0                       |
   |                                                                      |
   | Unless required by applicable law or agreed to in writing, software  |
-  | distributed under the License is distributed on an "AS \IS" BASIS,    |
+  | distributed under the License is distributed on an "AS \IS" BASIS,   |
   | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or      |
   | implied.                                                             |
   | See the License for the specific language governing permissions and  |
@@ -145,16 +145,16 @@ ZVAL_TO_MEMORYPOINTER(zval * obj, MemoryPointer * ptr, char * type)
     }
 }
 
-static
-void FREE_FROM_MEMORYPOINTER(MemoryPointer * ptr)
+void
+FREE_FROM_MEMORYPOINTER(MemoryPointer * ptr)
 {
     if(ptr->free == 1 || ptr->free == 2) {
         CArray_Alloc_FreeFromMemoryPointer(ptr);
     }
 }
 
-static
-void * FREE_TUPLE(int * tuple)
+void *
+FREE_TUPLE(int * tuple)
 {
     if(tuple != NULL)
         efree(tuple);
@@ -175,8 +175,8 @@ int * ZVAL_TO_TUPLE(zval * obj, int * size)
     return data_int;
 }
 
-static
-zval * MEMORYPOINTER_TO_ZVAL(MemoryPointer * ptr)
+zval * 
+MEMORYPOINTER_TO_ZVAL(MemoryPointer * ptr)
 {
     zval * a = emalloc(sizeof(zval));
     object_init_ex(a, carray_sc_entry);
@@ -906,11 +906,6 @@ PHP_METHOD(CArray, argmax)
         return;
     }
 
-    if(ZEND_NUM_ARGS() == 1) {
-        CArray_INCREF(target_ca);
-        CArray_Free(target_ca);
-    }
-
     FREE_FROM_MEMORYPOINTER(&ptr);
     RETURN_MEMORYPOINTER(return_value, &out_ptr);
 }
@@ -946,11 +941,6 @@ PHP_METHOD(CArray, argmin)
     efree(axis_p);
     if (ret == NULL) {
         return;
-    }
-
-    if(ZEND_NUM_ARGS() == 1) {
-        CArray_INCREF(target_ca);
-        CArray_Free(target_ca);
     }
 
     FREE_FROM_MEMORYPOINTER(&ptr);
@@ -2730,6 +2720,79 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, m, NULL, ZEND_ACC_PUBLIC)
         PHP_ME(CRubix, n, NULL, ZEND_ACC_PUBLIC)
         PHP_ME(CRubix, size, NULL, ZEND_ACC_PUBLIC)
+        PHP_ME(CRubix, diagonalAsVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, symmetric, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, reshape, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, transpose, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, subMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, solve, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, log, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, log1p, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, sin, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, asin, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, atan, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, cos, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, acos, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, tan, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, sqrt, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, exp, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, expm1, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, reciprocal, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, abs, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, maximum, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, minimum, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, flatten, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, inverse, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, matmul, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, eig, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, multiply, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, divide, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, add, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, subtract, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, pow, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, mod, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, negate, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, sum, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, product, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, floor, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, ceil, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, argmin, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, argmax, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, min, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, max, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, equalMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, notEqualMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, greaterMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, greaterEqualMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, greaterVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, greaterEqualVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, greaterScalar, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, greaterEqualScalar, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, greaterColumnVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, greaterEqualColumnVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, equalScalar, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, lessMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, lessEqualMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, lessVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, lessEqualVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, lessScalar, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, lessEqualScalar, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, lessColumnVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, lessEqualColumnVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, equalVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, notEqualVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, notEqualScalar, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+
+        PHP_ME(CRubix, offsetGet, arginfo_array_offsetGet, ZEND_ACC_PUBLIC)
 };
 
 /**
@@ -3041,7 +3104,7 @@ static PHP_MINIT_FUNCTION(carray)
     carray_sc_entry = zend_register_internal_class(&ce);
     carray_sc_entry->create_object = carray_create_object;
 
-    // Register PHP Object Handcarray_sc_entrylers
+    // Register PHP Object
     memcpy(&carray_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
     carray_object_handlers.do_operation = carray_do_operation;
     carray_object_handlers.compare_objects = carray_compare;
@@ -3057,6 +3120,7 @@ static PHP_MINIT_FUNCTION(carray)
 
     // Pretend CArray is a PHP Array for compatibility
     zend_class_implements(carray_sc_entry, 1, zend_ce_arrayaccess);
+    zend_class_implements(crubix_sc_entry, 1, zend_ce_arrayaccess);
 
     // Register Exception Classes
     init_exception_objects();

@@ -67,7 +67,7 @@ init_linearize_data(LINEARIZE_DATA_t *lin_data, int rows, int columns,
     init_linearize_data_ex(lin_data, rows, columns, row_strides, column_strides, columns);
 }
 
-static inline void *
+void *
 linearize_DOUBLE_matrix(double *dst_in,
                         double *src_in,
                         CArray * a)
@@ -900,9 +900,11 @@ fail:
     return NULL;
 }
 
-static void
-DOUBLE_solve(CArray *a, CArray *b, CArray *out)
+static CArray *
+DOUBLE_solve(CArray *a, CArray *b, MemoryPointer *rtn_ptr)
 {
+    CArray *out;
+    int i;
     int * ipiv = emalloc(sizeof(int) * CArray_DIMS(a)[0]);
     int status;
     double *dataA = emalloc(sizeof(double) * CArray_SIZE(a));
@@ -932,12 +934,20 @@ DOUBLE_solve(CArray *a, CArray *b, CArray *out)
                            dataB,
                            1);
 
-    print_matrix("Solution", n, nrhs, dataB, CArray_DIMS(a)[0]);
     if (status > 0) {
         throw_valueerror_exception("The diagonal element of the triangular factor of A is zero, so that A is singular");
     }
 
+    int *dims = emalloc(sizeof(int));
+    *dims = CArray_DIMS(a)[0];
+    out = CArray_Zeros(dims, 1, TYPE_DOUBLE, NULL, rtn_ptr);
+    efree(dims);
 
+    for (i = 0; i < CArray_DIMS(a)[0]; i++) {
+        DDATA(out)[i] = dataB[i];
+    }    
+
+    return out;
 }
 
 CArray *
@@ -979,12 +989,11 @@ CArray_Solve(CArray *target_a, CArray *target_b, MemoryPointer * out)
         b = target_b;
     }
 
-   if (CArray_TYPE(a) == TYPE_DOUBLE_INT && CArray_TYPE(b) == TYPE_DOUBLE_INT) {
-       DOUBLE_solve(a, b, rtn);
-   }
+    if (CArray_TYPE(a) == TYPE_DOUBLE_INT && CArray_TYPE(b) == TYPE_DOUBLE_INT) {
+       rtn = DOUBLE_solve(a, b, out);
+    }
 
-   return NULL;
-
+    return rtn;
 fail:
     return NULL;
 }
