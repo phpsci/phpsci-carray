@@ -558,6 +558,13 @@ CArray_Dump(CArray * ca)
     php_printf("CArray.descriptor.type_num\t%d\n", ca->descriptor->type_num);
 }
 
+CArray *
+CArray_NewScalar(char type, MemoryPointer *out) 
+{
+    int shape = 0;
+    return CArray_Zeros(&shape, 0, type, NULL, out);    
+}
+
 /**
  * Multiply vector list by scalar
  *
