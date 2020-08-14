@@ -6,7 +6,7 @@
  * return true if pointer is aligned to 'alignment'
  */
 static inline int
-carray_is_aligned(const void * p, const int alignment)
+carray_is_aligned(void * p, int alignment)
 {
     /*
      * Assumes alignment is a power of two, as required by the C standard.
