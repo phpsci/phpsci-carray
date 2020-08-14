@@ -194,7 +194,7 @@ CArray_Correlate2(CArray * op1, CArray * op2, int mode, MemoryPointer * out)
      * ret = ret[::-1])
      */
     if (inverted) {
-        st = _carray_revert(ret);
+        //st = _carray_revert(ret);
         if (st) {
             goto clean_ret;
         }
