@@ -242,7 +242,7 @@ CArray_Matmul(CArray * ap1, CArray * ap2, CArray * out, MemoryPointer * ptr)
         throw_valueerror_exception("dot: too many dimensions in result");
         goto fail;
     }
-
+    
     j = 0;
     dimensions = emalloc((CArray_NDIM(ap1)) * sizeof(int));
     for (i = 0; i < CArray_NDIM(ap1) - 1; i++) {
@@ -897,6 +897,7 @@ CArray_InnerProduct(CArray *op1, CArray *op2, MemoryPointer *out)
     CArrayDescriptor_FREE(typec);
     return ret;
 fail:
+    throw_valueerror_exception("");
     return NULL;
 }
 

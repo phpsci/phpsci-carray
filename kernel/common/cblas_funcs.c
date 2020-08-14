@@ -317,12 +317,12 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
     numbytes = CArray_NBYTES(out_buf);
     memset(CArray_DATA(out_buf), 0, numbytes);
     
-    if (numbytes == 0 || l == 0) {
-        CArray_DECREF(ap1);
-        CArray_DECREF(ap2);
-        CArray_DECREF(out_buf);
-        return result;
-    }
+    //if (numbytes == 0 || l == 0) {
+    //    CArray_DECREF(ap1);
+    //    CArray_DECREF(ap2);
+    //    CArray_DECREF(out_buf);
+    //    return result;
+    //}
 
     if (ap2shape == _scalar) {
         /*
@@ -358,6 +358,8 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
                 val = *((double *)CArray_DATA(ap2));
                 a1s = CArray_STRIDE(ap1, maxind) / sizeof(double);
                 outs = CArray_STRIDE(out_buf, maxind) / sizeof(double);
+
+                
                 for (i = 0; i < CArray_DIM(ap1, oind); i++) {
                     //cblas_daxpy(l, val, (double *)ptr, a1s,
                                 //(double *)optr, outs);
