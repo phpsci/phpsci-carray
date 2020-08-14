@@ -25,7 +25,7 @@ CArray_Poisson(int *shape, double lambda, MemoryPointer *out)
     result = emalloc(sizeof(CArray));
     descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
     result = CArray_NewFromDescr_int(result, descr, 2, shape, NULL, NULL,
-                                     NULL, NULL, 1, 0);
+                                     CARRAY_ARRAY_C_CONTIGUOUS, NULL, 1, 0);
 
     // Random Seed
     srand((unsigned) time(&t));
