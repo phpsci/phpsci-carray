@@ -24,6 +24,7 @@
 #include <kernel/common/exceptions.h>
 #include <kernel/scalar.h>
 #include "lapacke.h"
+#include "cblas.h"
 
 /**
  * RubixML/Tensor/Matrix::identity
@@ -703,9 +704,36 @@ PHP_METHOD(CRubix, matmul)
     }
 }
 
+/**
+ * RubixML/Tensor/Vector::dot
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, dot)
 {
+    MemoryPointer rtn_ptr, a_ptr, b_ptr;
+    zval *a, *b;
+    CArray *a_ca, *b_ca, *rtn_ca;
+    ZEND_PARSE_PARAMETERS_START(2, 2)
+        Z_PARAM_ZVAL(a)
+        Z_PARAM_ZVAL(b)
+    ZEND_PARSE_PARAMETERS_END();
+    ZVAL_TO_MEMORYPOINTER(a, &a_ptr, NULL);
+    ZVAL_TO_MEMORYPOINTER(b, &b_ptr, NULL);
 
+    a_ca = CArray_FromMemoryPointer(&a_ptr);
+    b_ca = CArray_FromMemoryPointer(&b_ptr);
+
+    rtn_ca = CArray_InnerProduct(a_ca, b_ca, &rtn_ptr);
+
+    FREE_FROM_MEMORYPOINTER(&a_ptr);
+    FREE_FROM_MEMORYPOINTER(&b_ptr);
+    if (rtn_ca == NULL) {
+        return;
+    }
+
+    RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
 PHP_METHOD(CRubix, convolve)
@@ -1662,9 +1690,41 @@ PHP_METHOD(CRubix, covariance)
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::round
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, round)
 {
+    MemoryPointer target_ptr, rtn_ptr;
+    CArray * target_ca, * rtn_ca;
+    zval * target;
+    long decimals;
+    ZEND_PARSE_PARAMETERS_START(1, 2)
+            Z_PARAM_ZVAL(target)
+            Z_PARAM_OPTIONAL
+            Z_PARAM_LONG(decimals)
+    ZEND_PARSE_PARAMETERS_END();
+    if(ZEND_NUM_ARGS() == 1) {
+        decimals = 0;
+    }
 
+    ZVAL_TO_MEMORYPOINTER(target, &target_ptr, NULL);
+    target_ca = CArray_FromMemoryPointer(&target_ptr);
+    rtn_ca = CArray_Round(target_ca, (int)decimals, &rtn_ptr);
+
+    if (rtn_ca == NULL) {
+        return;
+    }
+
+    if (target_ptr.free == 1 || target_ptr.free == 2) {
+        CArrayDescriptor_INCREF(CArray_DESCR(rtn_ca));
+    }
+
+    FREE_FROM_MEMORYPOINTER(&target_ptr);
+    RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
 /**
@@ -2351,17 +2411,6 @@ PHP_METHOD(CRubix, notEqualVector)
     ca_a = CArray_FromMemoryPointer(&ptr_a);
     ca_b = CArray_FromMemoryPointer(&ptr_b);
 
-    if (CArray_NDIM(ca_a) != 2 || CArray_NDIM(ca_b) != 1)
-    {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
-
-    if (CArray_DIM(ca_a, 1) != CArray_DIM(ca_b, 0)) {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
-
     rtn_ca = CArray_Zeros(CArray_DIMS(ca_a), CArray_NDIM(ca_a), 'd', NULL, &rtn_ptr);
 
     CArrayIterator *it_a = CArray_NewIter(ca_a);
@@ -2500,17 +2549,6 @@ PHP_METHOD(CRubix, lessVector)
     ca_a = CArray_FromMemoryPointer(&ptr_a);
     ca_b = CArray_FromMemoryPointer(&ptr_b);
 
-    if (CArray_NDIM(ca_a) != 2 || CArray_NDIM(ca_b) != 1)
-    {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
-
-    if (CArray_DIM(ca_a, 1) != CArray_DIM(ca_b, 0)) {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
-
     rtn_ca = CArray_Zeros(CArray_DIMS(ca_a), CArray_NDIM(ca_a), 'd', NULL, &rtn_ptr);
 
     CArrayIterator *it_a = CArray_NewIter(ca_a);
@@ -2556,17 +2594,6 @@ PHP_METHOD(CRubix, lessEqualVector)
 
     ca_a = CArray_FromMemoryPointer(&ptr_a);
     ca_b = CArray_FromMemoryPointer(&ptr_b);
-
-    if (CArray_NDIM(ca_a) != 2 || CArray_NDIM(ca_b) != 1)
-    {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
-
-    if (CArray_DIM(ca_a, 1) != CArray_DIM(ca_b, 0)) {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
 
     rtn_ca = CArray_Zeros(CArray_DIMS(ca_a), CArray_NDIM(ca_a), 'd', NULL, &rtn_ptr);
 
@@ -2852,12 +2879,6 @@ PHP_METHOD(CRubix, equalScalar)
     ca_a = CArray_FromMemoryPointer(&ptr_a);
     ca_b = CArray_FromMemoryPointer(&ptr_b);
 
-    if (CArray_NDIM(ca_a) != 2 || CArray_NDIM(ca_b) != 0)
-    {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
-
     rtn_ca = CArray_Zeros(CArray_DIMS(ca_a), CArray_NDIM(ca_a), 'd', NULL, &rtn_ptr);
 
     CArrayIterator *it_a = CArray_NewIter(ca_a);
@@ -3079,12 +3100,6 @@ PHP_METHOD(CRubix, lessScalar)
     ca_a = CArray_FromMemoryPointer(&ptr_a);
     ca_b = CArray_FromMemoryPointer(&ptr_b);
 
-    if (CArray_NDIM(ca_a) != 2 || CArray_NDIM(ca_b) != 0)
-    {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
-
     rtn_ca = CArray_Zeros(CArray_DIMS(ca_a), CArray_NDIM(ca_a), 'd', NULL, &rtn_ptr);
 
     CArrayIterator *it_a = CArray_NewIter(ca_a);
@@ -3138,12 +3153,6 @@ PHP_METHOD(CRubix, lessEqualScalar)
 
     ca_a = CArray_FromMemoryPointer(&ptr_a);
     ca_b = CArray_FromMemoryPointer(&ptr_b);
-
-    if (CArray_NDIM(ca_a) != 2 || CArray_NDIM(ca_b) != 0)
-    {
-        throw_valueerror_exception("Shapes are not aligned");
-        return;
-    }
 
     rtn_ca = CArray_Zeros(CArray_DIMS(ca_a), CArray_NDIM(ca_a), 'd', NULL, &rtn_ptr);
 

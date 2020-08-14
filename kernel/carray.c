@@ -559,8 +559,7 @@ CArray_Dump(CArray * ca)
 }
 
 CArray *
-CArray_NewScalar(char type, MemoryPointer *out) 
-{
+CArray_NewScalar(char type, MemoryPointer *out) {
     int shape = 0;
     return CArray_Zeros(&shape, 0, type, NULL, out);    
 }
@@ -1269,7 +1268,7 @@ CArray_Print(CArray *array, int force_summary)
 
     if(array->ndim == 0) {
         if(CArray_TYPE(array) == TYPE_DOUBLE_INT) {
-            php_printf("%f", DDATA(array)[0]);
+            php_printf("%.17g", DDATA(array)[0]);
             return;
         }
         if(CArray_TYPE(array) == TYPE_INTEGER_INT) {

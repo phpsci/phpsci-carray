@@ -140,7 +140,7 @@ DOUBLE_dot(char *ip1, int is1, char *ip2, int is2, char *op, int n)
 
             sum += cblas_ddot(chunk,
                     (double *) ip1, is1b,
-            (double *) ip2, is2b);
+                    (double *) ip2, is2b);
             /* use char strides here */
             ip1 += chunk * is1;
             ip2 += chunk * is2;
