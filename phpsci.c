@@ -2792,6 +2792,7 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, notEqualVector, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, notEqualScalar, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 
+        PHP_ME(CRubix, sign, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, offsetGet, arginfo_array_offsetGet, ZEND_ACC_PUBLIC)
 };
 

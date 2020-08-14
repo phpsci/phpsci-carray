@@ -30,6 +30,10 @@ Makefile.fragments
 Makefile.objects
 run-tests.php
 vgcore.*
+config.h*
+build*
+*.so
+
 
 # OS
 .DS_Store

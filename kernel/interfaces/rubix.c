@@ -1734,9 +1734,44 @@ PHP_METHOD(CRubix, clipUpper)
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::sign
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, sign)
 {
+    MemoryPointer target_ptr, rtn_ptr;
+    CArray * target_ca, * rtn_ca;
+    zval * target;
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_ZVAL(target)
+    ZEND_PARSE_PARAMETERS_END();
+    ZVAL_TO_MEMORYPOINTER(target, &target_ptr, NULL);
+    target_ca = CArray_FromMemoryPointer(&target_ptr);
 
+    CArrayIterator *a_it = CArray_NewIter(target_ca);
+    rtn_ca = CArray_Zeros(CArray_DIMS(target_ca), CArray_NDIM(target_ca), 'd', NULL, &rtn_ptr);
+
+    if (CArray_TYPE(target_ca) == TYPE_INTEGER) {
+        throw_typeerror_exception("Invalid type");
+        return;
+    }
+
+    do {
+        if (IT_DDATA(a_it)[0] > 0) {
+            DDATA(rtn_ca)[a_it->index] = 1.0;
+        } else if (IT_DDATA(a_it)[0] < 0) {
+            DDATA(rtn_ca)[a_it->index] = -1.0;
+        } else {
+            DDATA(rtn_ca)[a_it->index] = 0.0;
+        }
+
+        CArrayIterator_NEXT(a_it);
+    } while(CArrayIterator_NOTDONE(a_it));
+
+    RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
 /**
@@ -2877,14 +2912,13 @@ PHP_METHOD(CRubix, notEqualScalar)
     ca_a = CArray_FromMemoryPointer(&ptr_a);
     ca_b = CArray_FromMemoryPointer(&ptr_b);
 
-    if (CArray_NDIM(ca_a) != 2 || CArray_NDIM(ca_b) != 0)
+    if (CArray_NDIM(ca_b) != 0)
     {
         throw_valueerror_exception("Shapes are not aligned");
         return;
     }
 
     rtn_ca = CArray_Zeros(CArray_DIMS(ca_a), CArray_NDIM(ca_a), 'd', NULL, &rtn_ptr);
-
     CArrayIterator *it_a = CArray_NewIter(ca_a);
 
     if (CArray_TYPE(ca_b) == TYPE_DOUBLE_INT) {
@@ -2898,9 +2932,9 @@ PHP_METHOD(CRubix, notEqualScalar)
             CArrayIterator_NEXT(it_a);
         } while (CArrayIterator_NOTDONE(it_a));
     }
-
     if (CArray_TYPE(ca_b) == TYPE_INTEGER_INT) {
         do {
+            
             if (IT_DDATA(it_a)[0] != IDATA(ca_b)[0]) {
                 DDATA(rtn_ca)[it_a->index] = 1.0;
             } else {
