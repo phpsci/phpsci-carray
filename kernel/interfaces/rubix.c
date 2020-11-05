@@ -500,12 +500,23 @@ PHP_METHOD(CRubix, argmin)
     ZVAL_TO_MEMORYPOINTER(target, &ptr, NULL);
     target_ca = CArray_FromMemoryPointer(&ptr);
 
-    ret = CArray_Argmin(target_ca, &axis_p, &out_ptr);
+    // For 2-D Tensor
+    if (CArray_NDIM(target_ca) == 2) {
+        ret = CArray_Argmin(target_ca, &axis_p, &out_ptr);
+    }
+
+    // For Vector
+    if (CArray_NDIM(target_ca) == 1) {
+        axis_p = 0;
+        ret = CArray_Argmin(target_ca, &axis_p, &out_ptr);
+        ZVAL_LONG(return_value, IDATA(ret)[0]);
+        CArray_Free(ret);
+        return;
+    }
 
     if (ret == NULL) {
         return;
     }
-
     FREE_FROM_MEMORYPOINTER(&ptr);
     RETURN_MEMORYPOINTER(return_value, &out_ptr);
 }
@@ -1868,7 +1879,7 @@ PHP_METHOD(CRubix, quantile)
         t = DDATA(sorted_ca)[x_hat - 1];
 
         dresult = t + remainder * (DDATA(sorted_ca)[x_hat] - t);
-        
+
         ZVAL_DOUBLE(return_value, dresult);
         return;
     }
