@@ -406,28 +406,6 @@ PHP_METHOD(CRubix, n)
 }
 
 /**
- * RubixML/Tensor/Matrix::row
- *
- * @param execute_data
- * @param return_value
- */
-PHP_METHOD(CRubix, row)
-{
-
-}
-
-/**
- * RubixML/Tensor/Matrix::column
- *
- * @param execute_data
- * @param return_value
- */
-PHP_METHOD(CRubix, column)
-{
-
-}
-
-/**
  * RubixML/Tensor/Matrix::diagonalAsVector
  *
  * @param execute_data
