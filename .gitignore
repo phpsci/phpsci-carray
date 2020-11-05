@@ -33,6 +33,7 @@ vgcore.*
 config.h*
 build*
 *.so
+*.gch
 
 
 # OS
