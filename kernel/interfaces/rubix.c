@@ -1831,7 +1831,72 @@ PHP_METHOD(CRubix, median)
  */
 PHP_METHOD(CRubix, quantile)
 {
+    double q, x, remainder, t, dresult;
+    zval *target;
+    MemoryPointer ptr, out_ptr;
+    CArray *target_ca, *sorted_ca, *result;
+    int i = 0, axis = -1, x_hat, key;
+    CARRAY_SORTKIND sortkind = CARRAY_QUICKSORT;
 
+    ZEND_PARSE_PARAMETERS_START(2, 2)
+         Z_PARAM_ZVAL(target)
+         Z_PARAM_DOUBLE(q)
+    ZEND_PARSE_PARAMETERS_END();
+
+    if (q < 0.0 || q > 1.0) {
+      throw_valueerror_exception("Q must be between 0 and 1");
+    }
+
+    ZVAL_TO_MEMORYPOINTER(target, &ptr, NULL);
+    target_ca = CArray_FromMemoryPointer(&ptr);
+
+    // If NDIM > 2 throw an exception
+    if (CArray_NDIM(target_ca) > 2) {
+        throw_notimplemented_exception();
+        return;
+    }
+
+    // For Vector
+    if (CArray_NDIM(target_ca) == 1) {
+        x = q * (CArray_DIMS(target_ca)[0] - 1.0) + 1.0;
+        x_hat = (int)x;
+
+        remainder = x - x_hat;
+
+        sorted_ca = CArray_Sort(target_ca, &axis, sortkind, 0, NULL);
+
+        t = DDATA(sorted_ca)[x_hat - 1];
+
+        dresult = t + remainder * (DDATA(sorted_ca)[x_hat] - t);
+        
+        ZVAL_DOUBLE(return_value, dresult);
+        return;
+    }
+
+
+    // For 2-D Tensor
+    x = q * (CArray_DIMS(target_ca)[1] - 1.0) + 1.0;
+    x_hat = (int)x;
+
+    remainder = x - x_hat;
+
+    sorted_ca = CArray_Sort(target_ca, &axis, sortkind, 0, NULL);
+
+    int *dims = emalloc(sizeof(double));
+    dims[0] = CArray_DIMS(sorted_ca)[0];
+    CArrayDescriptor *descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
+
+    result = (CArray*)emalloc(sizeof(CArray));
+    result = CArray_NewFromDescr(result, descr, 1, dims, NULL, NULL, 0, NULL);
+
+    for (i = 0; i < CArray_DIMS(target_ca)[0]; i++) {
+        key = i * CArray_DIMS(target_ca)[1];
+        t = DDATA(sorted_ca)[(key + (x_hat - 1))];
+        DDATA(result)[i] = t + remainder * (DDATA(sorted_ca)[key + x_hat] - t);
+    }
+
+    add_to_buffer(&out_ptr, result, sizeof(CArray));
+    RETURN_MEMORYPOINTER(return_value, &out_ptr);
 }
 
 /**

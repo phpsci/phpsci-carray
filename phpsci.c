@@ -2724,6 +2724,7 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, transpose, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, subMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, solve, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, quantile, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 
         PHP_ME(CRubix, log, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, log1p, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

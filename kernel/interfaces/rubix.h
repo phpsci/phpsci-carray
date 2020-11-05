@@ -78,7 +78,7 @@ PHP_METHOD(CRubix, product);                        //OK        PASSED
 PHP_METHOD(CRubix, min);                            //OK        PASSED
 PHP_METHOD(CRubix, max);                            //OK        PASSED
 PHP_METHOD(CRubix, variance);
-PHP_METHOD(CRubix, median);                         //OK                                     
+PHP_METHOD(CRubix, median);                         //OK        PASSED
 PHP_METHOD(CRubix, quantile);
 PHP_METHOD(CRubix, covariance);                     //OK        PASSED
 PHP_METHOD(CRubix, round);
