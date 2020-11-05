@@ -500,11 +500,6 @@ PHP_METHOD(CRubix, argmin)
     ZVAL_TO_MEMORYPOINTER(target, &ptr, NULL);
     target_ca = CArray_FromMemoryPointer(&ptr);
 
-    // For 2-D Tensor
-    if (CArray_NDIM(target_ca) == 2) {
-        ret = CArray_Argmin(target_ca, &axis_p, &out_ptr);
-    }
-
     // For Vector
     if (CArray_NDIM(target_ca) == 1) {
         axis_p = 0;
@@ -512,6 +507,11 @@ PHP_METHOD(CRubix, argmin)
         ZVAL_LONG(return_value, IDATA(ret)[0]);
         CArray_Free(ret);
         return;
+    }
+
+    // For 2-D Tensor
+    if (CArray_NDIM(target_ca) == 2) {
+        ret = CArray_Argmin(target_ca, &axis_p, &out_ptr);
     }
 
     if (ret == NULL) {
