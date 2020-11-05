@@ -175,7 +175,7 @@ int * ZVAL_TO_TUPLE(zval * obj, int * size)
     return data_int;
 }
 
-zval * 
+zval *
 MEMORYPOINTER_TO_ZVAL(MemoryPointer * ptr)
 {
     zval * a = emalloc(sizeof(zval));
@@ -255,7 +255,7 @@ PHP_METHOD(CArray, __construct)
 
 /**
  * GET & SETS
- **/ 
+ **/
 ZEND_BEGIN_ARG_INFO_EX(arginfo_array_set, 0, 0, 2)
     ZEND_ARG_INFO(0, name)
     ZEND_ARG_INFO(0, value)
@@ -288,7 +288,7 @@ PHP_METHOD(CArray, __set)
         zend_update_property_long(carray_sc_entry, getThis(), "ndim", sizeof("ndim") - 1, zval_get_long(value));
         return;
     }
-    throw_valueerror_exception("Unknown property.");    
+    throw_valueerror_exception("Unknown property.");
 }
 
 PHP_METHOD(CArray, offsetExists)
@@ -436,8 +436,6 @@ PHP_METHOD(CArray, reshape)
     RETURN_MEMORYPOINTER(return_value, &ptr);
 }
 
-
-
 PHP_METHOD(CArray, dump)
 {
     MemoryPointer ptr;
@@ -460,7 +458,7 @@ PHP_METHOD(CArray, print)
 
 /**
  * DESTRUCTOR
- **/ 
+ **/
 PHP_METHOD(CArray, __destruct)
 {
     MemoryPointer ptr;
@@ -470,7 +468,7 @@ PHP_METHOD(CArray, __destruct)
 
 /**
  * CALCULATIONS
- **/ 
+ **/
 PHP_METHOD(CArray, sum)
 {
     zval * target;
@@ -813,7 +811,7 @@ PHP_METHOD(CArray, transpose)
 
 /**
  * METHODS
- */  
+ */
 PHP_METHOD(CArray, identity)
 {
     MemoryPointer ptr;
@@ -1032,8 +1030,8 @@ PHP_METHOD(CArray, sort)
 
 
 /**
- * LINEAR ALGEBRA 
- */ 
+ * LINEAR ALGEBRA
+ */
 PHP_METHOD(CArray, matmul)
 {
     MemoryPointer target1_ptr, target2_ptr, result_ptr;
@@ -1043,10 +1041,10 @@ PHP_METHOD(CArray, matmul)
     ZEND_PARSE_PARAMETERS_START(2, 2)
         Z_PARAM_ZVAL(target1)
         Z_PARAM_ZVAL(target2)
-    ZEND_PARSE_PARAMETERS_END();    
+    ZEND_PARSE_PARAMETERS_END();
     ZVAL_TO_MEMORYPOINTER(target1, &target1_ptr, NULL);
     ZVAL_TO_MEMORYPOINTER(target2, &target2_ptr, NULL);
-    
+
     target_ca1 = CArray_FromMemoryPointer(&target1_ptr);
     target_ca2 = CArray_FromMemoryPointer(&target2_ptr);
     output_ca = CArray_Matmul(target_ca1, target_ca2, NULL, &result_ptr);
@@ -1297,7 +1295,7 @@ PHP_METHOD(CArray, cholesky)
 
 
 PHP_METHOD(CArray, zeros)
-{   
+{
     zval * zshape;
     char * dtype, order = 'C';
     int ndim;
@@ -1325,7 +1323,7 @@ PHP_METHOD(CArray, zeros)
     RETURN_MEMORYPOINTER(return_value, &ptr);
 }
 PHP_METHOD(CArray, ones)
-{   
+{
     zval * zshape;
     char * dtype, order = 'C';
     int ndim;
@@ -1802,7 +1800,7 @@ PHP_METHOD(CArray, diagonal)
     if(ZEND_NUM_ARGS() == 3) {
         axis2 = 1;
     }
-    
+
     ZVAL_TO_MEMORYPOINTER(a, &a_ptr, NULL);
     target_array = CArray_FromMemoryPointer(&a_ptr);
     CArray * rtn_array = CArray_Diagonal(target_array, offset, axis1, axis2, &rtn_ptr);
@@ -2188,7 +2186,7 @@ PHP_METHOD(CArray, arange)
         Z_PARAM_ZVAL(step)
         Z_PARAM_STRING(dtype, type_len)
     ZEND_PARSE_PARAMETERS_END();
-    
+
     if(ZEND_NUM_ARGS() == 1) {
         convert_to_double(start_stop);
         if (UNEXPECTED(EXPECTED(zval_get_double(start_stop) > 0x7fffffff))) {
@@ -2458,7 +2456,7 @@ PHP_METHOD(CArray, geomspace)
 
 /**
  * RANDOM
- **/ 
+ **/
 PHP_METHOD(CArray, rand)
 {
     zval * size;
@@ -2491,7 +2489,7 @@ PHP_METHOD(CArray, poisson)
 
 /**
  * MISC
- **/ 
+ **/
 PHP_METHOD(CArray, fill)
 {
     zval * obj = getThis();
@@ -2750,6 +2748,7 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, eig, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, dot, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 
+        PHP_ME(CRubix, median, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, multiply, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, divide, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, add, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

@@ -16,13 +16,13 @@
 #include <kernel/search.h>
 #include <kernel/round.h>
 #include <kernel/calculation.h>
-#include "rubix.h"
 #include <kernel/carray.h>
 #include <phpsci.h>
-#include "php.h"
-#include "php_ini.h"
 #include <kernel/common/exceptions.h>
 #include <kernel/scalar.h>
+#include "php.h"
+#include "php_ini.h"
+#include "rubix.h"
 #include "lapacke.h"
 #include "cblas.h"
 
@@ -196,14 +196,20 @@ PHP_METHOD(CRubix, rand)
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::gaussian
+ */
 PHP_METHOD(CRubix, gaussian)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::uniform
+ */
 PHP_METHOD(CRubix, uniform)
 {
-    
+
 }
 
 /**
@@ -306,11 +312,17 @@ PHP_METHOD(CRubix, maximum)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * RubixML/Tensor/Matrix::stack
+ */
 PHP_METHOD(CRubix, stack)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::implodeRow
+ */
 PHP_METHOD(CRubix, implodeRow)
 {
 
@@ -393,11 +405,23 @@ PHP_METHOD(CRubix, n)
     RETURN_LONG(CArray_DIMS(target)[1]);
 }
 
+/**
+ * RubixML/Tensor/Matrix::row
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, row)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::column
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, column)
 {
 
@@ -514,6 +538,12 @@ PHP_METHOD(CRubix, argmax)
     RETURN_MEMORYPOINTER(return_value, &out_ptr);
 }
 
+/**
+ * RubixML/Tensor/Matrix::map
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, map)
 {
 
@@ -567,16 +597,34 @@ PHP_METHOD(CRubix, det)
     }
 }
 
+/**
+ * RubixML/Tensor/Matrix::trace
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, trace)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::rank
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, rank)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::fullRank
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, fullRank)
 {
 
@@ -736,26 +784,56 @@ PHP_METHOD(CRubix, dot)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * RubixML/Tensor/Matrix::convolve
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, convolve)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::ref
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, ref)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::rref
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, rref)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::lu
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, lu)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::cholesky
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, cholesky)
 {
 
@@ -817,7 +895,7 @@ PHP_METHOD(CRubix, eig)
     );
 
     array_init_size(return_value, 2);
-    
+
     tmp_zval = MEMORYPOINTER_TO_ZVAL(&ptr_wr);
     zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), tmp_zval);
     efree(tmp_zval);
@@ -862,21 +940,45 @@ PHP_METHOD(CRubix, solve)
     RETURN_MEMORYPOINTER(return_value, &out);
 }
 
+/**
+ * RubixML/Tensor/Matrix::l1Norm
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, l1Norm)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::l2Norm
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, l2Norm)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::infinityNorm
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, infinityNorm)
 {
 
 }
 
+/**
+ * RubixML/Tensor/Matrix::maxNorm
+ *
+ * @param execute_data
+ * @param return_value
+ */
 PHP_METHOD(CRubix, maxNorm)
 {
 
@@ -1670,21 +1772,71 @@ PHP_METHOD(CRubix, max)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * Rubix/Tensor/Matrix::variance
+ */
 PHP_METHOD(CRubix, variance)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::median
+ */
 PHP_METHOD(CRubix, median)
 {
+    zval *target;
+    MemoryPointer ptr, out_ptr;
+    CArray *a, *b, *result;
+    int n, axis = -1, i = 0;
+    CARRAY_SORTKIND sortkind = CARRAY_QUICKSORT;
 
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+         Z_PARAM_ZVAL(target)
+    ZEND_PARSE_PARAMETERS_END();
+
+    ZVAL_TO_MEMORYPOINTER(target, &ptr, NULL);
+    a = CArray_FromMemoryPointer(&ptr);
+    n = CArray_DESCR(a)->numElements;
+
+    b = CArray_Sort(a, &axis, sortkind, 0, NULL);
+
+    // For vectors
+    if (CArray_NDIM(b) == 1) {
+      n = (n + 1) / 2 - 1;
+      ZVAL_DOUBLE(return_value, DDATA(b)[n]);
+      CArray_Free(b);
+      return;
+    }
+
+    // For 2-D Tensor
+    int *dims = emalloc(sizeof(double));
+    dims[0] = CArray_DIMS(b)[0];
+    CArrayDescriptor *descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
+
+    result = (CArray*)emalloc(sizeof(CArray));
+    result = CArray_NewFromDescr(result, descr, 1, dims, NULL, NULL, 0, NULL);
+
+    for (i = 0; i < CArray_DIMS(b)[0]; i++) {
+        n = ((CArray_DIMS(b)[1] + 1) / 2 - 1) + (i * CArray_DIMS(b)[1]);
+        DDATA(result)[i] = DDATA(b)[n];
+    }
+
+    add_to_buffer(&out_ptr, result, sizeof(CArray));
+    RETURN_MEMORYPOINTER(return_value, &out_ptr);
 }
 
+/**
+ * Rubix/Tensor/Matrix::quantile
+ */
 PHP_METHOD(CRubix, quantile)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::covariance
+ */
 PHP_METHOD(CRubix, covariance)
 {
 
@@ -1779,16 +1931,25 @@ PHP_METHOD(CRubix, ceil)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * Rubix/Tensor/Matrix::clip
+ */
 PHP_METHOD(CRubix, clip)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::clipLower
+ */
 PHP_METHOD(CRubix, clipLower)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::clipUpper
+ */
 PHP_METHOD(CRubix, clipUpper)
 {
 
@@ -1859,6 +2020,9 @@ PHP_METHOD(CRubix, negate)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * Rubix/Tensor/Matrix::insert
+ */
 PHP_METHOD(CRubix, insert)
 {
 
@@ -1915,26 +2079,41 @@ PHP_METHOD(CRubix, subMatrix)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * Rubix/Tensor/Matrix::augmentAbove
+ */
 PHP_METHOD(CRubix, augmentAbove)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::augmentBelow
+ */
 PHP_METHOD(CRubix, augmentBelow)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::augmentLeft
+ */
 PHP_METHOD(CRubix, augmentLeft)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::augmentRight
+ */
 PHP_METHOD(CRubix, augmentRight)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::repeat
+ */
 PHP_METHOD(CRubix, repeat)
 {
 
@@ -2192,7 +2371,7 @@ PHP_METHOD(CRubix, greaterEqualMatrix)
 
             i++;
             CArrayIterator_NEXT(it_b);
-            
+
             if (i == CArray_DIMS(ca_b)[1]) {
                 i = 0;
                 CArrayIterator_NEXT(it_a);
@@ -2261,7 +2440,7 @@ PHP_METHOD(CRubix, lessMatrix)
 
             i++;
             CArrayIterator_NEXT(it_b);
-            
+
             if (i == CArray_DIMS(ca_b)[1]) {
                 i = 0;
                 CArrayIterator_NEXT(it_a);
@@ -2330,7 +2509,7 @@ PHP_METHOD(CRubix, lessEqualMatrix)
 
             i++;
             CArrayIterator_NEXT(it_b);
-            
+
             if (i == CArray_DIMS(ca_b)[1]) {
                 i = 0;
                 CArrayIterator_NEXT(it_a);
@@ -2618,11 +2797,17 @@ PHP_METHOD(CRubix, lessEqualVector)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * Rubix/Tensor/Matrix::equalColumnVector
+ */
 PHP_METHOD(CRubix, equalColumnVector)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::notEqualColumnVector
+ */
 PHP_METHOD(CRubix, notEqualColumnVector)
 {
 
@@ -2955,7 +3140,7 @@ PHP_METHOD(CRubix, notEqualScalar)
     }
     if (CArray_TYPE(ca_b) == TYPE_INTEGER_INT) {
         do {
-            
+
             if (IT_DDATA(it_a)[0] != IDATA(ca_b)[0]) {
                 DDATA(rtn_ca)[it_a->index] = 1.0;
             } else {
@@ -3185,26 +3370,41 @@ PHP_METHOD(CRubix, lessEqualScalar)
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }
 
+/**
+ * Rubix/Tensor/Matrix::count
+ */
 PHP_METHOD(CRubix, count)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::offsetSet
+ */
 PHP_METHOD(CRubix, offsetSet)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::offsetExists
+ */
 PHP_METHOD(CRubix, offsetExists)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::offsetUnset
+ */
 PHP_METHOD(CRubix, offsetUnset)
 {
 
 }
 
+/**
+ * Rubix/Tensor/Matrix::getIterator
+ */
 PHP_METHOD(CRubix, getIterator)
 {
 

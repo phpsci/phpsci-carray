@@ -17,7 +17,7 @@ start_clblas_context() {
 
     /* Setup OpenCL environment. */
     err = clGetPlatformIDs( 1, &platform, NULL );
-        err = clGetDeviceIDs( platform, CL_DEVICE_TYPE_GPU, 1, &device, NULL );
+    err = clGetDeviceIDs( platform, CL_DEVICE_TYPE_GPU, 1, &device, NULL );
 
     props[1] = (cl_context_properties)platform;
 

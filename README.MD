@@ -1,8 +1,6 @@
 # PHPSci CArray Extension
 
-<p align="center">
-  <img src="https://i.imgur.com/QoIbhqj.png" width="70%" />
-</p>
+![](https://i.imgur.com/QoIbhqj.png)
 
 PHPSci CArray is a high-performance scientific computing library for PHP developed in C and based on the original NumPy code. CArrays offer a solid alternative to PHP arrays as well as compatibility with codes developed using NumPy.
 
@@ -11,22 +9,24 @@ PHPSci CArray is a high-performance scientific computing library for PHP develop
 - Efficient shape, initializers, linear algebra and mathematical methods.
 - Out of the box GPU integration (Cuda)
 
----
+--------------------------------------------------------------------------------
 
 ## Installing
 
 It's really easy to compile this extension using Linux environments.
 
-#### Requirements
+### Requirements
 
 - php-devel (php-dev)
 - PHP 7.2
 - OpenBLAS
 
-#### Optional
+### Optional
+
 - cuBLAS (For GPU Integration)
 
-#### Ubuntu 16.04
+### Ubuntu 16.04
+
 ```commandline
 $ add-apt-repository -y ppa:ondrej/php
 $ apt-get update
@@ -36,7 +36,9 @@ $ ./configure
 $ make test
 $ make install
 ```
-#### Ubuntu 14.04
+
+### Ubuntu 14.04
+
 ```commandline
 $ add-apt-repository -y ppa:ondrej/php
 $ apt-get update
