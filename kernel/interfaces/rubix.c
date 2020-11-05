@@ -539,7 +539,19 @@ PHP_METHOD(CRubix, argmax)
     ZVAL_TO_MEMORYPOINTER(target, &ptr, NULL);
     target_ca = CArray_FromMemoryPointer(&ptr);
 
-    ret = CArray_Argmax(target_ca, &axis_p, &out_ptr);
+    // For Vectors
+    if (CArray_NDIM(target_ca) == 1) {
+        axis_p = 0;
+        ret = CArray_Argmax(target_ca, &axis_p, &out_ptr);
+        ZVAL_LONG(return_value, IDATA(ret)[0]);
+        CArray_Free(ret);
+        return;
+    }
+
+    // For 2-D Tensor
+    if (CArray_NDIM(target_ca) == 2) {
+        ret = CArray_Argmax(target_ca, &axis_p, &out_ptr);
+    }
 
     if (ret == NULL) {
         return;
