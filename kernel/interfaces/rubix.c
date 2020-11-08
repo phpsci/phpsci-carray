@@ -15,6 +15,7 @@
 #include <kernel/buffer.h>
 #include <kernel/search.h>
 #include <kernel/round.h>
+#include <kernel/clip.h>
 #include <kernel/calculation.h>
 #include <kernel/carray.h>
 #include <phpsci.h>
@@ -25,6 +26,10 @@
 #include "rubix.h"
 #include "lapacke.h"
 #include "cblas.h"
+
+#ifdef HAVE_OMP
+#include <omp.h>
+#endif
 
 /**
  * RubixML/Tensor/Matrix::identity
@@ -1632,6 +1637,7 @@ PHP_METHOD(CRubix, min)
 
             rtn_ca = CArray_Zeros(newshape, 1, TYPE_INTEGER, &order, &rtn_ptr);
             it = CArray_NewIter(target_ca);
+
             do {
                 if (tmp_int > IT_IDATA(it)[0] || i == 0) {
                     IDATA(rtn_ca)[j] = IT_IDATA(it)[0];
@@ -1654,6 +1660,7 @@ PHP_METHOD(CRubix, min)
 
             rtn_ca = CArray_Zeros(newshape, 1, TYPE_DOUBLE, &order, &rtn_ptr);
             it = CArray_NewIter(target_ca);
+
             do {
                 if (tmp_double > IT_DDATA(it)[0] || i == 0) {
                     DDATA(rtn_ca)[j] = IT_DDATA(it)[0];
@@ -1874,7 +1881,6 @@ PHP_METHOD(CRubix, quantile)
         return;
     }
 
-
     // For 2-D Tensor
     x = q * (CArray_DIMS(target_ca)[1] - 1.0) + 1.0;
     x_hat = (int)x;
@@ -1891,9 +1897,9 @@ PHP_METHOD(CRubix, quantile)
     result = CArray_NewFromDescr(result, descr, 1, dims, NULL, NULL, 0, NULL);
 
     for (i = 0; i < CArray_DIMS(target_ca)[0]; i++) {
-        key = i * CArray_DIMS(target_ca)[1];
-        t = DDATA(sorted_ca)[(key + (x_hat - 1))];
-        DDATA(result)[i] = t + remainder * (DDATA(sorted_ca)[key + x_hat] - t);
+          key = i * CArray_DIMS(target_ca)[1];
+          t = DDATA(sorted_ca)[(key + (x_hat - 1))];
+          DDATA(result)[i] = t + remainder * (DDATA(sorted_ca)[key + x_hat] - t);
     }
 
     add_to_buffer(&out_ptr, result, sizeof(CArray));
@@ -2002,7 +2008,44 @@ PHP_METHOD(CRubix, ceil)
  */
 PHP_METHOD(CRubix, clip)
 {
+  MemoryPointer ptr_a, ptr_min, ptr_max, ptr_rtn;
+  CArray * ca_a, * ca_min = NULL, * ca_max = NULL, * rtn = NULL;
+  zval * a, * a_min, * a_max;
+  ZEND_PARSE_PARAMETERS_START(3, 3)
+      Z_PARAM_ZVAL(a)
+      Z_PARAM_ZVAL(a_min)
+      Z_PARAM_ZVAL(a_max)
+  ZEND_PARSE_PARAMETERS_END();
+  ZVAL_TO_MEMORYPOINTER(a, &ptr_a, NULL);
+  ZVAL_TO_MEMORYPOINTER(a_min, &ptr_min, NULL);
+  ZVAL_TO_MEMORYPOINTER(a_max, &ptr_max, NULL);
 
+  ca_a = CArray_FromMemoryPointer(&ptr_a);
+
+  if (Z_TYPE_P(a_min) != IS_NULL) {
+      ca_min = CArray_FromMemoryPointer(&ptr_min);
+  }
+  if (Z_TYPE_P(a_max) != IS_NULL) {
+      ca_max = CArray_FromMemoryPointer(&ptr_max);
+  }
+
+  rtn = CArray_Clip(ca_a, ca_min, ca_max, &ptr_rtn);
+
+  FREE_FROM_MEMORYPOINTER(&ptr_a);
+
+  if (Z_TYPE_P(a_min) != IS_NULL) {
+      FREE_FROM_MEMORYPOINTER(&ptr_min);
+  }
+
+  if (Z_TYPE_P(a_max) != IS_NULL) {
+      FREE_FROM_MEMORYPOINTER(&ptr_max);
+  }
+
+  if (rtn == NULL) {
+      return;
+  }
+
+  RETURN_MEMORYPOINTER(return_value, &ptr_rtn);
 }
 
 /**

@@ -4,6 +4,7 @@ PHP_ARG_WITH(carray, whether to enable CArray computing library,
 PHP_ARG_ENABLE(carray-opencl, whether to enable OpenCL support,
 [  --enable-carray-opencl     whether to enable OpenCL support], no, no)
 
+
 if test "$PHP_CARRAY" != "no"; then
   AC_DEFINE([HAVE_CARRAY],1 ,[whether to enable  CArray computing library])
 
@@ -130,6 +131,16 @@ PHP_CHECK_LIBRARY(lapacke,LAPACKE_sgetrf,
   -llapacke
 ])
 
+PHP_CHECK_LIBRARY(omp,omp_get_num_threads,
+[
+  AC_DEFINE(HAVE_OMP,1,[ ])
+  AC_MSG_RESULT([OpenMP found])
+  PHP_ADD_LIBRARY(omp,,CARRAY_SHARED_LIBADD)
+],[
+  AC_MSG_RESULT([OpenMP not found])
+],[
+  -fopenmp
+])
 
 PHP_NEW_EXTENSION(carray,
 	  phpsci.c \
@@ -181,5 +192,3 @@ PHP_NEW_EXTENSION(carray,
   PHP_INSTALL_HEADERS([ext/carray], [phpsci.h, kernel/carray.h, kernel/types.h, kernel/buffer.h])
   PHP_SUBST(CARRAY_SHARED_LIBADD)
 fi
-
-

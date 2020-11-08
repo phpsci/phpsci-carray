@@ -227,7 +227,7 @@ CArray_Clip(CArray * self, CArray * min, CArray * max, MemoryPointer * out_ptr)
 
         out = emalloc(sizeof(CArray));
         out = CArray_NewFromDescr(out,
-                                  indescr, CArray_NDIM(self),
+                                  CArray_DESCR(self), CArray_NDIM(self),
                                   CArray_DIMS(self),
                                   NULL, NULL,
                                   CArray_ISFORTRAN(self),

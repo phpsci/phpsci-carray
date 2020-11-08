@@ -124,7 +124,6 @@ ZVAL_TO_MEMORYPOINTER(zval * obj, MemoryPointer * ptr, char * type)
             throw_overflow_exception("CArrays only works with int32 and "
                                      "float64 values, LONG INT detected.");
         }
-
         IDATA(self)[0] = (int)zval_get_long(obj);
         add_to_buffer(ptr, self, sizeof(CArray));
         efree(dims);
@@ -2725,6 +2724,7 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, subMatrix, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, solve, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, quantile, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+        PHP_ME(CRubix, clip, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 
         PHP_ME(CRubix, log, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, log1p, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)

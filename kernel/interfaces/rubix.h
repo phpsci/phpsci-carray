@@ -84,9 +84,9 @@ PHP_METHOD(CRubix, covariance);                     //OK        PASSED
 PHP_METHOD(CRubix, round);
 PHP_METHOD(CRubix, floor);                          //OK        PASSED
 PHP_METHOD(CRubix, ceil);                           //OK        PASSED
-PHP_METHOD(CRubix, clip);
-PHP_METHOD(CRubix, clipLower);
-PHP_METHOD(CRubix, clipUpper);
+PHP_METHOD(CRubix, clip);                           //OK        PASSED
+PHP_METHOD(CRubix, clipLower);                      //OK
+PHP_METHOD(CRubix, clipUpper);                      //OK        PASSED
 PHP_METHOD(CRubix, sign);
 PHP_METHOD(CRubix, negate);                         //OK        PASSED
 PHP_METHOD(CRubix, insert);
