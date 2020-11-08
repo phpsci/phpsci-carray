@@ -1813,7 +1813,6 @@ PHP_METHOD(CRubix, median)
     if (CArray_NDIM(b) == 1) {
       n = (n + 1) / 2 - 1;
       ZVAL_DOUBLE(return_value, DDATA(b)[n]);
-      CArray_Free(b);
       return;
     }
 
