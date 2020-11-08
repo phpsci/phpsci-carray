@@ -1708,19 +1708,19 @@ PHP_METHOD(CRubix, max)
     if (CArray_NDIM(target_ca) == 1) {
         switch (CArray_TYPE(target_ca)) {
             case TYPE_INTEGER_INT:
-                tmp_int = 0;
-                for (i =0; i < CArray_DESCR(target_ca)->numElements; i++) {
-                    if (tmp_int > IDATA(target_ca)[i] || i == 0) {
-                        tmp_int = *(IDATA(target_ca));
+                tmp_int = IDATA(target_ca)[0];
+                for (i = 1; i < CArray_DESCR(target_ca)->numElements; i++) {
+                    if (tmp_int < IDATA(target_ca)[i] || i == 0) {
+                        tmp_int = IDATA(target_ca)[i];
                     }
                 }
                 RETURN_LONG((long) tmp_int);
                 break;
             case TYPE_DOUBLE_INT:
-                tmp_double = 0;
-                for (i =0; i < CArray_DESCR(target_ca)->numElements; i++) {
-                    if (tmp_double > DDATA(target_ca)[i] || i == 0) {
-                        tmp_double = *(DDATA(target_ca));
+                tmp_double = DDATA(target_ca)[0];
+                for (i = 1; i < CArray_DESCR(target_ca)->numElements; i++) {
+                    if (tmp_double < DDATA(target_ca)[i] || i == 0) {
+                        tmp_double = DDATA(target_ca)[i];
                     }
                 }
                 RETURN_DOUBLE(tmp_double);
