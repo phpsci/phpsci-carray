@@ -1796,7 +1796,7 @@ PHP_METHOD(CRubix, median)
     zval *target;
     MemoryPointer ptr, out_ptr;
     CArray *a, *b, *result;
-    int n, axis = -1, i = 0;
+    int n, axis = -1, i = 0, mid;
     CARRAY_SORTKIND sortkind = CARRAY_QUICKSORT;
 
     ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -1811,8 +1811,12 @@ PHP_METHOD(CRubix, median)
 
     // For vectors
     if (CArray_NDIM(b) == 1) {
-      n = (n + 1) / 2 - 1;
-      ZVAL_DOUBLE(return_value, DDATA(b)[n]);
+      mid = (int) n / 2;
+      if ((n % 2) == 1) {
+          ZVAL_DOUBLE(return_value, DDATA(b)[mid]);
+          return;
+      }
+      ZVAL_DOUBLE(return_value, (DDATA(b)[mid - 1] + DDATA(b)[mid]) / 2);
       return;
     }
 
