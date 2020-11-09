@@ -10,7 +10,7 @@ CArray_Floor(CArray *a, MemoryPointer *out)
     CArrayIterator * it1, * it2;
     CArray * rtn;
 
-    rtn = CArray_NewLikeArray(a, CARRAY_KEEPORDER, CArray_DESCR(a), 0);
+    rtn = CArray_NewLikeArray(a, CARRAY_KEEPORDER, NULL, 0);
 
     it1 = CArray_NewIter(a);
     it2 = CArray_NewIter(rtn);
@@ -54,7 +54,7 @@ CArray_Ceil(CArray *a, MemoryPointer *out)
     CArrayIterator * it1, * it2;
     CArray * rtn;
 
-    rtn = CArray_NewLikeArray(a, CARRAY_KEEPORDER, CArray_DESCR(a), 0);
+    rtn = CArray_NewLikeArray(a, CARRAY_KEEPORDER, NULL, 0);
 
     it1 = CArray_NewIter(a);
     it2 = CArray_NewIter(rtn);
@@ -99,7 +99,7 @@ CArray_Round(CArray *a, int decimals, MemoryPointer *out)
     CArray * rtn;
     int multiplier = 1, negative_decimals = 0, i;
 
-    rtn = CArray_NewLikeArray(a, CARRAY_KEEPORDER, CArray_DESCR(a), 0);
+    rtn = CArray_NewLikeArray(a, CARRAY_KEEPORDER, NULL, 0);
 
     it1 = CArray_NewIter(a);
     it2 = CArray_NewIter(rtn);
@@ -168,4 +168,3 @@ fail:
     CArrayIterator_FREE(it2);
     return NULL;
 }
-
