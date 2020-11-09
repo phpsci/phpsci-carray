@@ -240,19 +240,8 @@ CArray_Clip(CArray * self, CArray * min, CArray * max, MemoryPointer * out_ptr)
         outgood = 1;
     }
 
-    if (max != NULL) {
-        maxa = CArray_FromAny(max, indescr, 0, 0, CARRAY_ARRAY_DEFAULT);
-        if (maxa == NULL) {
-            goto fail;
-        }
-    }
-
-    if (min != NULL) {
-        mina = CArray_FromAny(min, indescr, 0, 0, CARRAY_ARRAY_DEFAULT);
-        if (mina == NULL) {
-            goto fail;
-        }
-    }
+    maxa = max;
+    mina = min;
 
     /* Now we can call the fast-clip function */
     min_data = max_data = NULL;
@@ -270,7 +259,6 @@ CArray_Clip(CArray * self, CArray * min, CArray * max, MemoryPointer * out_ptr)
     }
 
     CArray_DECREF(self);
-
     return out;
 fail:
     return NULL;
