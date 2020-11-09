@@ -128,6 +128,9 @@ _free_data_owner(MemoryPointer * ptr)
     }
 
     CArray_DECREF(array);
+    if (CArrayGC_ISDEBUGON()) {
+      php_printf("\n[CARRAY_GC_DEBUG] Freeing Dimensions and Strides from CArray ID %d", ptr->uuid);
+    }
     efree(array->dimensions);
     efree(array->strides);
     if(array->refcount < 0) {

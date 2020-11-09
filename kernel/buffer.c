@@ -10,6 +10,22 @@
 struct MemoryStack PHPSCI_MAIN_MEM_STACK;
 
 /**
+ * If CARRAY_GC_DEBUG env is True, CArray Garbage Collector
+ * will print debug messages when destructing objects.
+ */
+static int
+CArrayBuffer_ISDEBUGON()
+{
+    if (getenv("CARRAY_BUFFER_DEBUG") == NULL) {
+        return 0;
+    }
+    if (!strcmp(getenv("CARRAY_BUFFER_DEBUG"), "0")) {
+        return 0;
+    }
+    return 1;
+}
+
+/**
  * Initialize MemoryStack Buffer
  *
  * @todo Same from buffer_to_capacity
@@ -21,6 +37,9 @@ void buffer_init(size_t size) {
     PHPSCI_MAIN_MEM_STACK.bsize = size;
     // Allocate first CArray struct to buffer
     PHPSCI_MAIN_MEM_STACK.buffer = (struct CArray**)emalloc(sizeof(CArray *));
+    if (CArrayBuffer_ISDEBUGON()) {
+       php_printf("\n[CARRAY_BUFFER_DEBUG] Buffer Initialized");
+    }
 }
 
 void buffer_remove(MemoryPointer * ptr)
@@ -69,6 +88,10 @@ void add_to_buffer(MemoryPointer * ptr, struct CArray * array, size_t size) {
     // Associate CArray unique id
     ptr->uuid = (int)PHPSCI_MAIN_MEM_STACK.size;
     array->uuid = ptr->uuid;
+
+    if (CArrayBuffer_ISDEBUGON()) {
+       php_printf("\n[CARRAY_BUFFER_DEBUG] Added CArray ID %d", array->uuid);
+    }
     // Set new size for MemoryStack
     PHPSCI_MAIN_MEM_STACK.size++;
 }
