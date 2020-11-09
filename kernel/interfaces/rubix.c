@@ -552,7 +552,39 @@ PHP_METHOD(CRubix, argmax)
  */
 PHP_METHOD(CRubix, map)
 {
+    int i;
+    zval result;
+    CArray * target_ca, * ret_ca;
+    zend_fcall_info fci = empty_fcall_info;
+    zend_fcall_info_cache fci_cache = empty_fcall_info_cache;
+    zval * obj = getThis();
+    MemoryPointer ptr, out_ptr;
 
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_FUNC_EX(fci, fci_cache, 1, 0)
+    ZEND_PARSE_PARAMETERS_END();
+
+    ZVAL_TO_MEMORYPOINTER(obj, &ptr, NULL);
+    target_ca = CArray_FromMemoryPointer(&ptr);
+
+    zval *params = emalloc(sizeof(zval));
+    CArrayDescriptor *newdescr = CArray_DescrFromType(TYPE_DOUBLE_INT);
+    ret_ca = CArray_NewLikeArray(target_ca, CARRAY_KEEPORDER, newdescr, 0);
+
+    for (i = 0; i < CArray_DESCR(target_ca)->numElements; i++) {
+        ZVAL_DOUBLE(params, DDATA(target_ca)[i]);
+        fci.param_count = 1;
+        fci.retval = &result;
+        fci.params = params;
+        zend_call_function(&fci, &fci_cache);
+        DDATA(ret_ca)[i] = zval_get_double(&result);
+        zval_ptr_dtor(params);
+    }
+
+    add_to_buffer(&out_ptr, ret_ca, sizeof(CArray));
+    efree(params);
+
+    RETURN_MEMORYPOINTER(return_value, &out_ptr);
 }
 
 /**
