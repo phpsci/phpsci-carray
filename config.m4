@@ -1,9 +1,11 @@
 PHP_ARG_WITH(carray, whether to enable CArray computing library,
-[  --witch-carray          Disable CArray computing library], yes)
+[  --with-carray          Disable CArray computing library], yes)
 
-PHP_ARG_ENABLE(carray-opencl, whether to enable OpenCL support,
-[  --enable-carray-opencl     whether to enable OpenCL support], no, no)
+PHP_ARG_ENABLE(avx2, whether to enable AVX2 support,
+[  --enable-avx2     whether to enable AVX2 support], no, no)
 
+PHP_ARG_ENABLE(opencl, whether to enable OpenCL support,
+[  --enable-opencl     whether to enable OpenCL support], no, no)
 
 if test "$PHP_CARRAY" != "no"; then
   AC_DEFINE([HAVE_CARRAY],1 ,[whether to enable  CArray computing library])
@@ -77,7 +79,7 @@ AC_CHECK_HEADERS(
     [[#include "/usr/include/clBLAS.h"]]
 )
 
-if test "$PHP_CARRAY_OPENCL" != "no"; then
+if test "$PHP_OPENCL" != "no"; then
     PHP_CHECK_LIBRARY(clBLAS,clblasSgemm,
     [
       PHP_ADD_LIBRARY(clBLAS,,CARRAY_SHARED_LIBADD)
@@ -98,6 +100,21 @@ if test "$PHP_CARRAY_OPENCL" != "no"; then
     ],[
       -LclBLAS
     ])
+fi
+
+if test "$PHP_AVX2" != "no"; then
+AC_CHECK_HEADER([immintrin.h],
+    [
+      AC_DEFINE(CARRAY_HAVE_AVX2,1,[Have AV2/SSE support])
+      AC_MSG_RESULT([AVX2/SSE detected ])
+      CFLAGS+=" -mavx2 "
+    ],[
+      AC_DEFINE(CARRAY_HAVE_AVX2,0,[Have AV2/SSE support])
+      AC_MSG_RESULT([AVX2/SSE not found ])
+    ], [
+      
+    ]
+)
 fi
 
 PHP_CHECK_LIBRARY(cblas,cblas_sdot,
@@ -166,6 +183,7 @@ PHP_NEW_EXTENSION(carray,
       kernel/arraytypes.c \
       kernel/join.c \
       kernel/ctors.c \
+      kernel/simd.c \
       kernel/scalar.c \
       kernel/round.c \
       kernel/getset.c \

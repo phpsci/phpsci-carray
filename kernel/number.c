@@ -5,6 +5,7 @@
 #include "convert_type.h"
 #include "alloc.h"
 #include "matlib.h"
+#include "simd.h"
 
 void *
 _carray_add_double_double(CArrayIterator * a, CArrayIterator * b, CArray * out, int out_index) {
@@ -820,18 +821,27 @@ CArray_Absolute(CArray *a, MemoryPointer *out)
 CArray *
 CArray_Sqrt(CArray *a, MemoryPointer *out)
 {
-    CArrayDescriptor * descr;
+        CArrayDescriptor * descr;
     CArray * rtn = emalloc(sizeof(CArray));
     CArrayIterator * it1;
-    void * (*data_op)(CArrayIterator *, CArray *, int);
+    void * (*data_op)(CArrayIterator *, CArray *, int) = NULL;
 
     descr = CArray_DescrFromType(TYPE_DOUBLE_INT);
     rtn = CArray_NewFromDescr(rtn, descr, CArray_NDIM(a), CArray_DIMS(a), NULL, NULL, 0, NULL);
     it1 = CArray_NewIter(a);
+    char **args = emalloc(sizeof(char *) * 2);
+    int  *steps = emalloc(sizeof(int) * 2);
+
+    args[1] = CArray_DATA(rtn);
+    args[0] = CArray_DATA(a);
 
     switch (CArray_TYPE(a)) {
         case TYPE_DOUBLE_INT:
-            data_op = &_carray_sqrt_double;
+            steps[0] = CArray_DESCR(a)->elsize;
+            steps[1] = CArray_DESCR(a)->elsize;
+            if(!run_unary_simd_sqrt_DOUBLE(args, &(CArray_DESCR(a)->numElements), steps)) {
+                data_op = &_carray_sqrt_double;
+            }
             break;
         case TYPE_INTEGER_INT:
             data_op = &_carray_sqrt_int;
@@ -841,10 +851,12 @@ CArray_Sqrt(CArray *a, MemoryPointer *out)
             break;
     }
 
-    do {
-        data_op(it1, rtn, it1->index);
-        CArrayIterator_NEXT(it1);
-    } while(CArrayIterator_NOTDONE(it1));
+    if (data_op != NULL) {
+        do {
+            data_op(it1, rtn, it1->index);
+            CArrayIterator_NEXT(it1);
+        } while(CArrayIterator_NOTDONE(it1));
+    }
 
 
     if (out != NULL) {
@@ -853,8 +865,12 @@ CArray_Sqrt(CArray *a, MemoryPointer *out)
 
     CArrayIterator_FREE(it1);
 
+    efree(args);
+    efree(steps);
     return rtn;
 fail:
+    efree(args);
+    efree(steps);
     return NULL;
 }
 

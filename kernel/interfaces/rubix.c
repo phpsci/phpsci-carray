@@ -1389,7 +1389,6 @@ PHP_METHOD(CRubix, sin)
     ZVAL_TO_MEMORYPOINTER(target, &ptr, NULL);
     target_ca = CArray_FromMemoryPointer(&ptr);
     ret = CArray_Sin(target_ca, &rtn_tr);
-
     FREE_FROM_MEMORYPOINTER(&ptr);
     RETURN_MEMORYPOINTER(return_value, &rtn_tr);
 }
