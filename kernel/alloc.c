@@ -47,6 +47,17 @@ CArray_XDECREF(CArray *target)
 }
 
 /**
+ * @return
+ */
+void
+CArray_DECREF(CArray *target)
+{
+    target->refcount--;
+    CArray_Free(target);
+}
+
+
+/**
  * Alocates CArray Data Buffer based on numElements and elsize from
  * CArray descriptor.
  **/
