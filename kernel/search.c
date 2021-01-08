@@ -155,24 +155,24 @@ CArray_Argmax(CArray * target, int * axis, MemoryPointer * out)
             dims[j] = j + 1;
         }
         dims[CArray_NDIM(ap) - 1] = *axis;
-        CArray_DECREF(target);
+        CArray_XDECREF(target);
         target = CArray_Transpose(ap, &newaxes, NULL);
 
-        CArray_DECREF(ap);
+        CArray_XDECREF(ap);
         if (target == NULL) {
             return NULL;
         }
     }
     else {
         target = ap;
-        CArray_DECREF(ap);
+        CArray_XDECREF(ap);
     }
 
     /* Will get native-byte order contiguous copy. */
     CArrayDescriptor * tmp_descr = CArray_DescrFromType(CArray_DESCR(target)->type_num);
     ap = CArray_ContiguousFromAny(target, tmp_descr, 1, 0);
 
-    CArray_DECREF(target);
+    CArray_XDECREF(target);
     if (ap == NULL) {
         return NULL;
     }
@@ -208,7 +208,7 @@ CArray_Argmax(CArray * target, int * axis, MemoryPointer * out)
     }
 
     if (*axis != CArray_NDIM(ap)-1) {
-        CArray_DECREF(ap);
+        CArray_XDECREF(ap);
         CArrayDescriptor_DECREF(CArray_DESCR(target));
         CArray_Free(ap);
     } else {
@@ -217,8 +217,8 @@ CArray_Argmax(CArray * target, int * axis, MemoryPointer * out)
 
     return rp;
 fail:
-    CArray_DECREF(ap);
-    //CArray_DECREF(rp);
+    CArray_XDECREF(ap);
+    //CArray_XDECREF(rp);
     return NULL;
 }
 
@@ -254,24 +254,24 @@ CArray_Argmin(CArray * target, int * axis, MemoryPointer * out)
             dims[j] = j + 1;
         }
         dims[CArray_NDIM(ap) - 1] = *axis;
-        CArray_DECREF(target);
+        CArray_XDECREF(target);
         target = CArray_Transpose(ap, &newaxes, NULL);
 
-        CArray_DECREF(ap);
+        CArray_XDECREF(ap);
         if (target == NULL) {
             return NULL;
         }
     }
     else {
         target = ap;
-        CArray_DECREF(ap);
+        CArray_XDECREF(ap);
     }
 
     /* Will get native-byte order contiguous copy. */
     CArrayDescriptor * tmp_descr = CArray_DescrFromType(CArray_DESCR(target)->type_num);
     ap = CArray_ContiguousFromAny(target, tmp_descr, 1, 0);
 
-    CArray_DECREF(target);
+    CArray_XDECREF(target);
     if (ap == NULL) {
         return NULL;
     }
@@ -307,7 +307,7 @@ CArray_Argmin(CArray * target, int * axis, MemoryPointer * out)
     }
 
     if (*axis != CArray_NDIM(ap)-1) {
-        CArray_DECREF(ap);
+        CArray_XDECREF(ap);
         CArrayDescriptor_DECREF(CArray_DESCR(target));
         CArray_Free(ap);
     } else {
@@ -316,7 +316,7 @@ CArray_Argmin(CArray * target, int * axis, MemoryPointer * out)
 
     return rp;
     fail:
-    CArray_DECREF(ap);
-    //CArray_DECREF(rp);
+    CArray_XDECREF(ap);
+    //CArray_XDECREF(rp);
     return NULL;
 }

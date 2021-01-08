@@ -1053,7 +1053,7 @@ CArray_CheckAxis(CArray * arr, int * axis, int flags)
 
     if (flags) {
         temp2 = CArray_CheckFromAny(temp1, NULL, 0, 0, flags, NULL);
-        //CArray_DECREF(temp1);
+        //CArray_XDECREF(temp1);
         if (temp2 == NULL) {
             return NULL;
         }
@@ -1062,10 +1062,10 @@ CArray_CheckAxis(CArray * arr, int * axis, int flags)
         temp2 = temp1;
     }
 
-    CArray_DECREF(temp1);
+    CArray_XDECREF(temp1);
     n = CArray_NDIM(temp2);
     if (check_and_adjust_axis(axis, n) < 0) {
-        CArray_DECREF(temp2);
+        CArray_XDECREF(temp2);
         return NULL;
     }
     return temp2;
@@ -1119,7 +1119,7 @@ CArray_CheckFromAny(CArray *op, CArrayDescriptor *descr, int min_depth,
         !CArray_ElementStrides(obj)) {
         CArray *ret;
         ret = CArray_NewCopy(obj, CARRAY_ANYORDER);
-        CArray_DECREF(obj);
+        CArray_XDECREF(obj);
         obj = ret;
     }
     return obj;
@@ -1516,7 +1516,7 @@ CArray_SetWritebackIfCopyBase(CArray *arr, CArray *base)
     CArray_CLEARFLAGS(base, CARRAY_ARRAY_WRITEABLE);
 
   fail:
-    CArray_DECREF(base);
+    CArray_XDECREF(base);
     return -1;
 }
 
@@ -1589,7 +1589,7 @@ CArray_ResolveWritebackIfCopy(CArray * self)
             CArray_CLEARFLAGS(self, CARRAY_ARRAY_UPDATEIFCOPY);
             CArray_CLEARFLAGS(self, CARRAY_ARRAY_WRITEBACKIFCOPY);
             retval = CArray_CopyAnyInto(fa->base, self);
-            CArray_DECREF(fa->base);
+            CArray_XDECREF(fa->base);
             fa->base = NULL;
             if (retval < 0) {
                 /* this should never happen, how did the two copies of data
@@ -1817,7 +1817,7 @@ CArray_FromCArray(CArray * arr, CArrayDescriptor *newtype, int flags)
         }
         
         if (CArray_CastTo(ret, arr) < 0) {
-            CArray_DECREF(ret);
+            CArray_XDECREF(ret);
             return NULL;
         }
 
@@ -1827,7 +1827,7 @@ CArray_FromCArray(CArray * arr, CArrayDescriptor *newtype, int flags)
             ret->base->flags &= ~CARRAY_ARRAY_WRITEABLE;
             CArray_INCREF(arr);
         } else {
-            CArray_DECREF(arr);
+            CArray_XDECREF(arr);
             CArray_Free(arr);
         }
 
@@ -1851,12 +1851,12 @@ CArray_FromAnyUnwrap(CArray *op, CArrayDescriptor *newtype, int min_depth,
 
     if (min_depth != 0 && (CArray_NDIM(r) < min_depth)) {
         throw_valueerror_exception("object of too small depth for desired array");
-        CArray_DECREF(r);
+        CArray_XDECREF(r);
         return NULL;
     }
     if (max_depth != 0 && (CArray_NDIM(r) > max_depth)) {
         throw_valueerror_exception("object too deep for desired array");
-        CArray_DECREF(r);
+        CArray_XDECREF(r);
         return NULL;
     }
     return r;
@@ -1986,13 +1986,13 @@ CArray_FromAny(CArray *op, CArrayDescriptor *newtype, int min_depth,
 
             if (ndim > 0) {
                 if (CArray_AssignFromSequence(ret, op) < 0) {
-                    CArray_DECREF(ret);
+                    CArray_XDECREF(ret);
                     ret = NULL;
                 }
             }
             else {
                 if (CArray_DESCR(ret)->f->setitem(op,CArray_DATA(ret), ret) < 0) {
-                    CArray_DECREF(ret);
+                    CArray_XDECREF(ret);
                     ret = NULL;
                 }
             }
@@ -2001,17 +2001,17 @@ CArray_FromAny(CArray *op, CArrayDescriptor *newtype, int min_depth,
     else {
         if (min_depth != 0 && CArray_NDIM(arr) < min_depth) {
             throw_valueerror_exception("object of too small depth for desired array");
-            CArray_DECREF(arr);
+            CArray_XDECREF(arr);
             ret = NULL;
         }
         else if (max_depth != 0 && CArray_NDIM(arr) > max_depth) {
             throw_valueerror_exception("object too deep for desired array");
-            CArray_DECREF(arr);
+            CArray_XDECREF(arr);
             ret = NULL;
         }
         else {
             ret = CArray_FromArray(arr, newtype, flags);
-            CArray_DECREF(arr);
+            CArray_XDECREF(arr);
         }
     }
 

@@ -887,7 +887,7 @@ PHP_METHOD(CArray, argmax)
     axis_p = (int*)emalloc(sizeof(int));
 
     if(ZEND_NUM_ARGS() == 1) {
-        CArray_DECREF(target_ca);
+        CArray_XDECREF(target_ca);
         target_ca = CArray_Ravel(target_ca, CARRAY_KEEPORDER);
         CArrayDescriptor_DECREF(CArray_DESCR(target_ca));
         *axis_p = 0;
@@ -924,7 +924,7 @@ PHP_METHOD(CArray, argmin)
     axis_p = (int*)emalloc(sizeof(int));
 
     if(ZEND_NUM_ARGS() == 1) {
-        CArray_DECREF(target_ca);
+        CArray_XDECREF(target_ca);
         target_ca = CArray_Ravel(target_ca, CARRAY_KEEPORDER);
         CArrayDescriptor_DECREF(CArray_DESCR(target_ca));
         *axis_p = 0;
@@ -1021,7 +1021,7 @@ PHP_METHOD(CArray, sort)
     }
     CArrayDescriptor_INCREF(CArray_DESCR(ret));
     if(decref) {
-        CArray_DECREF(target_ca);
+        CArray_XDECREF(target_ca);
     }
     FREE_FROM_MEMORYPOINTER(&ptr);
     RETURN_MEMORYPOINTER(return_value, &out_ptr);
@@ -1551,7 +1551,7 @@ PHP_METHOD(CArray, prod)
     ret = CArray_Prod(target_ca, axis_p, target_ca->descriptor->type_num, &rtn_ptr);
 
     efree(axis_p);
-    CArray_DECREF(target_ca);
+    CArray_XDECREF(target_ca);
     FREE_FROM_MEMORYPOINTER(&ptr);
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }

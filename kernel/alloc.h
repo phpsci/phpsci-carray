@@ -12,7 +12,7 @@ void * carray_data_alloc_zeros(int num_elements, int size_element, char type);
 void * carray_data_alloc(int num_elements, int size_element);
 
 void CArray_INCREF(CArray * target);
-void CArray_DECREF(CArray * target);
+void CArray_XDECREF(CArray * target);
 void CArrayDescriptor_INCREF(CArrayDescriptor * descriptor);
 void CArrayDescriptor_DECREF(CArrayDescriptor * descriptor);
 void CArray_Alloc_FreeFromMemoryPointer(MemoryPointer * ptr);

@@ -18,17 +18,17 @@ _swap_and_concat(CArray **op, int axis, int n, MemoryPointer * out)
     for (i=0; i<n; i++) {
         otmp = op[i];
         arr = CArray_FromCArray(otmp, CArray_DESCR(otmp), CArray_FLAGS(otmp));
-        CArray_DECREF(otmp);
+        CArray_XDECREF(otmp);
         if (arr==NULL) goto fail;
         otmp = CArray_SwapAxes(arr, axis, 0, NULL);
-        CArray_DECREF(arr);
+        CArray_XDECREF(arr);
         if (otmp == NULL) goto fail;
         newtup[i] = otmp;
     }
     otmp = CArray_Concatenate(newtup, n, &axis2, out);
     if (otmp == NULL) return NULL;
     arr = CArray_SwapAxes(otmp, axis, 0, NULL);
-    CArray_DECREF(otmp);
+    CArray_XDECREF(otmp);
     return arr;
 fail:
     return NULL;
@@ -71,7 +71,7 @@ CArray_Concatenate(CArray ** target, int narrays, int * axis, MemoryPointer * ou
     for(i=0; i<n; i++) {
         if (*axis >= CARRAY_MAXDIMS) {
             otmp = CArray_Ravel(mps[i],0);
-            CArray_DECREF(mps[i]);
+            CArray_XDECREF(mps[i]);
             mps[i] = otmp;
         }
         prior2 = 0.0;
@@ -125,7 +125,7 @@ CArray_Concatenate(CArray ** target, int narrays, int * axis, MemoryPointer * ou
 
     CArray_INCREF(ret);
     for(i=0; i<n; i++) {
-        CArray_DECREF(mps[i]);
+        CArray_XDECREF(mps[i]);
     }
 
     if (out != NULL) {
@@ -135,9 +135,9 @@ CArray_Concatenate(CArray ** target, int narrays, int * axis, MemoryPointer * ou
     return ret;
 
 fail:
-    CArray_DECREF(ret);
+    CArray_XDECREF(ret);
     for(i=0; i<n; i++) {
-        CArray_DECREF(mps[i]);
+        CArray_XDECREF(mps[i]);
     }
     return NULL;
 }

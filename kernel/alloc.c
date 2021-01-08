@@ -41,7 +41,7 @@ CArray_INCREF(CArray *target)
  * @return
  */
 void
-CArray_DECREF(CArray *target)
+CArray_XDECREF(CArray *target)
 {
     target->refcount--;
 }
@@ -127,7 +127,7 @@ _free_data_owner(MemoryPointer * ptr)
         CArrayDescriptor_FREE(CArray_DESCR(array));
     }
 
-    CArray_DECREF(array);
+    CArray_XDECREF(array);
     if (CArrayGC_ISDEBUGON()) {
       php_printf("\n[CARRAY_GC_DEBUG] Freeing Dimensions and Strides from CArray ID %d", ptr->uuid);
     }
@@ -152,8 +152,8 @@ _free_data_ref(MemoryPointer * ptr)
 
     CArray * array = CArray_FromMemoryPointer(ptr);
 
-    CArray_DECREF(array);
-    CArray_DECREF(array->base);
+    CArray_XDECREF(array);
+    CArray_XDECREF(array->base);
     CArrayDescriptor_DECREF(array->descriptor);
     if(array->descriptor->refcount < 0) {
         if (CArrayGC_ISDEBUGON()) {

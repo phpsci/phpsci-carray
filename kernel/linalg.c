@@ -890,7 +890,7 @@ CArray_InnerProduct(CArray *op1, CArray *op2, MemoryPointer *out)
         goto fail;
     }
 
-    CArray_DECREF(op2);
+    CArray_XDECREF(op2);
     CArrayDescriptor_DECREF(CArray_DESCR(op2));
 
     CArrayDescriptor_DECREF(typec);

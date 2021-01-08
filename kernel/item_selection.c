@@ -394,11 +394,11 @@ CArray_TakeFrom(CArray * target, CArray * indices0, int axis,
         }
     }
 
-    CArray_DECREF(indices);
+    CArray_XDECREF(indices);
     if (out != NULL && out != obj) {
         CArray_INCREF(out);
         CArray_ResolveWritebackIfCopy(obj);
-        CArray_DECREF(obj);
+        CArray_XDECREF(obj);
         obj = out;
     }
     if(out_ptr != NULL) {
@@ -406,12 +406,12 @@ CArray_TakeFrom(CArray * target, CArray * indices0, int axis,
     }
     CArrayDescriptor_FREE(indices_type);
     
-    CArray_DECREF(target);
+    CArray_XDECREF(target);
     if(auto_free) {    
         CArrayDescriptor_DECREF(CArray_DESCR(self));
         CArray_Free(self);
     } else {
-        CArray_DECREF(target);
+        CArray_XDECREF(target);
     }
     return obj;
 fail:

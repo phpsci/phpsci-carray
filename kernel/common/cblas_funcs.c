@@ -181,7 +181,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
     if (_bad_strides(ap1)) {
         CArray *op1 = CArray_NewCopy(ap1, CARRAY_ANYORDER);
         memcpy(CArray_DATA(op1), CArray_DATA(ap1), CArray_SIZE(ap1) * CArray_DESCR(ap1)->elsize);
-        CArray_DECREF(ap1);
+        CArray_XDECREF(ap1);
         ap1 = op1;
         bad1 = 1;
         if (ap1 == NULL) {
@@ -191,7 +191,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
     if (_bad_strides(ap2)) {
         CArray *op2 = CArray_NewCopy(ap2, CARRAY_ANYORDER);
         memcpy(CArray_DATA(op2), CArray_DATA(ap2), CArray_SIZE(ap2) * CArray_DESCR(ap2)->elsize);
-        CArray_DECREF(ap2);
+        CArray_XDECREF(ap2);
         ap2 = op2;
         bad2 = 1;
         if (ap2 == NULL) {
@@ -318,9 +318,9 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
     memset(CArray_DATA(out_buf), 0, numbytes);
     
     //if (numbytes == 0 || l == 0) {
-    //    CArray_DECREF(ap1);
-    //    CArray_DECREF(ap2);
-    //    CArray_DECREF(out_buf);
+    //    CArray_XDECREF(ap1);
+    //    CArray_XDECREF(ap2);
+    //    CArray_XDECREF(out_buf);
     //    return result;
     //}
 
@@ -423,7 +423,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
         if (!CArray_ISONESEGMENT(ap1)) {
             CArray *new;
             new = CArray_Copy(ap1);
-            CArray_DECREF(ap1);
+            CArray_XDECREF(ap1);
             ap1 = (CArray *)new;
             if (new == NULL) {
                 goto fail;
@@ -450,7 +450,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
         if (!CArray_ISONESEGMENT(ap2)) {
             CArray *new;
             new = CArray_Copy(ap2);
-            CArray_DECREF(ap2);
+            CArray_XDECREF(ap2);
             ap2 = (CArray *)new;
             if (new == NULL) {
                 goto fail;
@@ -492,7 +492,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
         if (!CArray_IS_C_CONTIGUOUS(ap2) && !CArray_IS_F_CONTIGUOUS(ap2)) {
             CArray *new = CArray_Copy(ap2);
 
-            CArray_DECREF(ap2);
+            CArray_XDECREF(ap2);
             ap2 = (CArray *)new;
             if (new == NULL) {
                 goto fail;
@@ -501,7 +501,7 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
         if (!CArray_IS_C_CONTIGUOUS(ap1) && !CArray_IS_F_CONTIGUOUS(ap1)) {
             CArray *new = CArray_Copy(ap1);
 
-            CArray_DECREF(ap1);
+            CArray_XDECREF(ap1);
             ap1 = (CArray *)new;
             if (new == NULL) {
                 goto fail;
@@ -572,10 +572,10 @@ cblas_matrixproduct(int typenum, CArray * ap1, CArray *ap2, CArray *out, MemoryP
 
     return out_buf;
 fail:
-    //CArray_DECREF(ap1);
-    //CArray_DECREF(ap2);
-    //CArray_DECREF(out_buf);
-    //CArray_DECREF(result);
+    //CArray_XDECREF(ap1);
+    //CArray_XDECREF(ap2);
+    //CArray_XDECREF(out_buf);
+    //CArray_XDECREF(result);
     return NULL;
 }
 #endif

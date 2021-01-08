@@ -34,8 +34,8 @@ setArrayFromSequence(CArray *a, CArray *s, int dim, int offset)
         else {
             res = a->descriptor->f->setitem(o->data, (a->data + offset), a);
         }
-        CArray_DECREF(o);
-        CArray_DECREF(s);
+        CArray_XDECREF(o);
+        CArray_XDECREF(s);
         CArrayDescriptor_FREE(o->descriptor);
         CArray_Free(o);
         if (res < 0) {
@@ -43,11 +43,11 @@ setArrayFromSequence(CArray *a, CArray *s, int dim, int offset)
         }
         offset += a->strides[dim];
     }
-    CArray_DECREF(s);
+    CArray_XDECREF(s);
     return 0;
 
 fail:
-    CArray_DECREF(s);
+    CArray_XDECREF(s);
     return res;
 }
 
@@ -147,7 +147,7 @@ CArray_FromArray(CArray *arr, CArrayDescriptor *newtype, int flags)
         }
 
         if (CArray_CopyInto(ret, arr) < 0) {
-            CArray_DECREF(ret);
+            CArray_XDECREF(ret);
             return NULL;
         }
 

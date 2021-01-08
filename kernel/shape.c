@@ -437,7 +437,7 @@ CArray_Newshape(CArray * self, int *newdims, int new_ndim, CARRAY_ORDER order, M
         else {
             CArray * newcopy;
             newcopy = CArray_NewCopy(self, order);
-            CArray_DECREF(self);
+            CArray_XDECREF(self);
             if (newcopy == NULL) {
                 return NULL;
             }
@@ -472,7 +472,7 @@ CArray_Newshape(CArray * self, int *newdims, int new_ndim, CARRAY_ORDER order, M
     }
 
     CArrayDescriptor_INCREF(CArray_DESCR(ret));
-    CArray_DECREF(self);
+    CArray_XDECREF(self);
     return ret;
 }
 

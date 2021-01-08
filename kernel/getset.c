@@ -73,6 +73,6 @@ array_flat_set(CArray * self, CArray * val)
     efree(typecode);
     return retval;
 exit:
-    CArray_DECREF(arr);
+    CArray_XDECREF(arr);
     return retval;
 }

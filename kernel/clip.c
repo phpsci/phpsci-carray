@@ -258,7 +258,7 @@ CArray_Clip(CArray * self, CArray * min, CArray * max, MemoryPointer * out_ptr)
         add_to_buffer(out_ptr, out, sizeof(CArray));
     }
 
-    CArray_DECREF(self);
+    CArray_XDECREF(self);
     return out;
 fail:
     return NULL;

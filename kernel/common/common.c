@@ -72,8 +72,8 @@ new_array_for_sum(CArray *ap1, CArray *ap2, CArray* out,
             /* set copy-back */
             CArray_INCREF(out);
             if (CArray_SetWritebackIfCopyBase(out_buf, out) < 0) {
-                CArray_DECREF(out);
-                CArray_DECREF(out_buf);
+                CArray_XDECREF(out);
+                CArray_XDECREF(out_buf);
                 return NULL;
             }
         }

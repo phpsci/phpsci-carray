@@ -727,7 +727,7 @@ PHP_METHOD(CRubix, symmetric)
     return;
 
 not_symmetric:
-    CArray_DECREF(target);
+    CArray_XDECREF(target);
     CArrayDescriptor_DECREF(CArray_DESCR(target));
     CArrayIterator_FREE(it);
     RETURN_LONG(0);
@@ -1606,7 +1606,7 @@ PHP_METHOD(CRubix, product)
     target_ca = CArray_FromMemoryPointer(&ptr);
     ret = CArray_Prod(target_ca, &axis, target_ca->descriptor->type_num, &rtn_ptr);
 
-    CArray_DECREF(target_ca);
+    CArray_XDECREF(target_ca);
     FREE_FROM_MEMORYPOINTER(&ptr);
     RETURN_MEMORYPOINTER(return_value, &rtn_ptr);
 }

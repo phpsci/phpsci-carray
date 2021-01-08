@@ -95,7 +95,7 @@ CArray_CumSum(CArray * self, int * axis, int rtype, MemoryPointer * out_ptr)
             } while(CArrayIterator_NOTDONE(it));
             efree(accumulator);
         }
-        CArray_DECREF(self);
+        CArray_XDECREF(self);
         CArrayIterator_FREE(it);
         CArrayIterator_FREE(retit);
     }
@@ -203,7 +203,7 @@ CArray_CumProd(CArray * self, int * axis, int rtype, MemoryPointer * out_ptr)
             } while(CArrayIterator_NOTDONE(it));
             efree(accumulator);
         }
-        CArray_DECREF(self);
+        CArray_XDECREF(self);
         CArrayIterator_FREE(it);
         CArrayIterator_FREE(retit);
     }
@@ -445,7 +445,7 @@ CArray_Sum(CArray * self, int * axis, int rtype, MemoryPointer * out_ptr)
                 i++;
             } while(CArrayIterator_NOTDONE(it));
         }
-        CArray_DECREF(self);
+        CArray_XDECREF(self);
         CArrayIterator_FREE(it);
         efree(strides);
         efree(new_dimensions);

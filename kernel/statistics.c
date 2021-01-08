@@ -109,7 +109,7 @@ _carray_correlate(CArray *ap1, CArray *ap2, int typenum,
     return ret;
 
 clean_ret:
-    CArray_DECREF(ret);
+    CArray_XDECREF(ret);
     return NULL;
 }
 
@@ -151,9 +151,9 @@ CArray_Correlate(CArray * op1, CArray * op2, int mode, MemoryPointer * out)
     return ret;
 
 fail:
-    CArray_DECREF(ap1);
-    CArray_DECREF(ap2);
-    CArray_DECREF(ret);
+    CArray_XDECREF(ap1);
+    CArray_XDECREF(ap2);
+    CArray_XDECREF(ret);
     return NULL;
 }
 
@@ -216,10 +216,10 @@ CArray_Correlate2(CArray * op1, CArray * op2, int mode, MemoryPointer * out)
 
     return ret;
 clean_ret:
-    CArray_DECREF(ret);
+    CArray_XDECREF(ret);
 clean_ap2:
-    CArray_DECREF(ap2);
+    CArray_XDECREF(ap2);
 clean_ap1:
-    CArray_DECREF(ap1);
+    CArray_XDECREF(ap1);
     return NULL;
 }
