@@ -25,6 +25,22 @@ It's really easy to compile this extension using Linux environments.
 
 - cuBLAS (For GPU Integration)
 
+### Ubuntu 20.04
+
+```commandline
+$ sudo add-apt-repository -y ppa:ondrej/php
+$ sudo apt-get update
+$ sudo apt-get install libopenblas-dev libatlas-base-dev liblapacke-dev php7.4-dev
+$ phpize
+$ ./configure
+$ make test
+$ sudo make install
+$ echo 'extension=carray' | sudo tee /etc/php/7.4/cli/conf.d/20-carray.ini
+$ echo 'extension=carray' | sudo tee /etc/php/7.4/fpm/conf.d/20-carray.ini
+$ echo 'extension=carray' | sudo tee /etc/php/7.4/cgi/conf.d/20-carray.ini
+$ echo 'extension=carray' | sudo tee /etc/php/7.4/apache2/conf.d/20-carray.ini
+```
+
 ### Ubuntu 16.04
 
 ```commandline
