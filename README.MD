@@ -1,6 +1,6 @@
-# PHPSci CArray Extension
+<img src="https://i.imgur.com/QoIbhqj.png" alt="PHPSci CArray Logo" width="400"/>
 
-![](https://i.imgur.com/QoIbhqj.png)
+# PHPSci CArray Extension
 
 PHPSci CArray is a high-performance scientific computing library for PHP developed in C and based on the original NumPy code. CArrays offer a solid alternative to PHP arrays as well as compatibility with codes developed using NumPy.
 
