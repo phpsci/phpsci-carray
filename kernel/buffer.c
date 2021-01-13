@@ -35,6 +35,7 @@ void buffer_init(size_t size) {
     PHPSCI_MAIN_MEM_STACK.size = 0;
     PHPSCI_MAIN_MEM_STACK.capacity = 1;
     PHPSCI_MAIN_MEM_STACK.bsize = size;
+    PHPSCI_MAIN_MEM_STACK.last_free_uuid = -1;
     // Allocate first CArray struct to buffer
     PHPSCI_MAIN_MEM_STACK.buffer = (struct CArray**)emalloc(sizeof(CArray *));
     if (CArrayBuffer_ISDEBUGON()) {
@@ -46,10 +47,13 @@ void buffer_remove(MemoryPointer * ptr)
 {
     PHPSCI_MAIN_MEM_STACK.freed = PHPSCI_MAIN_MEM_STACK.freed + 1;
     efree(PHPSCI_MAIN_MEM_STACK.buffer[ptr->uuid]);
-    if(PHPSCI_MAIN_MEM_STACK.size == PHPSCI_MAIN_MEM_STACK.freed) {
-        efree(PHPSCI_MAIN_MEM_STACK.buffer);
-        PHPSCI_MAIN_MEM_STACK.buffer = NULL;
-    }
+    PHPSCI_MAIN_MEM_STACK.last_free_uuid = ptr->uuid;
+    
+}
+
+void buffer_free() {
+    efree(PHPSCI_MAIN_MEM_STACK.buffer);
+    PHPSCI_MAIN_MEM_STACK.buffer = NULL;
 }
 
 /**
@@ -78,20 +82,30 @@ void add_to_buffer(MemoryPointer * ptr, struct CArray * array, size_t size) {
         buffer_init(size);
     }
 
-    // If current capacity is smaller them the requested capacity, grow the MemoryStack
-    if((PHPSCI_MAIN_MEM_STACK.size+1) > PHPSCI_MAIN_MEM_STACK.capacity) {
-        buffer_to_capacity((PHPSCI_MAIN_MEM_STACK.capacity+1),size);
+    if (PHPSCI_MAIN_MEM_STACK.last_free_uuid == -1) {
+        // If current capacity is smaller them the requested capacity, grow the MemoryStack
+        if((PHPSCI_MAIN_MEM_STACK.size+1) > PHPSCI_MAIN_MEM_STACK.capacity) {
+            buffer_to_capacity((PHPSCI_MAIN_MEM_STACK.capacity+1),size);
+        }
+
+        PHPSCI_MAIN_MEM_STACK.buffer[PHPSCI_MAIN_MEM_STACK.size] = array;
+
+        // Associate CArray unique id
+        ptr->uuid = (int)PHPSCI_MAIN_MEM_STACK.size;
+        array->uuid = ptr->uuid;
+
+        // Set new size for MemoryStack
+        PHPSCI_MAIN_MEM_STACK.size++;
+    } else {
+        PHPSCI_MAIN_MEM_STACK.buffer[PHPSCI_MAIN_MEM_STACK.last_free_uuid] = array;
+
+        // Associate CArray unique id
+        ptr->uuid = (int)PHPSCI_MAIN_MEM_STACK.last_free_uuid;
+        array->uuid = ptr->uuid;
+        PHPSCI_MAIN_MEM_STACK.last_free_uuid = -1;
     }
-
-    PHPSCI_MAIN_MEM_STACK.buffer[PHPSCI_MAIN_MEM_STACK.size] = array;
-
-    // Associate CArray unique id
-    ptr->uuid = (int)PHPSCI_MAIN_MEM_STACK.size;
-    array->uuid = ptr->uuid;
 
     if (CArrayBuffer_ISDEBUGON()) {
        php_printf("\n[CARRAY_BUFFER_DEBUG] Added CArray ID %d", array->uuid);
     }
-    // Set new size for MemoryStack
-    PHPSCI_MAIN_MEM_STACK.size++;
 }

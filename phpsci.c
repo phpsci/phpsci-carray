@@ -3149,6 +3149,7 @@ static PHP_MINFO_FUNCTION(carray)
  */
 static PHP_MSHUTDOWN_FUNCTION(carray)
 {
+    buffer_free();
     UNREGISTER_INI_ENTRIES();
     return SUCCESS;
 }

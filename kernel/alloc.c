@@ -21,7 +21,7 @@ CArrayGC_ISDEBUGON()
 void
 CArrayDescriptor_FREE(CArrayDescriptor * descr)
 {
-    if (descr->refcount <= 0) {
+    if (descr->refcount < 0) {
         efree(descr->f);
         efree(descr);
         descr = NULL;

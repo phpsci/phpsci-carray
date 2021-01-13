@@ -10,6 +10,7 @@ struct MemoryStack {
     CArray ** buffer;
     int size;
     int capacity;
+    int last_free_uuid;
     int freed;
     size_t bsize;
 };
@@ -21,4 +22,5 @@ void buffer_to_capacity(int new_capacity, size_t size);
 void remove_from_buffer(MemoryPointer * ptr);
 void buffer_init();
 void buffer_remove(MemoryPointer * ptr);
+void buffer_free();
 #endif //PHPSCI_EXT_BUFFER_H
