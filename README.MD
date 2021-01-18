@@ -1,6 +1,6 @@
-# PHPSci CArray Extension
+<img src="https://i.imgur.com/QoIbhqj.png" alt="PHPSci CArray Logo" width="400"/>
 
-![](https://i.imgur.com/QoIbhqj.png)
+# PHPSci CArray Extension
 
 PHPSci CArray is a high-performance scientific computing library for PHP developed in C and based on the original NumPy code. CArrays offer a solid alternative to PHP arrays as well as compatibility with codes developed using NumPy.
 
@@ -24,6 +24,22 @@ It's really easy to compile this extension using Linux environments.
 ### Optional
 
 - cuBLAS (For GPU Integration)
+
+### Ubuntu 20.04
+
+```commandline
+$ sudo add-apt-repository -y ppa:ondrej/php
+$ sudo apt-get update
+$ sudo apt-get install libopenblas-dev libatlas-base-dev liblapacke-dev php7.4-dev
+$ phpize
+$ ./configure
+$ make test
+$ sudo make install
+$ echo 'extension=carray' | sudo tee /etc/php/7.4/cli/conf.d/20-carray.ini
+$ echo 'extension=carray' | sudo tee /etc/php/7.4/fpm/conf.d/20-carray.ini
+$ echo 'extension=carray' | sudo tee /etc/php/7.4/cgi/conf.d/20-carray.ini
+$ echo 'extension=carray' | sudo tee /etc/php/7.4/apache2/conf.d/20-carray.ini
+```
 
 ### Ubuntu 16.04
 
