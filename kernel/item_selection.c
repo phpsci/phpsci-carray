@@ -253,6 +253,7 @@ CArray_Diagonal(CArray *self, int offset, int axis1, int axis2, MemoryPointer * 
     ret = CArray_NewFromDescrAndBase(
             ret, dtype, ndim-1, ret_shape, ret_strides, data,
             CArray_FLAGS(self), self);
+    CArrayDescriptor_INCREF(dtype);
 
     ret->flags &= ~CARRAY_ARRAY_WRITEABLE;
     ret->flags |= CARRAY_ARRAY_C_CONTIGUOUS | CARRAY_ARRAY_F_CONTIGUOUS;
