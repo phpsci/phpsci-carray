@@ -816,6 +816,7 @@ CArray_DescrFromType(int typenum)
     ret->type_num = typenum;
     ret->numElements = 0;
 
+
     if(typenum == 0) {
         ret->elsize = sizeof(int);
         ret->type = TYPE_DEFAULT;

@@ -15,6 +15,7 @@
 #include <kernel/buffer.h>
 #include <kernel/search.h>
 #include <kernel/round.h>
+#include <kernel/ctors.h>
 #include <kernel/clip.h>
 #include <kernel/calculation.h>
 #include <kernel/carray.h>
@@ -1175,6 +1176,8 @@ PHP_METHOD(CRubix, pow)
  */
 PHP_METHOD(CRubix, mod)
 {
+    int i;
+    char order = 'C';
     MemoryPointer target1_ptr, target2_ptr, result_ptr;
     zval * target1, * target2;
     CArray * target_ca1, * target_ca2, * output_ca, * out;
@@ -1186,8 +1189,21 @@ PHP_METHOD(CRubix, mod)
     ZVAL_TO_MEMORYPOINTER(target2, &target2_ptr, NULL);
     target_ca1 = CArray_FromMemoryPointer(&target1_ptr);
     target_ca2 = CArray_FromMemoryPointer(&target2_ptr);
-    output_ca = CArray_Mod(target_ca1, target_ca2, &result_ptr);
 
+    if (CArray_NDIM(target_ca1) == 1) {
+        if (CArray_NDIM(target_ca1) == CArray_NDIM(target_ca2)) {
+            CArray *rtn_ca = CArray_Zeros(CArray_DIMS(target_ca1), 1, TYPE_INTEGER, &order, &result_ptr);
+            for (i = 0; i < CArray_DESCR(target_ca1)->numElements; i++) {
+                IDATA(rtn_ca)[i] = fmod(DDATA(target_ca1)[i], DDATA(target_ca2)[i]);
+            }
+            FREE_FROM_MEMORYPOINTER(&target1_ptr);
+            FREE_FROM_MEMORYPOINTER(&target2_ptr);
+            RETURN_MEMORYPOINTER(return_value, &result_ptr);
+            return;
+        }
+       
+    }
+    output_ca = CArray_Mod(target_ca1, target_ca2, &result_ptr);
 
     FREE_FROM_MEMORYPOINTER(&target1_ptr);
     FREE_FROM_MEMORYPOINTER(&target2_ptr);
@@ -1783,7 +1799,7 @@ PHP_METHOD(CRubix, max)
                 }
                 CArrayIterator_NEXT(it);
             } while (CArrayIterator_NOTDONE(it));
-
+            CArrayIterator_FREE(it);
         case TYPE_DOUBLE_INT:
             i = 0, j = 0;
             newshape = emalloc(sizeof(int));
@@ -1805,6 +1821,7 @@ PHP_METHOD(CRubix, max)
                 }
                 CArrayIterator_NEXT(it);
             } while (CArrayIterator_NOTDONE(it));
+            CArrayIterator_FREE(it);
     }
 
     add_to_buffer(&rtn_ptr, rtn_ca, sizeof(CArray));
@@ -3521,14 +3538,54 @@ PHP_METHOD(CRubix, count)
 
 }
 
-/**
- * Rubix/Tensor/Matrix::offsetSet
- */
+ZEND_BEGIN_ARG_INFO(arginfo_offsetSet, 0)
+                ZEND_ARG_INFO(0, index)
+                ZEND_ARG_INFO(0, newval)
+ZEND_END_ARG_INFO();
 PHP_METHOD(CRubix, offsetSet)
 {
+    CArray * target, * value;
+    MemoryPointer target_ptr, value_ptr;
+    int indexl;
+    zval *index, *val;
+    zval * obj = getThis();
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "zz", &index, &val) == FAILURE) {
+        return;
+    }
+    convert_to_long(index);
+    indexl = (int)zval_get_long(index);
+    ZVAL_TO_MEMORYPOINTER(val, &value_ptr, NULL);
+    ZVAL_TO_MEMORYPOINTER(obj, &target_ptr, NULL);
+    target = CArray_FromMemoryPointer(&target_ptr);
+    value = CArray_FromMemoryPointer(&value_ptr);
 
+    if ((int)indexl  >= CArray_DIMS(target)[0]) {
+        throw_indexerror_exception("Invalid index");
+        return;
+    }
+
+    if (CArray_NDIM(target) == 1 && CArray_NDIM(value) == 0) {
+        if (CArray_TYPE(target) == TYPE_INTEGER_INT && CArray_TYPE(value) == TYPE_INTEGER_INT) {
+            IDATA(target)[indexl] = IDATA(value)[0];
+        }
+        if (CArray_TYPE(target) == TYPE_DOUBLE_INT && CArray_TYPE(value) == TYPE_DOUBLE_INT) {
+            DDATA(target)[indexl] = DDATA(value)[0];
+        }
+        if (CArray_TYPE(target) == TYPE_INTEGER_INT && CArray_TYPE(value) == TYPE_DOUBLE_INT) {
+            IDATA(target)[indexl] = (int)DDATA(value)[0];
+        }
+        if (CArray_TYPE(target) == TYPE_DOUBLE_INT && CArray_TYPE(value) == TYPE_INTEGER_INT) {
+            DDATA(target)[indexl] = (double)IDATA(value)[0];
+        }
+        FREE_FROM_MEMORYPOINTER(&target_ptr);
+        FREE_FROM_MEMORYPOINTER(&value_ptr);
+        return;
+    }
+
+    setArrayFromSequence(target, value, CArray_NDIM(value), ((int)indexl * CArray_STRIDES(target)[0]));
+    FREE_FROM_MEMORYPOINTER(&target_ptr);
+    FREE_FROM_MEMORYPOINTER(&value_ptr);
 }
-
 /**
  * Rubix/Tensor/Matrix::offsetExists
  */

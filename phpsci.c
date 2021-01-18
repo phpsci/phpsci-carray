@@ -341,21 +341,37 @@ PHP_METHOD(CArray, offsetSet)
 {
     CArray * target, * value;
     MemoryPointer target_ptr, value_ptr;
-    long indexl;
+    int indexl;
     zval *index, *val;
     zval * obj = getThis();
     if (zend_parse_parameters(ZEND_NUM_ARGS(), "zz", &index, &val) == FAILURE) {
         return;
     }
     convert_to_long(index);
-    indexl = zval_get_double(index);
+    indexl = (int)zval_get_long(index);
     ZVAL_TO_MEMORYPOINTER(val, &value_ptr, NULL);
     ZVAL_TO_MEMORYPOINTER(obj, &target_ptr, NULL);
     target = CArray_FromMemoryPointer(&target_ptr);
     value = CArray_FromMemoryPointer(&value_ptr);
 
     if ((int)indexl  >= CArray_DIMS(target)[0]) {
-        throw_indexerror_exception("");
+        throw_indexerror_exception("Invalid index");
+        return;
+    }
+
+    if (CArray_NDIM(target) == 1 && CArray_NDIM(value) == 0) {
+        if (CArray_TYPE(target) == TYPE_INTEGER_INT && CArray_TYPE(value) == TYPE_INTEGER_INT) {
+            IDATA(target)[indexl] = IDATA(value)[0];
+        }
+        if (CArray_TYPE(target) == TYPE_DOUBLE_INT && CArray_TYPE(value) == TYPE_DOUBLE_INT) {
+            DDATA(target)[indexl] = DDATA(value)[0];
+        }
+        if (CArray_TYPE(target) == TYPE_INTEGER_INT && CArray_TYPE(value) == TYPE_DOUBLE_INT) {
+            IDATA(target)[indexl] = (int)DDATA(value)[0];
+        }
+        if (CArray_TYPE(target) == TYPE_DOUBLE_INT && CArray_TYPE(value) == TYPE_INTEGER_INT) {
+            DDATA(target)[indexl] = (double)IDATA(value)[0];
+        }
         return;
     }
 
@@ -2797,6 +2813,7 @@ static zend_function_entry crubix_class_methods[] =
         PHP_ME(CRubix, sign, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, round, NULL, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
         PHP_ME(CRubix, offsetGet, arginfo_array_offsetGet, ZEND_ACC_PUBLIC)
+        PHP_ME(CRubix, offsetSet, arginfo_offsetSet, ZEND_ACC_PUBLIC)
 };
 
 /**

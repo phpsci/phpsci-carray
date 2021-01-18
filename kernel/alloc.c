@@ -22,7 +22,11 @@ void
 CArrayDescriptor_FREE(CArrayDescriptor * descr)
 {
     if (descr->refcount < 0) {
-        efree(descr->f);
+        if (descr->f != NULL) {
+            efree(descr->f);
+            descr->f = NULL;
+        }
+
         efree(descr);
         descr = NULL;
     }

@@ -125,7 +125,7 @@ PHP_METHOD(CRubix, greaterEqualScalar);             //OK        PASSED
 PHP_METHOD(CRubix, lessScalar);                     //OK        PASSED
 PHP_METHOD(CRubix, lessEqualScalar);                //OK        PASSED
 PHP_METHOD(CRubix, count);
-PHP_METHOD(CRubix, offsetSet);
+PHP_METHOD(CRubix, offsetSet);                      //OK        PASSED
 PHP_METHOD(CRubix, offsetExists);
 PHP_METHOD(CRubix, offsetUnset);
 PHP_METHOD(CRubix, offsetGet);
